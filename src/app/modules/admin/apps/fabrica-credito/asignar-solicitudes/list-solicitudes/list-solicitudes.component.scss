@@ -1,0 +1,112 @@
+.columna-1 {
+    @media (min-width: 1280px) {
+        width: 25%;
+    }
+
+    @media (min-width: 1440px) {
+        width: 15%;
+    }
+}
+
+.columna-2 {
+    width: 85%;
+}
+
+.subcol-1 {
+    width: 10%;
+}
+
+.m-row {
+    margin-top: 2.5%;
+}
+
+.max-height {
+    @media (min-width:1280px) {
+        max-height: 15.5rem;
+    }
+    @media (min-width:1440px) {
+        max-height: 34rem;
+    }
+}
+
+// button:enabled {
+//     background-color: #4ABBEC;
+// }
+
+// button:disabled {
+//     background-color: white !important;
+//     border-width: 1px !important;
+// }
+
+.permitir:enabled {
+    background-color: #4ABBEC;
+}
+
+.bloquear:disabled {
+    background-color: white !important;
+    border: 1px solid rgb(212, 212, 212) !important;
+}
+
+
+.per-asig:enabled {
+    background-color: #bbf7d0
+}
+
+.blo-asig:disabled{
+    background-color: white !important;
+    border: 1px solid rgb(212, 212, 212) !important;
+}
+
+.per-reasig:enabled {
+    background-color: #bfdbfe
+}
+
+.blo-reasig:disabled{
+    background-color: white !important;
+    border: 1px solid rgb(212, 212, 212) !important;
+}
+
+.leftScrollButton{
+    left: -25px;
+    height: 20px;
+    bottom: calc(50% - 10px);
+    z-index: 100;
+}
+
+// .leftScrollButton > mat-icon{
+//     position: sticky;
+// }
+
+.rigthScrollButton{
+    right: -25px;
+    height: 20px;
+    bottom: calc(50% - 10px);
+    z-index: 100;
+}
+
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+  .w-97P{
+ width: 97%;
+  }
+
+.scaleHover{
+    transition:  0.2s;
+}
+
+.scaleHover:hover{
+    transform: scale(1.2);
+    transition:  0.2s;
+}
+

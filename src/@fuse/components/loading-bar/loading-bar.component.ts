@@ -38,7 +38,6 @@ export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
      */
     ngOnChanges(changes: SimpleChanges): void
     {
-        console.log(changes);
         // Auto mode
         if ( 'autoMode' in changes )
         {

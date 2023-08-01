@@ -42,6 +42,13 @@ import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona
 import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
 import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultracem/persona-juridica/representante-legal/representante-legal.component';
 import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/persona-natural/laboral/laboral.component';
+import { FamiliarConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/familiar/familiar.component';
+import { PersonalConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/personal/personal.component';
+import { TitularConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/titular/titular.component';
+import { FormGenericoComponent } from './tab-agenda-referenciacion/form-generico-modal/form-generico.component';
+import { FormGenericoTabComponent } from './tab-agenda-referenciacion/form-generico-tab/form-generico-tab.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { CalculoCreditoMicroComponent } from './calculo-credito-micro/calculo-credito-micro.component';
 
 
 @NgModule({
@@ -58,7 +65,13 @@ import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/p
     LibranzaLaboralComponent,
     ComercialComponent,
     PersonalComponent,
-    RepresentanteLegalComponent
+    RepresentanteLegalComponent,
+    TitularConsumoPlexaComponent,
+    FamiliarConsumoPlexaComponent,
+    PersonalConsumoPlexaComponent,
+    FormGenericoComponent,
+    FormGenericoTabComponent,
+    CalculoCreditoMicroComponent,
   ],
     imports: [
         CommonModule,
@@ -89,7 +102,10 @@ import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/p
         SharedModule,
         MatRadioModule,
         QuillModule.forRoot(),
-
+        NgxMaskModule.forRoot(),
+    ],
+    exports:[
+      FormGenericoComponent
     ]
 })
 export class AgendaReferenciacionModule { }

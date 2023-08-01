@@ -16,6 +16,11 @@ import { ListadoTiposComentariosFormComponent } from './listado-tipos-comentario
 import { TiempoAgendaComponent } from './tiempo-agenda/tiempo-agenda.component';
 import { FormTiempoAgendaComponent } from './tiempo-agenda/form-tiempo-agenda/form-tiempo-agenda.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ListadoBarriosComponent } from './listado-barrios/listado-barrios.component';
+import { ListadoBarriosFormComponent } from './listado-barrios/listado-barrios-form/listado-barrios-form.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { TipoCombustibleComponent } from './tipo-combustible/tipo-combustible.component';
+import { AsignacionAsesorMicroComponent } from './asignacion-asesor-micro/asignacion-asesor-micro.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ListadoTiposComentariosComponent,
     TiempoAgendaComponent,
     FormTiempoAgendaComponent,
-    ListadoTiposComentariosFormComponent
+    ListadoTiposComentariosFormComponent,
+    ListadoBarriosComponent,
+    ListadoBarriosFormComponent,
+    TipoCombustibleComponent,
+    AsignacionAsesorMicroComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     NgxPaginationModule,
     FuseCardModule,
+    MatAutocompleteModule
   ]
 })
 export class ParametriaModule { }

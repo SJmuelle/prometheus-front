@@ -6,40 +6,43 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class DetalleCreditoService {
-    constructor(private _httpClient: HttpClient) {}
+
+    private ruta = environment.apiUrl + 'api-fintra/api/generic/qry';
+
+    constructor(private _httpClient: HttpClient) { }
 
     getInformacionPersonal(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 +
-                `/informacion-detalle-referencia-laboral/${codigoNegocio}`
+            this.ruta +
+            `/informacion-detalle-referencia-laboral/${codigoNegocio}`
         );
     }
 
     getInformacionReferencias(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 +
-                `/informacion-detalle-referencias/${codigoNegocio}`
+            this.ruta +
+            `/informacion-detalle-referencias/${codigoNegocio}`
         );
     }
 
     getInformacionCodeudor(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 +
-                `/informacion-detalle-codeudor/${codigoNegocio}`
+            this.ruta +
+            `/informacion-detalle-codeudor/${codigoNegocio}`
         );
     }
 
     getInformacionNegocio(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 +
-                `/informacion-detalle-negocio-cliente/${codigoNegocio}`
+            this.ruta +
+            `/informacion-detalle-negocio-cliente/${codigoNegocio}`
         );
     }
 
     getInformacionConyuge(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 +
-                `/informacion-detalle-conyugue/${codigoNegocio}`
+            this.ruta +
+            `/informacion-detalle-conyugue/${codigoNegocio}`
         );
     }
 }

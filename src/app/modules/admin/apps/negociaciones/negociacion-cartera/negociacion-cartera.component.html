@@ -1,0 +1,101 @@
+<div class="w-screen h-screen flex flex-col">
+
+
+
+
+
+
+
+
+    <mat-drawer-container>
+        <mat-drawer mode="side" #drawer position="end" class="" [(opened)]="opened">
+
+            <app-data-modal [ListadoNegociaciones]="ListadoNegociaciones" [dataRow]="dataRowSelect || {}"
+                (closedEmit)="opened=false"></app-data-modal>
+
+        </mat-drawer>
+        <mat-drawer-content class="min-h-screen w-full" [style]="opened? 'max-width: calc( 100% - 509px );' : '' ">
+
+            <div class="flex items-center pl-16 pt-6 pb-5 bg-white w-full">
+                <div class="flex-0 w-16 h-16  overflow-hidden">
+                    <img src="assets/images/agendas/Asignacion.png" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 mx-3">
+                    <div class="text-3xl font-semibold tracking-tight leading-8">
+                        Negociación cartera
+                    </div>
+                    <div class="flex items-center">
+                        <mat-icon class="mr-2" svgIcon="heroicons_solid:bell"></mat-icon>
+                        <div class="font-medium tracking-tight text-secondary">
+                            Aquí puedes realizar negociaciones de cartera
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="bg-white h-auto rounded-xl  flex-col justify-start flex-wrap mt-6 mb-40 ml-6 mr-6 shadow-md border-1 border-gray-100 "
+                style=" max-width : calc(100%-560px) !important; min-width: 330px;">
+
+
+
+                <div class="flex flex-row gap-4 items-center justify-between mr-6 ml-6 mt-2 flex-wrap">
+                    <!-- (selectionChange)="changeDocumentType()" -->
+
+                    <div class="flex gap-6 flex-wrap w-full justify-between p-2 mt-2">
+                        <div class="w-full sm:w-auto flex flex-row flex-wrap gap-2 ">
+                            <div class=" w-full sm:w-64  rounded-full h-10 items-center flex flex-row border-2">
+                                <mat-icon svgIcon="heroicons_outline:identification" class="ml-2 mr-2"></mat-icon>
+                                <input (keyup.enter)="search()" matInput [(ngModel)]="valueSearch" type="text">
+
+                            </div>
+
+
+                            <button (click)="search()" [disabled]="valueSearch.length===0 " mat-flat-button
+                                class="p-2  w-full sm:w-32  color_fintra flex items-center"
+                                [ngClass]="valueSearch.length===0?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
+                                <mat-icon class="mr-1 "
+                                    [ngStyle]="{'color' : valueSearch.length===0 ? '' : 'white !important' }">search</mat-icon>
+                                <!-- style="color: white !important;" -->
+                                <span
+                                    [ngClass]=" valueSearch.length===0? ' text-disabled' : 'text-white' ">Consultar</span>
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="w-full sm:w-64 -mt-3.5 sm:mt-0  rounded-full border-2 border-gray-200 h-10 p-2 flex items-center justify-between">
+                            <input (keyup)="filtrar(text.value)" #text type="text" class="ml-2 w-full"
+                                placeholder="filtrar...">
+
+
+                            <mat-icon>search</mat-icon>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class=" flex-col mt-3  ml-6 mr-6  mb-4 flex">
+
+                    <app-data-table (selectListaOpciones)="ListaOpcionesDisponibles($event)"
+                        (selectRow)="dataSelect($event)" [dataRow]="dataRow"></app-data-table>
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+
+
+</div>

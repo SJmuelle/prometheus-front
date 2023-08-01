@@ -18,6 +18,7 @@ import { FormDialogoChecklistComponent } from '../../form-dialogo-checklist/form
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 import { FormularioCreditoInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dialog-decision.component';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-gestion-fabrica-libranza',
@@ -73,6 +74,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     public salarioBasico: number;
     public fabricaDatos;
     unidadNegocio: any;
+    public permisoEditar:boolean=false;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -83,6 +85,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         private genericaServices: GenericasService,
         private _dialog: MatDialog,
         public utility: UtilityService,
+        public _permisosService: PermisosService
+
     ) {
 
         if (!this.numeroSolicitud) {
@@ -117,6 +121,11 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.getPagaduria()
         this.getSalarioBasico()
         // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
+        
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if(this.permisoEditar){
+            this.form.disable();
+        }
     }
     /**
      * @description:
@@ -169,7 +178,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             data: { numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento }
         });
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
         });
     }
     /**
@@ -201,8 +209,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 break;
             case 'SIGUIENTE':
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-                    minWidth: '30%',
-                    minHeight: '30%',
+                    minWidth: '50%',
+                    minHeight: '50%',
                     // data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
                     data: {
                         numeroSolicitud: this.numeroSolicitud,
@@ -389,7 +397,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
         const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
         const plazoFormato = Number(this.form.value.plazo);
-        // debugger
+        // 
         const codigoBarrioFormato = codigoBarrio == undefined ? 0 : Number(codigoBarrio)
         // descuentoNomina
         delete data.ventasMensuales;
@@ -822,7 +830,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
         // Se valida el nit
         if (isNaN(data)) {
-            // console.log('El nit/cédula \'' + data + '\' no es válido(a).');
             return '';
         };
 

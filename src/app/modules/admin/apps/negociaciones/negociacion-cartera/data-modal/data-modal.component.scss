@@ -1,0 +1,21 @@
+:host ::ng-deep .mat-accent .mat-slider-track-fill,
+:host ::ng-deep .mat-slider-track-background,
+:host ::ng-deep .mat-slider:hover .mat-slider-track-background {
+    background-color: #4abbec !important;
+    opacity: 0.2 !important;
+}
+
+:host ::ng-deep .mat-slider:not(.mat-slider-disabled).cdk-mouse-focused .mat-slider-thumb {
+    transform: scale(0.7) !important;
+    border: 1px solid #4abbec !important;
+}
+
+:host ::ng-deep .mat-slider-thumb {
+    transform: scale(0.7) !important;
+    background-color: #4abbec !important;
+    border: 1px solid #4abbec !important;
+}
+
+:host ::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+    background-color: #4abbec !important;
+}

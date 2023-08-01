@@ -92,7 +92,7 @@
                         <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none"
                             [ngStyle]="{'color': item.color}">
                             {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} </div>
-                                <div class="text-md font-medium truncate"  [ngStyle]="{'color': item.color}">
+                                <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
                                     ${{item.total_solicitud | number:0}}
                                 </div>
                                 <div class="text-md font-medium truncate">Devolución</div>
@@ -118,7 +118,7 @@
                 <div class="flex items-center justify-between">
 
                     <div class="text-secondary font-medium"> <input
-                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
                             autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
                             placeholder="Filtrar..."></div>
 
@@ -138,16 +138,18 @@
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
 
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td rowspan="2" class="py-3 text-sm my-3">
+                                    <td rowspan="2" class="py-3 text-sm my-3 min-w-18">
                                         <div class="text-gray-700 grid-cols-2 grid">
                                             <div class="py-0 text-sm">
-                                                <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
+                                                <button mat-icon-button matTooltip="Gestionar"
+                                                    (click)="onGetAgenda(item)">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                                 </button>
                                             </div>
-                                           
+
                                             <div class="py-0 text-sm ">
-                                                <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
+                                                <button mat-icon-button matTooltip="Reprogramar"
+                                                    (click)="onReprogramar(item)">
                                                     <mat-icon svgIcon="mat_outline:timer"></mat-icon>
                                                 </button>
                                             </div>
@@ -160,20 +162,20 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-2 pb-0 pt-1" >
+                                    <td class="px-2 pb-0 pt-1">
                                         <div class="flex flex-column ">
                                             <small class="text-accent-600 text-xs">Solicitud:</small>
                                             <span class="text-md text-black font-medium"> {{
                                                 item.numeroSolicitud}}</span>
                                         </div>
                                     </td>
-                                    <td class="px-2 pb-0 pt-1" >
+                                    <td class="px-2 pb-0 pt-1">
                                         <div class="flex flex-column ">
                                             <small class="text-accent-600 text-xs">Identificación: </small>
                                             <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
                                         </div>
                                     </td>
-                                    <td class="px-2 pb-0 pt-1"  colspan="3">
+                                    <td class="px-2 pb-0 pt-1" colspan="3">
                                         <div class="flex flex-column ">
                                             <small class="text-accent-600 text-xs">Cliente: </small>
                                             <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
@@ -193,15 +195,30 @@
                                     <td class="px-2  pb-1 pt-1">
                                         <div class="flex flex-column ">
 
-                                            <span class="text-md text-black font-medium" matTooltip="Agencia">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Agencia">
                                                 <mat-icon class="icon-size-3"
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
 
-                                            <span class="text-md text-black font-medium" matTooltip="Asesor">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor comercial">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesor}}
+                                                {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                            </span>
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor fábrica">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
+                                            </span>
+                                            <span *ngIf="item.unidadNegocioFabrica === 1"
+                                                class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor micro">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
                                             </span>
                                         </div>
                                     </td>
@@ -223,7 +240,8 @@
                                                     {{ cambiarHora(item.fechaEmision) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasTotalesCredito}} horas
                                                 </span>
@@ -247,7 +265,8 @@
                                                     {{ cambiarHora(item.fechaIngresoFabrica) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"  class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasEnFabrica}} horas
                                                 </span>
@@ -271,7 +290,8 @@
                                                     {{ cambiarHora(item.fechaIngresoAgendaActual) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasEnAgendaActual}} horas
                                                 </span>
@@ -322,7 +342,7 @@
                                             </div>
                                             <button mat-icon-button matTooltip="ver devolución"
                                                 *ngIf="item.cantidadDevolucion>0"
-                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
+                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='v'?'f':'v'">
                                                 <mat-icon
                                                     [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                                 </mat-icon>
@@ -369,8 +389,9 @@
                                                     </div>
 
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        <span class="mr-2 font-semibold truncate">Observación: </span>   {{item.observacionDevolucion}}
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
+                                                        {{item.observacionDevolucion}}
                                                     </div>
 
                                                 </div>
@@ -408,8 +429,9 @@
                                                         </span>
                                                     </div>
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        <span class="mr-2 font-semibold truncate">Observación: </span>   {{item.observacionReintegroDevolucion}}
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
+                                                        {{item.observacionReintegroDevolucion}}
                                                     </div>
                                                 </div>
                                             </div>

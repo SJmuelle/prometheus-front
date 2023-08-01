@@ -31,10 +31,8 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.crearFormulario();
     this.agendaFabrica = this.data.agenda;
-    console.log(this.data)
     this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
     this.form.controls.agenda.setValue(this.data.agenda);
-    // console.log('sdsdsdsds->'+this.data.agenda)
     if (this.data.idDevolucion) {
       this.form.controls.observacion.setValue(this.data.descripcionDevolucion);
       this.form.controls.descripcionCausal.setValue(this.data.descripcionCausal);
@@ -112,7 +110,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
    * @description: Obtiene los comentarios
    */
   private getCausales(): void {
-    this.listCausales$ = this.devolucionesService.getCausalesDevoluciones(this.agendaFabrica);
+    this.listCausales$ = this.devolucionesService.getCausalesDevoluciones(this.agendaFabrica,this.data.numeroSolicitud);
   }
 
   /**
@@ -120,6 +118,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
    */
   private redireccionar() {
     let agenda = '';
+    
     switch (this.data.agenda) {
       case 'CO':
         agenda = 'agenda-completion';
@@ -135,6 +134,9 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
         break;
       case 'GC':
         agenda = 'agenda-cartera';
+        break;
+      case 'CC':
+        agenda = 'agenda-comite-comercial'
         break;
       default:
         agenda = 'trazabilidad';

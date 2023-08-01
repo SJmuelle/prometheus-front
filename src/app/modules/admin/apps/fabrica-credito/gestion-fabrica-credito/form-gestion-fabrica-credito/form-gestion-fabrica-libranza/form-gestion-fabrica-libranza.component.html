@@ -362,8 +362,8 @@
                             <div class="-mx-3 md:flex mt-3 mb-2">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha de nacimiento </mat-label>
-                                    <input matInput [matDatepicker]="fechaNacimiento"
-                                        [formControlName]="'fechaNacimiento'" (change)="validacion('FEN')">
+                                    <input matInput [matDatepicker]="fechaNacimiento"  (dateChange)="validacion('FEN')"
+                                        [formControlName]="'fechaNacimiento'" >
                                     <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #fechaNacimiento></mat-datepicker>
@@ -740,7 +740,7 @@
                                 </mat-form-field>
                             </div>
                         </ng-container>
-                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end"  *ngIf="!permisoEditar">
                             <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                                 Guardar
                             </button>
@@ -772,11 +772,11 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <mat-tab *ngIf="agenda_fabrica == 'CM'">
+                <mat-tab *ngIf="agenda_fabrica == 'CM' || permisoEditar">
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera></app-grid-cartera>
                 </mat-tab>
-                <mat-tab *ngIf="agenda_fabrica != 'CM'">
+                <mat-tab *ngIf="(agenda_fabrica != 'CM') && (!permisoEditar)">
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>

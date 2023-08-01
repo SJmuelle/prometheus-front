@@ -87,7 +87,7 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
 
     cambiarHora(date) {
         moment.locale('es');
-        return moment(date).format('h:mm a')
+        return moment(date).format('hh:mm A')
     }
 
 
@@ -98,6 +98,10 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
         //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
         const { numeroSolicitud, identificacion } = data;
         this.router.navigate(['/credit-factory/agenda-decision/resumen/', numeroSolicitud, identificacion]);
+    }
+
+    public changePageToOne(){
+        this.page = 1;
     }
 
     ngOnDestroy(): void {

@@ -6,6 +6,14 @@
 //     --tw-text-opacity: 1;
 //     color: rgba(var(--fuse-text-secondary-rgb), var(--tw-text-opacity));
 // }
+.permitir:enabled {
+    background-color: #4ABBEC
+}
+
+.bloquear:disabled{
+    background: #cecfcf;
+}
+
 .color_salmon {
     background: #f7ae0c;
     /* color: #fff !important; */

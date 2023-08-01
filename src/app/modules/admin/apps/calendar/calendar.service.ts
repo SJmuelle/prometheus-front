@@ -14,6 +14,7 @@ import moment from 'moment';
 })
 export class CalendarService {
     // Private
+    private ruta:string=environment.apiUrl+'api-fintra/api/generic/qry/'
     private _calendars: BehaviorSubject<Calendar[] | null> = new BehaviorSubject(null);
     private _events: BehaviorSubject<CalendarEvent[] | null> = new BehaviorSubject(null);
     private _loadedEventsRange: { start: Moment | null; end: Moment | null } = {
@@ -213,9 +214,9 @@ export class CalendarService {
         // console.log(`${annoI}${mesI}-${annoF}${mesF}`)
 
         // /tk/informacion-dias-no-habiles
-        let url: string = `/informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
+        let url: string = `informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
         // Get the events
-        return this._httpClient.get<any>(environment.urlApi2+url,{}).pipe(
+        return this._httpClient.get<any>(this.ruta+url,{}).pipe(
             switchMap(response => this._events.pipe(
                 take(1),
                 map((events) => {
@@ -273,9 +274,9 @@ export class CalendarService {
          let annoF = this.end.format('yyyy')
          let mesF = this.end.format('MM');
          // /tk/informacion-dias-no-habiles
-         let url: string = `/informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
+         let url: string = `informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
          // Get the events
-         return this._httpClient.get<any>(environment.urlApi2+url,{}).pipe(
+         return this._httpClient.get<any>(this.ruta+url,{}).pipe(
             map((response) => {
 
                 // Execute the observable with the response replacing the events object

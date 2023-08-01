@@ -18,7 +18,6 @@ export class ObligacionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultaObligaciones()
-    console.log(this.data.numero)
   }
 
   /**
@@ -26,10 +25,8 @@ export class ObligacionesComponent implements OnInit {
    */
    consultaObligaciones(){
     this.pagaduria.getObligaciones(this.data.numero).subscribe((response: any) => {
-      console.log(response)
       if (response) {
         this.obligaciones = response.data;
-        console.log(this.obligaciones)
       }
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valor_recoger), 0);
     });

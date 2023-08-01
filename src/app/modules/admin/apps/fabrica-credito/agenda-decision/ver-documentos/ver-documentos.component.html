@@ -1,0 +1,117 @@
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full">
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-row flex-0 sm:items-center justify-end">
+                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza();">
+                    <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Cerrar" (click)="onCerrar()">
+                    <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full">
+        <!-- Main -->
+        <div class="flex flex-col flex-auto px-2 py-4 sm:pb-20">
+            <!-- Activity feed -->
+            <!-- Activity feed -->
+            <div class="w-full mb-4">
+                <!-- Title -->
+                <h3 class="mb-2 text-gray-900">Documentos</h3>
+                <span class="font-semibold text-gray-500">Listado de los documentos cargados</span>
+
+
+            </div>
+
+            <div class="flex flex-col justify-center items-center mt-2 divide-y">
+                <mat-tab-group class="flex w-full justify-items-center items-center moreWidth changeTabStyle">
+                    <ng-container *ngFor="let documentosPorTipo of documentos | keyvalue: keyDescOrder">
+                        <mat-tab *ngIf="!ocultarTercero(documentosPorTipo.key)">
+                            <ng-template matTabLabel>{{getTituloPorKey(documentosPorTipo.key)}}</ng-template>
+                            <ng-container *ngFor="let documento of documentosPorTipo.value">
+                                <div
+                                    class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-2 w-11/12 justify-self-center max-h-24 shadow-md rounded-lg z-10">
+
+                                    <div style="grid-column: span 2 / span 2;"
+                                        class=" flex justify-center h-full max-h-20 items-center w-full border-r-2">
+                                        <img (click)="carguePreview(documento)"
+                                            [ngClass]="{'cursor-pointer' : extesionValidAudioYPDF(documento)}"
+                                            style="max-height: 66.666667%; width: 41.666667%;"
+                                            [src]="getIconByExtension(documento.nombreArchivoReal)" alt="icon">
+                                        <!-- <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon> -->
+                                    </div>
+                                    <div style="grid-column: span 8 / span 8; min-height: 4.5rem;"
+                                        class="max-h-20 px-4">
+                                        <span
+                                            class="text-blue-500 font-semibold text-sm leading-2 inline-block">{{documento.descripcion}}</span>
+                                        <p class="text-gray-400 font-normal m-0 text-xs">
+                                            <strong class="text-gray-700"> Usuario creación: </strong>
+                                            {{documento.usuarioCreacion}}
+                                        </p>
+                                        <p class="text-gray-400 font-normal m-0 text-xs">
+                                            <strong class="text-gray-700"> Fecha de cargue: </strong>
+                                            {{documento.fechaCargue}}
+                                        </p>
+                                    </div>
+                                    <div style="grid-column: span 2 / span 2; border-left-width: 2px"
+                                        class="max-h-20 h-full w-full flex justify-center items-center">
+                                        <button mat-icon-button matTooltip="Descargar documento"
+                                            (click)="onDescargar(documento)">
+                                            <mat-icon class="text-blue-500 cursor-pointer"
+                                                [svgIcon]="'download'"></mat-icon>
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <div *ngIf="documento.display"
+                                    class=" w-11/12 shadow-md rounded-lg min-h-50 mx-2 fade-in">
+                                    <ng-container [ngSwitch]="getExtension(documento.nombreArchivoReal)">
+                                        <div *ngSwitchCase="'pdf'"  class="w-full relative flex justify-center items-center h-auto">
+                                            <pdf-viewer [src]="documento.base64"
+                                                [render-text]="true" [original-size]="false" [show-all]="true"
+                                                style="width: 80%; height: 400px" class="min-h-12">
+                                            </pdf-viewer>
+                                        </div>
+                                        <div *ngSwitchDefault  class="w-full relative flex justify-center items-center h-40 gap-4">
+                                            <mat-icon role="img"
+                                                class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
+                                                aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
+                                                data-mat-icon-namespace="iconsmind"> <svg
+                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="file">
+                                                    <path fill="#00b8df"
+                                                        d="M104 126H24c-5.5 0-10-4.5-10-10V12c0-5.5 4.5-10 10-10h40.7c2.7 0 5.2 1 7.1 2.9l39.3 39.3c1.9 1.9 2.9 4.4 2.9 7.1V116c0 5.5-4.5 10-10 10zM24 6c-3.3 0-6 2.7-6 6v104c0 3.3 2.7 6 6 6h80c3.3 0 6-2.7 6-6V51.3c0-1.6-.6-3.1-1.8-4.2L68.9 7.8C67.8 6.6 66.3 6 64.7 6H24z">
+                                                    </path>
+                                                    <path fill="#00b8df"
+                                                        d="M57 89h-4V58.5c0-1.8 1.2-3.4 2.9-3.9l21-5.5c1.2-.3 2.5-.1 3.5.7 1 .8 1.6 1.9 1.6 3.2v30.4h-4V53l-21 5.5V89z">
+                                                    </path>
+                                                    <ellipse cx="47.5" cy="89" fill="#00b8df" rx="7.5" ry="5"></ellipse>
+                                                    <path fill="#00b8df"
+                                                        d="M47.5 96c-5.3 0-9.5-3.1-9.5-7s4.2-7 9.5-7 9.5 3.1 9.5 7-4.2 7-9.5 7zm0-10c-3.1 0-5.5 1.6-5.5 3s2.4 3 5.5 3 5.5-1.6 5.5-3-2.4-3-5.5-3z">
+                                                    </path>
+                                                    <ellipse cx="72.5" cy="83.4" fill="#00b8df" rx="7.5" ry="5.4">
+                                                    </ellipse>
+                                                    <path fill="#00b8df"
+                                                        d="M72.5 90.7c-5.3 0-9.5-3.2-9.5-7.4 0-4.1 4.2-7.4 9.5-7.4s9.5 3.2 9.5 7.4-4.2 7.4-9.5 7.4zm0-10.7c-2.9 0-5.5 1.6-5.5 3.4 0 1.6 2.3 3.4 5.5 3.4S78 85 78 83.4c0-1.8-2.6-3.4-5.5-3.4z">
+                                                    </path>
+                                                </svg>
+
+                                            </mat-icon>
+                                            <audio controls="controls" autobuffer="autobuffer" [autoplay]="false">
+                                                <source [src]="sanitizer.bypassSecurityTrustResourceUrl(documento.base64)" [type]="'audio/'+getExtension(documento.nombreArchivoReal).toLowerCase()">
+
+                                                Your browser does not support the audio element.
+                                            </audio>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </mat-tab>
+                    </ng-container>
+                </mat-tab-group>
+
+            </div>
+
+        </div>
+    </div>
+</div>

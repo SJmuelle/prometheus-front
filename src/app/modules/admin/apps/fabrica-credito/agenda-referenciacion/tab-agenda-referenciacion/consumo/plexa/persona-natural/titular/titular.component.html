@@ -1,0 +1,627 @@
+<!-- Steps -->
+<ng-container *ngIf="MostrarfabricaDatos">
+    <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
+
+        <ng-container>
+            <!-- formulario de referencia  -->
+            <form [formGroup]="form">
+                <mat-tab *ngIf="currentStep==0">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Información de contacto
+                        </h2>
+                        <div class="grid sm:grid-cols-3 grid-cols-2 mb-1">
+                            <fuse-card class="flex items-center max-w-80 w-full p-6 filter-info border-2 rounded-2 ">
+                                <mat-icon class="icon-size-12" [svgIcon]="'iconsmind:smartphone_2'"></mat-icon>
+                                <div class="flex flex-col">
+                                    <div class="text-2xl font-semibold leading-tight">{{fabricaDatos.celular}}</div>
+                                    <div class="text-md text-secondary">Celular</div>
+                                </div>
+                            </fuse-card>
+                            <fuse-card
+                                class="flex items-center w-full p-6 filter-info border-2 rounded-2 md:ml-4 col-span-2">
+                                <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:file_clipboardfiletext'">
+                                </mat-icon>
+                                <div class="flex flex-col ">
+                                    <div class="text-2xl font-semibold leading-tight capitalize">
+                                        {{fabricaDatos.nombreCompleto}}
+                                    </div>
+                                    <div class="text-md text-secondary">{{fabricaDatos.correoElectronico}}.</div>
+                                </div>
+                            </fuse-card>
+                        </div>
+                        <hr>
+                        <div class="flex justify-between items-center ">
+                            <p>¿El contacto fue realizado al número del formulario?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            (change)="form.controls['numeroFormularioValida_bool'].setValue(true)"
+                                            formControlName="telefonoContactoValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center" *ngIf="!form.value.telefonoContactoValida_bool">
+                            <p>¿El teléfono del formulario es correcto?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="numeroFormularioValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.numeroFormularioValida_bool">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Teléfono / Celular corregido: </mat-label>
+                                <input matInput type="text" [formControlName]="'telefonoContactoCorregido'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error
+                                    *ngIf="(form.controls.telefonoContactoCorregido.dirty || form.controls.telefonoContactoCorregido.touched)">
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.required ">
+                                        Este campo es
+                                        requerido.</mat-error>
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.pattern">
+                                        Solo se aceptan
+                                        números.</mat-error>
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.minlength">
+                                        Longitud
+                                        mínima son 7 dígitos.</mat-error>
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.maxlength">
+                                        Longitud
+                                        máxima son 11 dígitos.</mat-error>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mt-3" *ngIf="!form.value.numeroFormularioValida_bool">
+                            <p class="m-0">Motivo por la cual se cambia el número de telefono </p>
+                            <quill-editor class="mb-2" placeholder="Motivo de las obligaciones en mora..."
+                                name="descripcion" [modules]="quillModules"
+                                [formControlName]="'telefonoContactoObservacion'"></quill-editor>
+                        </div>
+                        <!-- //reconocer telefono -->
+                        <div class="flex justify-between items-center">
+                            <p>¿El teléfono del formulario coincide con el de reconocer?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="celularReconocerValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center" *ngIf="!form.value.celularReconocerValida_bool">
+                            <p>¿Conoce alguno de estos telefonos?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="conoceCelularReconocerValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="m-0">Comentario de número de telefono de reconocer</p>
+                            <quill-editor class="mb-2"
+                                placeholder="Explique el proceso de validación que se realizo con el cliente y del resultado..."
+                                name="descripcion" [modules]="quillModules"
+                                [formControlName]="'comentarioReconocerCelular'"></quill-editor>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab *ngIf="currentStep==1">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Información de conctacto
+                        </h2>
+                        <div class="grid grid-cols gap-2">
+                            <div class="flex justify-between items-center">
+                                <p>¿El correo electrónico del formulario es correcto
+                                    <strong>{{fabricaDatos.correoElectronico}}</strong>
+                                    ?
+                                </p>
+                                <div class="toggle-button-cover">
+                                    <div class="button-cover">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" class="checkbox"
+                                                formControlName="correoElectronicoValida_bool">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.correoElectronicoValida_bool">
+                            <mat-form-field class="w-full fuse-mat-dense mt-3">
+                                <mat-label>Correo electrónico corregido </mat-label>
+                                <input matInput type="email" [formControlName]="'correoElectronicoCorregido'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- //reconocer correo -->
+                        <div class="flex justify-between items-center">
+                            <p>¿El correo electronico del formulario coincide con el de reconocer?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="emailReconocerValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center" *ngIf="!form.value.emailReconocerValida_bool">
+                            <p>¿Conoce alguno de estos correos electronicos?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="conoceEmailReconocerValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="m-0">Comentario de correo de electronico de reconocer</p>
+                            <quill-editor class="mb-2"
+                                placeholder="Explique el proceso de validación que se relaizo con el cliente y del resultado..."
+                                name="descripcion" [modules]="quillModules"
+                                [formControlName]="'comentarioReconocerEmail'"></quill-editor>
+                        </div>
+
+                        <!-- //direccion -->
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Información de residencia del titular
+                        </h2>
+                        <div class="grid grid-cols-12">
+                            <div class="col-span-12">
+                                <ng-container>
+                                    <div class="flex justify-between items-center">
+                                        <p *ngIf="fabricaDatos.descripcionDepartamento!==''">
+                                            ¿El titular vive en el departamento
+                                            <strong>{{fabricaDatos.descripcionDepartamento}}</strong>?
+                                        </p>
+                                        <div class="toggle-button-cover">
+                                            <div class="button-cover">
+                                                <div class="button r" id="button-1">
+                                                    <input type="checkbox" class="checkbox"
+                                                        formControlName="departamentoResidenciaValida_bool">
+                                                    <div class="knobs"></div>
+                                                    <div class="layer"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <div class="-mx-3 md:flex mt-3 mb-2"
+                                    *ngIf="!form.value.departamentoResidenciaValida_bool">
+                                    <ng-container *ngIf="departamentos$ | async as departamentos">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Departamento</mat-label>
+                                            <mat-select (selectionChange)="seleccionDepartamento($event)"
+                                                [value]="'seleccione'"
+                                                [formControlName]="'departamentoResidenciaCorregido'">
+                                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                                </mat-option>
+                                                <mat-option *ngFor="let departamento of departamentos.data"
+                                                    [value]="departamento.codigo">{{departamento.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </div>
+
+                                <ng-container>
+                                    <div class="flex justify-between items-center">
+                                        <p>¿El titular vive en la ciudad de
+                                            <strong>{{fabricaDatos.descripcionCiudad}}</strong>?
+                                        </p>
+                                        <div class="toggle-button-cover">
+                                            <div class="button-cover">
+                                                <div class="button r" id="button-1">
+                                                    <input type="checkbox" class="checkbox"
+                                                        formControlName="ciudadResidenciaValida_bool">
+                                                    <div class="knobs"></div>
+                                                    <div class="layer"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.ciudadResidenciaValida_bool">
+                                    <ng-container *ngIf="ciudades$ | async as ciudades">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Ciudad / Municipio</mat-label>
+                                            <mat-select (selectionChange)="seleccionCiudad($event)"
+                                                [value]="'seleccione'" [formControlName]="'ciudadResidenciaCorregido'">
+                                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                                </mat-option>
+                                                <mat-option *ngFor="let ciudad of ciudades.data"
+                                                    [value]="ciudad.codigo">
+                                                    {{ciudad.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </div>
+
+                                <ng-container>
+                                    <div class="flex justify-between items-center">
+                                        <p>¿El titular vive en el barrio
+                                            <strong>{{fabricaDatos.descripcionBarrio}}</strong>?
+                                        </p>
+                                        <div class="toggle-button-cover">
+                                            <div class="button-cover">
+                                                <div class="button r" id="button-1">
+                                                    <input type="checkbox" class="checkbox"
+                                                        formControlName="barrioResidenciaValida_bool">
+                                                    <div class="knobs"></div>
+                                                    <div class="layer"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.barrioResidenciaValida_bool ">
+                                    <ng-container *ngIf="barrios$ | async as barrios">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Barrio</mat-label>
+                                            <mat-select [value]="'seleccione'"
+                                                [formControlName]="'barrioResidenciaCorregido'">
+                                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                                </mat-option>
+                                                <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
+                                                    {{barrio.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El titular vive en esta dirección:
+                                        <strong>{{fabricaDatos.direccionResidencia}}</strong>?
+                                    </p>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="direccionResidenciaValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.direccionResidenciaValida_bool">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Dirección de residencia</mat-label>
+                                        <input matInput type="text" [formControlName]="'direccionResidenciaCorregido'"
+                                            (click)="openModalDirection()">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- //direccion reconocer -->
+                        <div class="flex justify-between items-center">
+                            <p>¿La dirección del formulario coincide con el de reconocer?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="direccionReconocerValida">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center" *ngIf="!form.value.direccionReconocerValida">
+                            <p>¿Conoce alguno de estas direcciones?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="conoceDireccionReconocerValida">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="m-0">Comentario de dirección reconocer</p>
+                            <quill-editor class="mb-2"
+                                placeholder="Explique el proceso de validación que se relaizo con el cliente y del resultado..."
+                                name="descripcion" [modules]="quillModules"
+                                [formControlName]="'comentarioReconocerDireccion'"></quill-editor>
+                        </div>
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab *ngIf="currentStep==2">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Preguntas a la referencia
+                        </h2>
+
+                        <div>
+                            <div class="flex justify-between items-center">
+                                <p>¿La actividad especifíca es
+                                    <strong>{{fabricaDatos.actividadEspecifica}}</strong>?
+                                </p>
+                                <div class="toggle-button-cover">
+                                    <div class="button-cover">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" class="checkbox"
+                                                formControlName="actividadEspecificaValida_bool">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.actividadEspecificaValida_bool">
+                                <mat-form-field class="w-full fuse-mat-dense mt-3">
+                                    <mat-label>Actividad especifíca corregida </mat-label>
+                                    <input matInput type="text" autocomplete="off"
+                                        [formControlName]="'actividadEspecificaCorregida'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="flex justify-between items-center">
+                                <p>¿Realiza actividad o posee fuente de ingreso adicional?
+                                </p>
+                                <div class="toggle-button-cover">
+                                    <div class="button-cover">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" class="checkbox"
+                                                formControlName="ingresosAdicionalesValida_bool">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="form.value.ingresosAdicionalesValida_bool">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <mat-form-field class="w-full fuse-mat-dense mt-3">
+                                        <mat-label>Valor de otros ingresos</mat-label>
+                                        <input matInput type="text" [formControlName]="'otrosIngresosCorregido'"
+                                            (keyup)="form.controls['otrosIngresosCorregido'].setValue(utility.formatearNumero(form.value.otrosIngresosCorregido)); ">
+                                    </mat-form-field>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="m-0">Actividad</p>
+                                    <quill-editor class="mb-2" placeholder="Especifica la actividad economica..."
+                                        name="comentarioOtrosIngresos" [modules]="quillModules"
+                                        [formControlName]="'comentarioOtrosIngresos'"></quill-editor>
+                                </div>
+                            </ng-container>
+
+
+
+                            <div class="flex justify-between items-center">
+                                <p>¿Trabaja <strong> {{datosCompletoSolicitud.diasTrabajados}} dias</strong> a la
+                                    semana?
+
+                                </p>
+                                <div class="toggle-button-cover">
+                                    <div class="button-cover">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" class="checkbox"
+                                                formControlName="diastrabajadosvalida_bool">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.diastrabajadosvalida_bool">
+                                <mat-form-field class="w-full fuse-mat-dense mt-3">
+                                    <mat-label>Dias trabajados corregidos</mat-label>
+                                    <input matInput type="number" autocomplete="off"
+                                        [formControlName]="'diasTrabajadosCorregido'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="flex justify-between items-center">
+                                <p>
+                                    ¿El tipo de combustible que maneja es <strong>
+                                        {{datosCompletoSolicitud.descripcionTipoCombustible}}</strong> ?
+                                </p>
+                                <div class="toggle-button-cover">
+                                    <div class="button-cover">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" class="checkbox"
+                                                formControlName="tipoCombustibleValida_bool">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.tipoCombustibleValida_bool">
+                                <ng-container *ngIf="tipoCombustible$ | async as tipoCombustible">
+                                    <mat-form-field class="w-full fuse-mat-dense mt-3">
+                                        <mat-label>Tipo de combustible corregido</mat-label>
+                                        <!-- <input matInput type="email" [formControlName]="'tipoCombustibleCorregido'"> -->
+                                        <mat-select [value]="'seleccione'"
+                                            [formControlName]="'tipoCombustibleCorregido'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let item of tipoCombustible.data"
+                                                [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                            </div>
+
+
+
+
+
+                            <div class="flex justify-between items-center">
+                                <p>
+                                    ¿Tanquea usted <strong> ${{fabricaDatos.compraCombustibleDia | number}}</strong>
+                                    diario de combustible?
+                                </p>
+                                <div class="toggle-button-cover">
+                                    <div class="button-cover">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" class="checkbox"
+                                                formControlName="compraCombustibleValida_bool">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.compraCombustibleValida_bool">
+                                <mat-form-field class="w-full fuse-mat-dense mt-3">
+                                    <mat-label>Compra combustible diario corregido</mat-label>
+                                    <input matInput type="text" autocomplete="off"
+                                        [formControlName]="'compraCombustiblediaCorregido'"
+                                        (keyup)="form.controls['compraCombustiblediaCorregido'].setValue(utility.formatearNumero(form.value.compraCombustiblediaCorregido)); ">
+                                </mat-form-field>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </mat-tab>
+
+                <mat-tab *ngIf="currentStep==4">
+
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Comentario
+                        </h2>
+                        <div class="flex justify-between items-center ">
+                            <p>¿Referencia validada?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox" formControlName="referenciaValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center " *ngIf="!form.value.referenciaValida_bool">
+                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                                <mat-label>¿Resultado de referenciación?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'resultadoReferencia'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No exitoso
+                                    </mat-option>
+                                    <mat-option [value]="'NO'">No contactado
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="mt-1">
+                            <quill-editor #editor (contentChanged)="logChange($event)" class="mb-2"
+                                placeholder=" Ingrese aquí el resumen de la referenciación..." name="descripcion"
+                                [modules]="quillModules" [formControlName]="'comentarioValidacion'">
+                            </quill-editor>
+                        </div>
+                        <div class="col-lg-12 mt-1.5" *ngIf="editor.editorElem">
+                            <small [ngClass]="(editor.editorElem.outerText.length<10)?'text-red-600':'text-green-600'"
+                                class="text-sm" *ngIf="editor.editorElem.outerText.length>1">
+                                Caracteres : {{ editor.editorElem.outerText.length }}
+
+                            </small>
+                        </div>
+
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-tab>
+            </form>
+            <!-- formualrio de la oferta  -->
+
+
+            <mat-tab *ngIf="currentStep==3">
+                <div
+                    class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                    <h2 class="ml-2.5 text-md ssm:text-xl  tracking-tight truncate font-bold">
+                        Ofertas y capacidad de pagos
+                    </h2>
+                    <recalcular-oferta-consumo-plexa [numeroSolicitud]="numeroSolicitud"
+                        [identificacion]="identificacion"></recalcular-oferta-consumo-plexa>
+                </div>
+                <!-- <recalcular-oferta-libranza></recalcular-oferta-libranza> -->
+            </mat-tab>
+
+        </ng-container>
+
+
+    </mat-tab-group>
+</ng-container>

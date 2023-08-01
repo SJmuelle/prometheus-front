@@ -1,0 +1,33 @@
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+@media screen AND (max-width: 600px) {
+    .mat-expansion-panel-header{
+        padding: 0 !important;
+    }
+
+
+}
+
+.boldText:hover{
+    font-weight: 400 !important;
+    color: black;
+}
+
+
+.text-xxs{
+    font-size: 8px;
+}
+
+.text-smx{
+    font-size: 10px;
+}

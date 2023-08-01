@@ -23,7 +23,6 @@ export class ResponsablesPQRSComponent implements OnInit {
   responsable: any;
   escala: any;
   listadoArea: any=[];
-  // datos: { responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; };
 
 
   constructor(
@@ -77,13 +76,10 @@ export class ResponsablesPQRSComponent implements OnInit {
 
     const dialogRef = this.dialog.open(FormResponsablesComponent, {
         width: '60%',
-      // maxHeight: '550px',
       data: this.datos,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
       this.consulta();
     });
 
@@ -106,8 +102,6 @@ export class ResponsablesPQRSComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
         if(result){
             if(tipo=='R'){
                 this.responsable=result;
@@ -123,7 +117,7 @@ export class ResponsablesPQRSComponent implements OnInit {
   consultaListado(){
     Swal.fire({ title: 'Cargando', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
-          .getListados(`/tk/select-areas`)
+          .getListados(`tk/select-areas`)
           .subscribe((response: any) => {
             Swal.close();
             if (response) {
@@ -146,7 +140,7 @@ export class ResponsablesPQRSComponent implements OnInit {
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._pqrService
-      .Create(url, data )
+      .Create(url, data)
       .subscribe((response: any) => {
         Swal.close();
         if (response) {

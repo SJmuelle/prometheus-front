@@ -36,14 +36,9 @@ export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
   fabricaDatos: any;
 
   constructor(
-    private agendaCompletacionService: AgendaCompletacionService,
     private fabricaCreditoService: FabricaCreditoService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private departamentosCiudadesService: DepartamentosCiudadesService,
     private router: Router,
-    private genericaServices: GenericasService,
-    private _dialog: MatDialog,
     public utility: UtilityService,
     private agendaReferenciaService: AgendaReferenciacionService,
   ) {
@@ -86,7 +81,7 @@ export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-
+        
         this.tipoDocumento = data.tipoDocumento;
         const datosDocumentos: any = {
           numeroSolicitud: datosSolicitud.numeroSolicitud,
@@ -139,7 +134,7 @@ export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaReferenciaService.getTipoReferenciacion(datos).pipe().subscribe((res) => {
       if (res.status === 200) {
-        console.log(res.data)
+        
         this.listado = res.data;
         Swal.close();
       } else {

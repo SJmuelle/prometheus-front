@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Validacion de datos capacidad de pago y oferta</h2>
+<mat-dialog-content class="mat-typography">
+
+    <div [ngSwitch]="data.unidadNegocio">
+
+        <div *ngSwitchCase="22">
+            <recalcular-oferta-libranza
+            [numeroSolicitud]="data.numeroSolicitud"
+            [identificacion]="data.identificacion"
+             ></recalcular-oferta-libranza>
+        </div>
+        
+        <div *ngSwitchCase="30">
+            <recalcular-oferta-consumo-plexa
+            [numeroSolicitud]="data.numeroSolicitud"
+            [identificacion]="data.identificacion"
+             ></recalcular-oferta-consumo-plexa>
+        </div>
+
+        <div *ngSwitchCase="1">
+            <app-recalcular-oferta-micro
+            [numeroSolicitud]="data.numeroSolicitud"
+            [identificacion]="data.identificacion"
+             ></app-recalcular-oferta-micro>
+        </div>
+
+        <div *ngSwitchDefault>
+            No se encuentra informacion de capacidad de pago y oferta para la unidad  negocio elegida
+        </div>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="text-end">
+    <button mat-button class="color_fintra text-white" (click)="decision()">
+        Decisión del crédito
+    </button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

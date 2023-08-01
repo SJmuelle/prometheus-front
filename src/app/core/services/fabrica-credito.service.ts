@@ -22,6 +22,13 @@ export class FabricaCreditoService {
     }
 
     /**
+     * @description: Get datos fabrica Agenda
+     */
+    public getInformacionTipoTercero(numeroSolicitud, tipo): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.informacionTercero}/${numeroSolicitud}/${tipo}`);
+    }
+
+    /**
      * @description: Get datos fabrica Agenda referenciacion
      */
     public getDatosFabricaAgendaReferenciacion(datos): Observable<any> {
@@ -44,6 +51,15 @@ export class FabricaCreditoService {
         // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);
         return this._http.post(this._appSettings.fabricaDatos.url.resumenes, datos);
 
+    }
+    /**
+* @description: resumenes de credito
+*/
+    public getHistoricoCliente(datos): Observable<any> {
+        // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);
+        // return this._http.post(this._appSettings.fabricaDatos.url.historicoCliente, datos);
+        const { numeroSolicitud } = datos;
+        return this._http.get(`${this._appSettings.fabricaDatos.url.historicoCliente}/${numeroSolicitud}`);
     }
 
     /**
@@ -87,6 +103,19 @@ export class FabricaCreditoService {
     /**
      * @description: Post Guardar datos fabrica credito
      */
+    public postDatosFabricaCreditoCodeudor(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCreditoCodeudor, data);
+    }
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
+    public postDatosFabricaCreditoSolitario(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCreditoSolitario, data);
+    }
+
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
     public postDatosFabricaCreditoReferenciacion(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.PostagendaReferenciacion, data);
     }
@@ -97,4 +126,71 @@ export class FabricaCreditoService {
         return this._http.get(`${this._appSettings.fabricaDatos.url.baseRepresentante}/${solicitud}`);
     }
 
+    /**
+ * @description: Get Datos del titular
+ */
+    public busquedaGeneral(data: any): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.trazabilidadBusqueda}`, data);
+    }
+
+    /**
+    * @description: Get Datos del titular
+    */
+    public trazabilidadBusquedaFiltro(data: any): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.trazabilidadBusquedaFiltro}`, data);
+    }
+    /**
+     * @description: Get step  Agendabreferenciacuoin
+     */
+    public obtenerPreguntaAgendaReferenciacion(datos): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionPregunta}`, datos);
+    }
+
+    /**
+     * @description: Get step  Agendabreferenciacuoin
+     */
+    public obtenerDatoAgendaReferenciacion(datos): Observable<any> {
+        const { numeroSolicitud, tipoReferencia, identificacion } = datos;
+        return this._http.get(`${this._appSettings.fabricaDatos.url.agendaReferenciacionInformacion}/${numeroSolicitud}/${identificacion}/${tipoReferencia}`);
+
+        // return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionPregunta}`, datos);
+    }
+
+    /**
+ * @description: Get step  Agendabreferenciacuoin
+ */
+    public GuardarPreguntaAgendaReferenciacion(datos): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionGuardarPregunta}`, datos);
+    }
+
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
+    public postDatosDeudorSolidario(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
+    }
+
+    /**
+      * @description: Enviar confirmacion codigo OTP validado
+      */
+    public postConfirmarOTP(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.autorizarConsultaOTP, data);
+    }
+
+    /**
+         * @description: Get rol ID
+         */
+    public getRolId(): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.getRolID}`);
+
+
+    }
+
+    public carteraValidarNitEntidad(datos): Observable<any>{
+        return this._http.post(this._appSettings.agendaCartera.url.validarNit, datos)
+    }
+
+    public carteraEntidadNombres(search): Observable<any>{
+        return this._http.post(this._appSettings.agendaCartera.url.entidadesNombres, search)
+    }
 }

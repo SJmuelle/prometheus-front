@@ -3,7 +3,7 @@ import { HttpClient, HttpEvent } from "@angular/common/http";
 import { AppSettingsService } from "../app-configs/app-settings.service";
 import { Observable, throwError } from "rxjs";
 import { replace, toNumber } from 'lodash';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { catchError } from 'rxjs/operators';
 
 
@@ -11,16 +11,21 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DecisionesService {
+  private icono: SweetAlertIcon = 'error';
+  private titulo: string = 'Error';
+
+  // private icono:string='error';
 
   constructor(private _http: HttpClient, private _appSettings: AppSettingsService) { }
 
   /**
    *@description: Obtiene el listado de opciones
    */
-  public getOpciones(): Observable<any> {
-    return this._http.get(this._appSettings.decision.url.base);
+  public getOpciones(agenda): Observable<any> {
+    return this._http.get(this._appSettings.decision.url.base+agenda);
   }
 
+  
   /**
    * @description: Obtiene el listado de causales aprobacion
    */
@@ -30,6 +35,17 @@ export class DecisionesService {
       concepto: descision
     }
     return this._http.post(`${this._appSettings.decision.url.baseCausalAprobacion}`, data);
+  }
+
+  /**
+   * @description: Obtiene el listado de causales anulacion
+   */
+  public getCausalesAnulacion(numeroSolicitud, descision): Observable<any> {
+    let data = {
+      numeroSolicitud: numeroSolicitud,
+      concepto: descision
+    }
+    return this._http.post(`${this._appSettings.decision.url.baseCausalAnulacion}`, data);
   }
 
 
@@ -42,10 +58,23 @@ export class DecisionesService {
     }
     // return this._http.post(`${this._appSettings.decision.url.baseCausalRechazo}`, data).pipe(catchError(this.handleError));;
     return this._http
-    .post(this._appSettings.decision.url.baseCausalRechazo, data)
-    .pipe(catchError(this.handleError));
+      .post(this._appSettings.decision.url.baseCausalRechazo, data)
+      .pipe(catchError(this.handleError));
   }
 
+    /**
+ * @description: Obtiene el listado de causales
+ */
+    public getCauDesestimiento(numeroSolicitud): Observable<any> {
+      let data = {
+        numeroSolicitud: numeroSolicitud,
+      }
+      // return this._http.post(`${this._appSettings.decision.url.baseCausalRechazo}`, data).pipe(catchError(this.handleError));;
+      return this._http
+        .post(this._appSettings.decision.url.baseCauDesestimiento, data)
+        .pipe(catchError(this.handleError));
+    }
+  
 
   /**
    * @description: Asegurar que los campos de valor tengan formato de numero
@@ -71,20 +100,20 @@ export class DecisionesService {
   /**
  * @description: comprobacion Campos
  */
-   public comprobacionCampos(data: any): Observable<any> {
-    
+  public comprobacionCampos(data: any): Observable<any> {
+
     return this._http.post(this._appSettings.decision.url.comprobacionCampos, data)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
 
   }
-  
+
   /**
  * @description: comprobacion Campos
  */
-   public generarNumeroPagare(data: any): Observable<any> {
-    
+  public generarNumeroPagare(data: any): Observable<any> {
+
     return this._http.post(this._appSettings.decision.url.generarNumeroPagare, data)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
 
   }
 
@@ -95,90 +124,91 @@ export class DecisionesService {
 
     // return this._http.post(this._appSettings.decision.url.guardado, data);
     return this._http
-    .post(this._appSettings.decision.url.guardado, data)
-    .pipe(catchError(this.handleError));
-  } 
+      .post(this._appSettings.decision.url.guardado, data).pipe(catchError(this.handleError));
+  }
 
-  
-    //Funcion para el Manejo de errores
-    handleError = (err: any): Observable<HttpEvent<any>> => {
-      // debugger;
-      let errorMessage = 'No hay respuesta, favor intente nuevamente';
-      let icon: string = 'question';
-      // console.log("Algo se daño");
-      let res: any = {};
-      if (err.error instanceof ErrorEvent) {
-          icon = 'question';
-          errorMessage = `Error: ${err.error.msg}`;
-      } else {
-          switch (err.status) {
-              case 401:
-                  localStorage.clear();
-                  localStorage.clear();
-                  setTimeout(() => {
-                      localStorage.setItem('closeSession', 'true');
-                  }, 100);
-                  break;
-              case 402:
-                  localStorage.clear();
-                  localStorage.clear();
-                  setTimeout(() => {
-                      localStorage.setItem('closeSession', 'true');
-                  }, 100);
-                  break;
-              case 403:
-                  errorMessage = `No tiene permiso para ejecutar esta acción`;
-                  break;
-              case 400:
-                  if (err.error.msg == 'La session ha expirado') {
-                      localStorage.clear();
-                      localStorage.clear();
-                      setTimeout(() => {
-                          localStorage.setItem('closeSession', 'true');
-                      }, 100);
-                  }
-                  if (
-                      err.error.msg !== undefined &&
-                      typeof err.error.msg == 'string'
-                  ) {
-                      errorMessage = `${err.error.msg}`;
-                  }
-                  break;
-              case 404:
-                  errorMessage = `${err.error.msg}`;
-                  break;
-              case 500:
-                  errorMessage = `${err.error.msg}`;
-                  break;
-              default:
-                  errorMessage = `${err.statusText.msg}`;
-                  break;
+
+  //Funcion para el Manejo de errores
+  handleError = (err: any): Observable<HttpEvent<any>> => {
+    // ;
+    let errorMessage = 'No hay respuesta, favor intente nuevamente';
+    let icon: string = 'question';
+    // console.log("Algo se daño");
+    let res: any = {};
+    if (err.error instanceof ErrorEvent) {
+      icon = 'question';
+      errorMessage = `Error: ${err.error.msg}`;
+    } else {
+      switch (err.status) {
+        case 401:
+          localStorage.clear();
+          localStorage.clear();
+          setTimeout(() => {
+            localStorage.setItem('closeSession', 'true');
+          }, 100);
+          break;
+        case 402:
+          localStorage.clear();
+          localStorage.clear();
+          setTimeout(() => {
+            localStorage.setItem('closeSession', 'true');
+          }, 100);
+          break;
+        case 403:
+          errorMessage = `No tiene permiso para ejecutar esta acción`;
+          break;
+        case 400:
+          this.titulo="Advertencia"
+          this.icono = 'warning';
+          if (err.error.msg == 'La session ha expirado') {
+            localStorage.clear();
+            localStorage.clear();
+            setTimeout(() => {
+              localStorage.setItem('closeSession', 'true');
+            }, 100);
           }
-      }
-      if (err.status !== 401 && err.error !== 'La session ha expirado') {
           if (
-              errorMessage != 'undefined' &&
-              errorMessage !== undefined &&
-              errorMessage != null &&
-              errorMessage != '' &&
-              errorMessage != 'UNKNOWN ERROR!'
+            err.error.msg !== undefined &&
+            typeof err.error.msg == 'string'
           ) {
-              Swal.fire({
-                  title: 'Error',
-                  text: errorMessage,
-                  icon: 'error',
-                  confirmButtonText: 'Cerrar',
-              }).then();
-          } else {
-              Swal.fire({
-                  title: 'Error',
-                  text: 'No hubo respuesta por parte del servidor, favor intente nuevamente',
-                  icon: 'error',
-                  confirmButtonText: 'Cerrar',
-              }).then();
+            errorMessage = `${err.error.msg}`;
           }
+          break;
+        case 404:
+          errorMessage = `${err.error.msg}`;
+          break;
+        case 500:
+          errorMessage = `${err.error.msg}`;
+          break;
+        default:
+          errorMessage = `${err.statusText.msg}`;
+          break;
       }
-      return throwError(errorMessage);
+    }
+    if (err.status !== 401 && err.error !== 'La session ha expirado') {
+      if (
+        errorMessage != 'undefined' &&
+        errorMessage !== undefined &&
+        errorMessage != null &&
+        errorMessage != '' &&
+        errorMessage != 'UNKNOWN ERROR!'
+      ) {
+        Swal.fire({
+          title: this.titulo,
+          text: errorMessage,
+          icon: this.icono,
+          confirmButtonText: 'Cerrar',
+        }).then();
+      } else {
+        Swal.fire({
+          title: this.titulo,
+          text: 'No hubo respuesta por parte del servidor, favor intente nuevamente',
+          icon: this.icono,
+          confirmButtonText: 'Cerrar',
+        }).then();
+      }
+    }
+    return throwError(errorMessage);
   };
 
 }

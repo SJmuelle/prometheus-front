@@ -61,7 +61,6 @@ export class PagaduriaComponent implements OnInit {
   descargarArchivo(id:any){
     this.pagaduria.descargarArchivos(id).subscribe((response:any)=>{
       if(response) {
-        console.log(response)
         if (response.status==202) {
           Swal.fire(
             '¡Error!',
@@ -74,7 +73,7 @@ export class PagaduriaComponent implements OnInit {
           const extension = 'pdf'
           const link = document.createElement('a');
           document.body.appendChild(link);
-          link.href = `data:application/${extension};base64,${archivo}`;
+          link.href = `${archivo}`;
           link.target = '_self';
           link.download = response.data[0].filename
           link.click();

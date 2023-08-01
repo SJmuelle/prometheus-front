@@ -31,12 +31,7 @@ export class InsertarAdjuntosComponent implements OnInit {
     }
 
     public onCharge(input: HTMLInputElement, ind): void {
-        // this.showButtonSave = false;
-        // this.showButtonRecord = true;
-        // this.nameFile = 'masivo.cvs';
-
         const files = input.files;
-        // console.log(files);
         if (files && files.length) {
             const fileToRead = files[0];
             const reader = new FileReader();
@@ -49,7 +44,6 @@ export class InsertarAdjuntosComponent implements OnInit {
                 this.evidencia.ext = nombre[1].toLowerCase();
                 this.evidencia.nombre = nombre[0];
                 this.evidencia.peso = fileToRead.size / 1024;
-
                 if (this.evidencia.peso <= 10000) {
                     if (
                         this.evidencia.ext == 'pdf' ||
@@ -61,7 +55,6 @@ export class InsertarAdjuntosComponent implements OnInit {
                         return;
                     }
                 }
-
                 Swal.fire(
                     'Información',
                     `Verificar las condiciones antes de subir un archivo.`,
@@ -69,7 +62,6 @@ export class InsertarAdjuntosComponent implements OnInit {
                 );
                 this.evidencia.file = '';
                 this.evidencia.filename = '';
-
                 this.evidencia.ext = '';
                 this.evidencia.nombre = '';
             };

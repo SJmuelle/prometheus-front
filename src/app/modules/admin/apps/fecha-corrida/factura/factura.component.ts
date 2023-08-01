@@ -70,11 +70,10 @@ export class FacturaComponent implements OnInit {
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
       if (response.data.length==0) {
-        console.log(response.data)
         Swal.fire(
-          'Error!',
-          `El nit no coincide.`,
-          'error'
+          '¡Aviso!',
+          `El proveedor `+nit+' no tiene facturas por pagar.',
+          'info'
         ).then();
         this.mostrar=false;
       } else {

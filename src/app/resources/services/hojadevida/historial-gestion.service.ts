@@ -8,6 +8,7 @@ import { List } from 'lodash';
     providedIn: 'root',
 })
 export class HistorialGestionService {
+    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
     titulos: Array<any> = [
         'Fecha de Gestión',
         'Gestor',
@@ -32,8 +33,8 @@ export class HistorialGestionService {
 
     getHistorialGestion(codigoNegocio: string = '') {
         return this._httpClient.get(
-            environment.urlApi2 +
-                `/informacion-historial-gestion/${codigoNegocio}`
+            this.ruta +
+                `informacion-historial-gestion/${codigoNegocio}`
         );
     }
 }

@@ -22,10 +22,13 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public referencia: string = this.route.snapshot.paramMap.get('referencia');
   public tipoReferenciacion: string = this.route.snapshot.paramMap.get('tipoReferenciacion');
+  public tipoPersona: string = this.route.snapshot.paramMap.get('tipoPersona');
+  public CodUnidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public unidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public fabrica_datos: any = {};
   public tipoDocumento: string = '';
   titulo: string;
+  public maxOrdenNumber: number = 0;
 
   constructor(
     @Inject(DOCUMENT) private _document: Document,
@@ -43,7 +46,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // alert(this.unidadNegocio)
     switch (this.tipoReferenciacion) {
       case 'P':
         this.titulo = "personal"
@@ -62,6 +64,9 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       case 'L':
         this.titulo = "Laboral"
         break;
+      case 'F':
+        this.titulo = "Familiar"
+        break;
       default:
         break;
     }
@@ -71,17 +76,18 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       const id: any = params['id'];
       // Código...
 
-
-
-
-
-
-
-
-
     });
   }
 
+  getMaxOrdenNumber(data: any){
+    let max: number = 0;
+    data.forEach(step => {
+      if(step.order > max){
+        max = step.order
+      }
+    })
+    return max;
+  }
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
@@ -105,11 +111,18 @@ export class FormAgendaReferenciacionComponent implements OnInit {
  * Go to next step
  */
   goToNextStep(): void {
+    
     // Return if we already on the last step
-    if (this.currentStep === (this.totalsteps - 1)) {
+    
+    if (this.currentStep === (this.totalsteps - 1) || this.currentStep > this.totalsteps - 1) {
+      
+      if((this.totalsteps - 1) < this.maxOrdenNumber  && this.currentStep < 3){
+        this.goToStep(this.maxOrdenNumber);
+      }
       return;
     }
 
+    
     // // Go to step
     this.goToStep(this.currentStep + 1);
 
@@ -188,14 +201,16 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
+        if (data) {
+          this.tipoDocumento = data.tipoDocumento;
+          const datosDocumentos: any = {
+            numeroSolicitud: datosSolicitud.numeroSolicitud,
+            tipoDocumento: this.tipoDocumento
+          };
+          this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
+          this.fabrica_datos = data;
+        }this.tipoDocumento = data.tipoDocumento;
 
-        this.tipoDocumento = data.tipoDocumento;
-        const datosDocumentos: any = {
-          numeroSolicitud: datosSolicitud.numeroSolicitud,
-          tipoDocumento: this.tipoDocumento
-        };
-        this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-        this.fabrica_datos = data;
       });
   }
 
@@ -214,11 +229,29 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data)
-
+        if(this.CodUnidadNegocio === '1'){
+          this.ordenarDataStepOrden(data)
+        }
         this.steps = data
+        
         this.totalsteps = this.steps.length;
+        this.maxOrdenNumber = this.getMaxOrdenNumber(this.steps);
       });
+  }
+
+  /**
+  * Ordena el array del backend y le asigna el numero en su orden, esto evita que salta orden  1 - 3 - 4
+  *
+  * @param data 
+  */
+  ordenarDataStepOrden(data: any[]){
+    data.sort((first,second) => {
+      return first.order - second.order
+    })
+    data.map((item,i) => {
+      item.order = i
+      return item
+    })
   }
 
 

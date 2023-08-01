@@ -8,6 +8,10 @@ import { UtilityService } from '../../../../../../resources/services/utility.ser
 import { takeUntil } from 'rxjs/operators';
 import { FormDialogListErrorDialogComponent } from '../../agenda-referenciacion/form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
 import { Router } from '@angular/router';
+import { toInteger } from 'lodash';
+import { GenericasService } from 'app/core/services/genericas.service';
+import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-dialog-decision',
@@ -21,16 +25,24 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     public causal$: Observable<any>;
     mostrarAccion: boolean;
     mostrarCupo: boolean;
+    mostrarPlazo: boolean = false;
     tituloModal: string;
     listadoAgenda: any;
+    public plazosCredito$: Observable<any>;
+    public salarioMinimo: number = 0;
+
     constructor(
         private fb: FormBuilder,
+        public _permisosService: PermisosService,
+
         private decisionService: DecisionService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _dialog: MatDialogRef<FormDialogDecisionComponent>,
         public utility: UtilityService,
         public dialog: MatDialog,
-        private router: Router
+        private router: Router,
+        private genericaServices: GenericasService,
+        private _formularioCreditoService: FormularioCreditoService,
     ) {
         this.crearFormulario();
     }
@@ -39,7 +51,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         this.getDecision();
         this.escuchaObservable();
         this.getCausal();
-        console.log(this.data)
         this.getTipoComentario(this.data.idAgenda)
         this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
         switch (this.data.etapa) {
@@ -58,9 +69,32 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 this.mostrarAccion = true;
                 this.mostrarCupo = true;
                 this.tituloModal = "Decisión"
-
                 break;
         }
+
+        if (this.data.idAgenda == 'CC') {
+            this.tituloModal = "Aprobar crédito"
+            this.mostrarCupo = true;
+            this.mostrarPlazo = true;
+            this.form.controls['cupo'].setValue('');
+            this.form.controls['cupo'].setValidators(Validators.required);
+            this.form.controls['cupo'].updateValueAndValidity();
+            this.form.controls['plazo'].setValue('');
+            this.form.controls['plazo'].setValidators(Validators.required);
+            this.form.controls['plazo'].updateValueAndValidity();
+
+            this.getSalarioMinimo();
+        }
+    }
+
+
+    private getSalarioMinimo() {
+        this.genericaServices.getSalarioBasico().subscribe(({ data }) => {
+
+            this.salarioMinimo = data.salarioMinimo;
+
+            this.form.get('cupo').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
+        })
     }
 
 
@@ -68,7 +102,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
 * @description: Obtiene el listado de agenda de completacion
 */
     private getTipoComentario(agenda: string): void {
-        // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        // Swal.fire({ title: 'Cargando', html: 'Busc ando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this.decisionService.getAgendasFabrica(agenda).subscribe((res) => {
             // Swal.close();
             if (res.status === 200) {
@@ -135,7 +169,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             })
                             break;
                         default:
+
                             this.postDecision(data);
+
                             break;
 
                     }
@@ -177,6 +213,14 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                     }
                     break;
             }
+            if (this.data.idAgenda == 'CC') {
+                this.form.controls['cupo'].setValue('');
+                this.form.controls['cupo'].setValidators(Validators.required);
+                this.form.controls['cupo'].updateValueAndValidity();
+                this.form.controls['plazo'].setValue('');
+                this.form.controls['plazo'].setValidators(Validators.required);
+                this.form.controls['plazo'].updateValueAndValidity();
+            }
 
 
         });
@@ -190,7 +234,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             concepto: [''],
             cupo: [''],
             comentario: ['', [Validators.required]],
-            causal: [0]
+            causal: [0],
+            plazo: ['']
         });
     }
     /**
@@ -222,7 +267,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                                 text: 'Ha cambiado el estado con éxito'
                             };
                             this.mostrarAlerta(respuesta);
-                        }else{
+                        } else {
                             respuesta = {
                                 icon: 'error',
                                 title: 'Mensaje',
@@ -259,12 +304,15 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     private validacionCampos(data: any, data_cambioEstado): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
         this.decisionService.postValidacionDatos(data).subscribe((res) => {
-            console.log(res)
             Swal.close();
             if (res.data.estado == 1) {
                 this.modalDetalle(res.data.detalle)
             } else {
-                this.postCambioEstado(data_cambioEstado)
+                if (data_cambioEstado.agenda === 'CC') {
+                    this.postCambioEstadoMicro(data_cambioEstado)
+                } else {
+                    this.postCambioEstado(data_cambioEstado)
+                }
             }
 
         })
@@ -273,12 +321,12 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     private modalDetalle(data) {
         const dialogRef = this.dialog.open(FormDialogListErrorDialogComponent,
             {
-                width: '60%',
+                maxWidth: '90vw',
+                width: window.innerWidth < 600 ? '90%' : '60%',
                 data: data,
                 disableClose: false
             });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
         });
     }
 
@@ -286,10 +334,19 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      * @description: redireciona a la grilla de completacion
      */
     private redireccionar() {
+        if (this._permisosService.estabaFormulario(this.router.url)) {
+            this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+        }
         let agenda = '';
         switch (this.data.idAgenda) {
+            case 'VD':
+                agenda = 'agenda-venta-digital';
+                break;
             case 'CO':
                 agenda = 'agenda-completion';
+                break;
+            case 'CC':
+                agenda = 'agenda-comite-comercial';
                 break;
             case 'CM':
                 agenda = 'agenda-comercial';
@@ -303,17 +360,84 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             case 'GC':
                 agenda = 'agenda-cartera';
                 break;
+            case 'FO':
+                agenda = 'agenda-formalizacion';
+                break;
+            case 'VI':
+                agenda = 'agenda-visitas';
+                break;
             default:
                 agenda = 'trazabilidad';
                 break;
         }
         this.router.navigate([`/credit-factory/${agenda}`]);
     }
+
+    /**
+     * @description: Guarda la decision
+     */
+    private postCambioEstadoMicro(data: any): void {
+        Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+
+        data.cupo = toInteger(this.utility.enviarNumero(this.form.getRawValue().cupo))
+
+        this.decisionService.postAprobado({ ...this.form.getRawValue(), ...data }).pipe(takeUntil(this.unsuscribe$))
+            .subscribe((res) => {
+                let respuesta: any = {};
+                switch (res.status) {
+                    case 200:
+                        if (res.data.respuesta == 'OK') {
+                            respuesta = {
+                                icon: 'success',
+                                title: 'Mensaje',
+                                text: 'Ha cambiado el estado con éxito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                            setTimeout(() => {
+                                //redireccionar
+                                this.redireccionar()
+                            }, 1000);
+                        } else {
+                            respuesta = {
+                                icon: 'warning',
+                                title: 'Mensaje',
+                                text: res.data.respuesta
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }
+
+
+                        break;
+                    case 400:
+                        respuesta = {
+                            icon: 'warning',
+                            title: 'Mensaje',
+                            text: 'Advertencia'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    case 500:
+                        respuesta = {
+                            icon: 'error',
+                            title: 'Mensaje',
+                            text: 'Ha ocurrido un error'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    default:
+                        break;
+                }
+            });
+    }
+
     /**
      * @description: Guarda la decision
      */
     private postCambioEstado(data: any): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+
+
+
         this.decisionService.postCambioEstado(data).pipe(takeUntil(this.unsuscribe$))
             .subscribe((res) => {
                 let respuesta: any = {};
@@ -330,7 +454,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                                 //redireccionar
                                 this.redireccionar()
                             }, 1000);
-                        }else{
+                        } else {
                             respuesta = {
                                 icon: 'warning',
                                 title: 'Mensaje',
@@ -384,6 +508,10 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         return (this.form.controls.cupo.dirty || this.form.controls.cupo.touched);
     }
 
+    get requeridoPlazo(): any {
+        return (this.form.controls.plazo.dirty || this.form.controls.plazo.touched);
+    }
+
     get requeridoComentario(): any {
         return (this.form.controls.comentario.dirty || this.form.controls.comentario.touched);
     }
@@ -392,4 +520,13 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         this.unsuscribe$.unsubscribe();
     }
 
+
+    /**
+     * @description: Obtener limite de plazos por el valor de credito
+     */
+    public getPlazosCredito(valorCredito: number) {
+
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
+
+    }
 }

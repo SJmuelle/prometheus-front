@@ -1,0 +1,64 @@
+<div class="h-full h-screen overflow-auto w-full pb-40">
+    <div class="flex flex-col flex-auto">
+
+        <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+
+            <!-- Title and action buttons -->
+            <div class="flex items-center justify-between w-full mb-8">
+                <div class="flex items-center ml-6">
+                    <div class="flex-0 w-16 h-16  overflow-hidden">
+                        <img src="assets/images/agendas/Decision.png" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 mx-3">
+                        <div class="text-3xl font-semibold tracking-tight leading-8">Historico de políticas
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                            <div class="font-medium tracking-tight text-secondary">
+                                Realizar el análisis de las políticas
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-between gap-4">
+                    <div class="flex flex-col gap-1">
+                        <div class="font-sans font-bold text-sm text-gray-400">Solicitud</div>
+                        <div class="text-sm font-bold text-center font-sans">{{numeroSolicitud}}</div>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="font-sans font-bold text-sm text-gray-400">Identificación</div>
+                        <div class="text-sm font-bold text-center font-sans">{{identificacion}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1  gap-8 w-full mt-8 mx-8">
+                <mat-accordion multi>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <strong class="mr-2">Agenda comercial
+                                </strong>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <strong class="mr-2">Agenda comité comercial
+                                </strong>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+</div>

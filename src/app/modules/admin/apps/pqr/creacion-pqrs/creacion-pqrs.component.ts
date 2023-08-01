@@ -17,6 +17,8 @@ import { environment } from 'environments/environment';
 export class CreacionPQRSComponent implements OnInit {
     mostrar_formulario: boolean = true;
     datos: any = {};
+    data: any = {};
+    idPqr: number;
     panelOpenState: boolean = false;
     tabMostrar: number;
     identificaiconCliente: any;
@@ -39,6 +41,8 @@ export class CreacionPQRSComponent implements OnInit {
     listadoProcedimientoPQRS: any[];
     listadoResponsablePQRS: any[];
     listadoOrigenCliente: any[];
+    listadoMotivos: any[];
+    listadoSubMotivos: any[] = [];
     clienteExistente: boolean;
     filename: string;
     file: any;
@@ -46,6 +50,7 @@ export class CreacionPQRSComponent implements OnInit {
     causalesLegales: any = [];
     campana: any;
     tipo: any;
+    idnegocio: any;
     UsuarioSaggics: string;
     EstadoSagicc: boolean = false;
 
@@ -55,7 +60,7 @@ export class CreacionPQRSComponent implements OnInit {
         public dialog: MatDialog,
         private router: Router,
         private _authService: AuthService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this._activatedRoute.params.subscribe((param) => {
@@ -97,13 +102,12 @@ export class CreacionPQRSComponent implements OnInit {
                         }
                     );
             }
-            // alert(this.identificaiconCliente)
         });
     }
 
     buscarListados() {
         //datos ingreso
-        let urlOrigenCliente = `/tk/informacion-pqrs-origen`;
+        let urlOrigenCliente = `tk/informacion-pqrs-origen`;
         this._pqrService
             .getListados(urlOrigenCliente)
             .subscribe((response: any) => {
@@ -113,7 +117,7 @@ export class CreacionPQRSComponent implements OnInit {
                     this.listadoOrigenCliente = [];
                 }
             });
-        let urlTIpoCliente = `/tk/informacion-tipos-cliente`;
+        let urlTIpoCliente = `tk/informacion-tipos-cliente`;
         this._pqrService
             .getListados(urlTIpoCliente)
             .subscribe((response: any) => {
@@ -123,7 +127,7 @@ export class CreacionPQRSComponent implements OnInit {
                     this.listadoTipoCliente = [];
                 }
             });
-        let urlLineaNegocio = `/informacion-lineas-negocio/${this.identificaiconCliente}`;
+        let urlLineaNegocio = `informacion-lineas-negocio/${this.identificaiconCliente}`;
         this._pqrService
             .getListados(urlLineaNegocio)
             .subscribe((response: any) => {
@@ -151,7 +155,7 @@ export class CreacionPQRSComponent implements OnInit {
             this.identificaiconCliente = null;
             this.datos.primerContacto = false;
         } else {
-            let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
+            let urlinfoCliente = `informacion-cliente/${this.identificaiconCliente}`;
             this._pqrService
                 .getListados(urlinfoCliente)
                 .subscribe((response: any) => {
@@ -192,7 +196,7 @@ export class CreacionPQRSComponent implements OnInit {
                 });
         }
         //detalle de PQRS
-        let urltipoPQRS = `/tk/select-tipo-pqrs`;
+        let urltipoPQRS = `tk/select-tipo-pqrs`;
         this._pqrService.getListados(urltipoPQRS).subscribe((response: any) => {
             if (response) {
                 this.listadoTipoPQRS = response;
@@ -209,16 +213,14 @@ export class CreacionPQRSComponent implements OnInit {
             .getListadosUnico(urlOrigenCliente)
             .subscribe((response: any) => {
                 if (response) {
-                   console.log(response)
-                   this.UsuarioSaggics=response.respuesta
+                    this.UsuarioSaggics = response.respuesta
                 } else {
-                    console.log(response)
                 }
             });
     }
 
     validaForm(tab) {
-        // debugger;
+        // ;
         switch (tab) {
             case 1:
                 if (
@@ -281,7 +283,7 @@ export class CreacionPQRSComponent implements OnInit {
 
     //datos ingreso
     negociosCabeceras(tipo) {
-        let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
+        let url = `pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 this.listadoNegocio = response;
@@ -292,12 +294,12 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     seleccionarNegocio(negocio) {
-        let index = this.listadoNegocio.findIndex(
-            (data) => data.codigoNegocio === negocio
-        );
+        let index = this.listadoNegocio.findIndex((data) => data.codigoNegocio === negocio);
         if (index != undefined) {
             this.datos.agencia = this.listadoNegocio[index].agencia;
             this.datos.entidad = this.listadoNegocio[index].entidad;
+            this.datos.segmento = this.listadoNegocio[index].segmento_actual;
+            this.datos.solicitante = this.listadoNegocio[index].tipo_solicitante;
         } else {
             this.datos.agencia = '';
             this.datos.entidad = '';
@@ -317,11 +319,11 @@ export class CreacionPQRSComponent implements OnInit {
         if (this.identificaiconCliente.length == 0) {
             return;
         }
-        let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
+        let urlinfoCliente = `informacion-cliente/${this.identificaiconCliente}`;
         this._pqrService
             .getListados(urlinfoCliente)
             .subscribe((response: any) => {
-                // debugger;
+                // ;
                 if (response) {
                     Swal.fire(
                         '¡Advertencia!',
@@ -352,7 +354,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     buscarSelectDinamico(path, tipo, variable, titulo) {
-        let url = `/${path}/${tipo}`;
+        let url = `${path}/${tipo}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response.length != 0) {
                 this[variable] = response;
@@ -369,6 +371,9 @@ export class CreacionPQRSComponent implements OnInit {
                     } else {
                         this.datos.fechaParaSolucion = '';
                     }
+                    // this.getMotivos(tipo);
+                } else if (variable == 'listadoProcedimientoPQRS') {
+                    this.getMotivos(tipo);
                 }
             } else {
                 Swal.fire(
@@ -381,146 +386,175 @@ export class CreacionPQRSComponent implements OnInit {
         });
     }
 
-    mostrarMensaje() {
-        // console.log(this.datos.descripcion);
+    getMotivos(tipo) {
+        let url = `listado-motivos-causal/${tipo}`;
+        this._pqrService.getListados(url).subscribe((response: any) => {
+            this.listadoMotivos = response;
+        });
+    }
+
+    buscarSelectSubMotivo(id) {
+        let submotivo = this.listadoMotivos.find(motivo => motivo.id === Number(id));
+
+        Object.entries(submotivo).forEach(([key, value]) => {
+            if (key !== 'id' && key !== 'nombre' && value !== '') {
+                this.listadoSubMotivos.push(value);
+            }
+        })
     }
 
     guardar() {
-       // debugger;
-        this._pqrService
-            .permisoCreacion('tk/validar-permisos-gestion-pqrs')
-            .subscribe((response: any) => {
-             //   debugger;
-                console.log(response.data.area);
-                if (response.data.area !== 'SAC') {
-                    Swal.fire(
-                        '¡Información!',
-                        `Este usuario no tiene permiso para crear una PQRS`,
-                        'error'
-                    ).then();
-                    return;
-                } else {
-                    let data = {
-                        empresa: 'FINV',
-                        identificador:'pqrs',
-                        campanha:
-                            this.datos.campana == undefined
-                                ? ''
-                                : this.datos.campana,
-                        origenPqrs: parseInt(this.datos.origen),
-                        tipoCliente: parseInt(this.datos.tipo),
-                        codigoNegocio:
-                            this.datos.negocio == undefined
-                                ? ''
-                                : this.datos.negocio,
-                        sucursal:
-                            this.datos.agencia == undefined
-                                ? ''
-                                : this.datos.agencia,
-                        entidad:
-                            this.datos.entidad == undefined
-                                ? ''
-                                : this.datos.entidad,
-                        idCliente: this.datos.identificacion,
-                        nombres: this.datos.nombres,
-                        apellidos: this.datos.apellidos,
-                        departamento: this.datos.departamento,
-                        ciudad: this.datos.ciudad,
-                        barrio: this.datos.barrio,
-                        direccion: this.datos.direccion,
-                        celular: this.datos.telefono,
-                        email: this.datos.email,
-                        idProcedimiento: parseInt(this.datos.procedimiento),
-                        detallePqrs:
-                            this.datos.descripcion == undefined
-                                ? ''
-                                : this.datos.descripcion,
-                        idPqrspadre: '',
-                        fechaSolucion: this.datos.fechaParaSolucion,
-                        primerContacto: this.datos.primerContacto,
-                        file: this.crearJsonAdjuntos(),
-                        hijos: this.crearJsonHijas(),
-                        user: this.UsuarioSaggics,
-                    };
-                    let url = '/crear-pqrs';
+        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
+            if (response.data.area !== 'SAC') {
+                Swal.fire(
+                    '¡Información!',
+                    `Este usuario no tiene permiso para crear una PQRS`,
+                    'error'
+                ).then();
+                return;
+            } else {
+                let data = {
+                    empresa: 'FINV',
+                    identificador: 'pqrs',
+                    campanha: this.datos.campana == undefined ? '' : this.datos.campana,
+                    origenPqrs: parseInt(this.datos.origen),
+                    tipoCliente: parseInt(this.datos.tipo),
+                    codigoNegocio: this.datos.negocio == undefined ? '' : this.datos.negocio,
+                    sucursal: this.datos.agencia == undefined ? '' : this.datos.agencia,
+                    entidad: this.datos.entidad == undefined ? '' : this.datos.entidad,
+                    idCliente: this.datos.identificacion,
+                    nombres: this.datos.nombres,
+                    apellidos: this.datos.apellidos,
+                    departamento: this.datos.departamento,
+                    ciudad: this.datos.ciudad,
+                    barrio: this.datos.barrio,
+                    direccion: this.datos.direccion,
+                    celular: this.datos.telefono,
+                    email: this.datos.email,
+                    idProcedimiento: parseInt(this.datos.procedimiento),
+                    detallePqrs: this.datos.descripcion == undefined ? '' : this.datos.descripcion,
+                    idPqrspadre: '',
+                    fechaSolucion: this.datos.fechaParaSolucion,
+                    primerContacto: this.datos.primerContacto,
+                    file: [],
+                    hijos: this.crearJsonHijas(),
+                    user: this.UsuarioSaggics
+                };
+                let url = '/crear-pqrs';
 
-                    this.crearJsonHijas();
+                this.crearJsonHijas();
+                Swal.fire({
+                    title: 'Cargando',
+                    html: 'Guardando información de PQRS',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    timer: 500000,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        this._pqrService.CreatePqrs(url, data).subscribe((response: any) => {
+                            Swal.close();
+                            if (response) {
+                                if (response.status == 200) {
 
-                    Swal.fire({
-                        title: 'Cargando',
-                        html: 'Guardando información de PQRS',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        timer: 500000,
-                        didOpen: () => {
-                            Swal.showLoading();
-
-                            this._pqrService
-                                .CreatePqrs(url, data)
-                                .subscribe((response: any) => {
-                                    Swal.close();
-                                    if (response) {
-                                        if (response.status == 200) {
+                                    let urlproc = `id_comentario_pqrs/${response.data.pqrs}`;
+                                    this._pqrService.getListados(urlproc).subscribe((resid: any) => {
+                                        if (this.evidencia.length > 0) {
+                                            let data = {
+                                                idComentario: resid[0].id.toString(),
+                                                fuente: 'registro-pqrs',
+                                                identificador: 'pqrs' + response.data.pqrs,
+                                                idpqrs: response.data.pqrs,
+                                                file: this.evidencia
+                                            };
+                                            url = '/file/cargar-archivo-pqrs';
                                             Swal.fire({
-                                                title: 'Información',
-                                                html: `${response.data.descripcion} ${response.data.pqrs}.`,
-                                                icon: 'success',
-                                                showConfirmButton: true,
-                                            }).then((result) => {
-                                               // debugger;
-                                                if (
-                                                    this.EstadoSagicc == false
-                                                ) {
-                                                    let url = `pqr/list`;
-                                                    this.router.navigateByUrl(
-                                                        url
-                                                    );
-                                                } else {
-                                                    this.mostrar_formulario =
-                                                        false;
+                                                title: 'Cargando',
+                                                html: 'Guardando documento de PQRS',
+                                                timer: 500000,
+                                                didOpen: () => {
+                                                    Swal.showLoading();
+                                                },
+                                            }).then((result) => { });
+                                            this._pqrService.postFile(url, data).subscribe((response: any) => {
+                                                Swal.close();
+                                                if (response) {
+                                                    Swal.fire(
+                                                        '¡Información!',
+                                                        `Se guardó el registro con éxito`,
+                                                        'success'
+                                                    ).then((resultado) => { });
                                                 }
                                             });
-                                            setTimeout(() => {
-                                                //debugger;
-                                                if (
-                                                    this.EstadoSagicc == false
-                                                ) {
-                                                    let url = `pqr/list`;
-                                                    this.router.navigateByUrl(
-                                                        url
-                                                    );
-                                                } else {
-                                                    this.mostrar_formulario =
-                                                        false;
-                                                }
-                                            }, 2000);
-                                        } else {
-                                            Swal.fire(
-                                                '¡Información!',
-                                                `Hubo un error en los datos enviados, favor validar`,
-                                                'error'
-                                            ).then();
                                         }
-                                    } else {
-                                        Swal.fire(
-                                            '¡Advertencia!',
-                                            'Error en la respuesta del servicio, favor intente nuevamente',
-                                            'error'
-                                        ).then();
+                                    });
+
+                                    let dato = {
+                                        id: response.data.pqrs,
+                                        tipo_solicitante: this.datos.solicitante,
+                                        segmento_actual: this.datos.segmento
+                                    };
+
+                                    if (dato.tipo_solicitante != undefined && dato.segmento_actual != undefined) {
+                                        this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => { })
                                     }
-                                });
-                        },
-                    }).then((result) => {});
-                }
-            });
+
+                                    let datos = {
+                                        idPadre: response.data.pqrs,
+                                        user: ""
+                                    }
+                                    this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response: any) => {
+                                        if (response) { }
+                                    });
+
+                                    let dataMotivo = {
+                                        id: response.data.pqrs,
+                                        motivo: this.datos.motivo != undefined ? Number(this.datos.motivo) : 0,
+                                        submotivo: this.datos.submotivo != undefined ? this.datos.submotivo : "N/A"
+                                    }
+                                    
+                                    // Guardar motivo y submotivo
+                                    url = `/tk/update-pqrs-motivo`;
+                                    this._pqrService.saveMotivoPQRS(url, dataMotivo).subscribe((response: any) => {
+                                        if (response) { }
+                                    });
+                                    Swal.fire({
+                                        title: 'Información',
+                                        html: `Se ha creado correctamente la PQRS N° ${response.data.pqrs}.`,
+                                        icon: 'success',
+                                        showConfirmButton: true,
+                                    }).then((result) => { });
+
+                                    setTimeout(() => {
+                                        if (this.EstadoSagicc == false) {
+                                            let url = `pqr/list`;
+                                            this.router.navigateByUrl(url);
+                                        } else {
+                                            this.mostrar_formulario = false;
+                                        }
+                                    }, 2000);
+                                } else {
+                                    Swal.fire(
+                                        '¡Información!',
+                                        `Hubo un error en los datos enviados, favor validar`,
+                                        'error'
+                                    ).then();
+                                }
+                            } else {
+                                Swal.fire(
+                                    '¡Advertencia!',
+                                    'Error en la respuesta del servicio, favor intente nuevamente',
+                                    'error'
+                                ).then();
+                            }
+                        });
+                    },
+                }).then((result) => { });
+            }
+        });
     }
 
     public onCharge(input: HTMLInputElement, ind): void {
-        // this.showButtonSave = false;
-        // this.showButtonRecord = true;
-        // this.nameFile = 'masivo.cvs';
         const files = input.files;
-        // console.log(files);
         if (files && files.length) {
             const fileToRead = files[0];
             const reader = new FileReader();
@@ -532,7 +566,6 @@ export class CreacionPQRSComponent implements OnInit {
                 let nombre = this.evidencia[ind].filename.split('.');
                 this.evidencia[ind].ext = nombre[1];
                 this.evidencia[ind].nombre = nombre[0];
-                // console.log(this.evidencia[ind].file);
             };
         }
     }
@@ -547,6 +580,7 @@ export class CreacionPQRSComponent implements OnInit {
                     extension: nombre[1].toLowerCase(),
                     fuente: 'registro-pqrs',
                     identificador: 'pqrs' + ind,
+                    idpqrs: ind,
                     base64: element.file,
                     descripcion: element.descripcion,
                 };
@@ -608,7 +642,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardHijos(respuesta, dataPadre, url) {
-        //debugger;
+        //;
         this.causalesLegales.forEach((element) => {
             let dataHijos = {
                 empresa: 'FINV',
@@ -698,7 +732,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     mostrarDireccion() {
-        // debugger;
+        // ;
         const dialogRef = this.dialog.open(DirectionsComponent, {
             width: '60%',
             data: {
@@ -743,8 +777,6 @@ export class CreacionPQRSComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
             let dataModal = result;
             if (
                 dataModal.file != '' &&
@@ -770,6 +802,7 @@ export class CreacionPQRSComponent implements OnInit {
         this.causalesLegales.forEach((element) => {
             dataHijos.push({
                 empresa: 'FINV',
+                identificador: 'pqrs',
                 campanha:
                     this.datos.campana == undefined ? '' : this.datos.campana,
                 origenPqrs: parseInt(this.datos.origen),
@@ -796,7 +829,7 @@ export class CreacionPQRSComponent implements OnInit {
                         : this.datos.descripcion,
                 idPqrspadre: '',
                 fechaSolucion: element.fechaParaSolucion,
-                adjuntos: this.crearJsonAdjuntos(),
+                file: [],
                 primerContacto: false,
                 user: this.UsuarioSaggics,
             });
@@ -821,6 +854,6 @@ export class CreacionPQRSComponent implements OnInit {
         //         });
         //     }
         // });
-        return  this.evidencia;
+        return this.evidencia;
     }
 }

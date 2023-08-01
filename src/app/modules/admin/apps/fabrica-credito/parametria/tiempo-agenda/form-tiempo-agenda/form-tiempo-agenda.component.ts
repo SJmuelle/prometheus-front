@@ -22,7 +22,7 @@ export class FormTiempoAgendaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // debugger;
+    // ;
     this.datos = this.data;
     if (this.datos.titulo != 'N') {
       this.datos.tipoIdentificacion = this.datos.tipoIdentificacion == 'CC' ? 'Persona natural' : 'Persona juridica'
