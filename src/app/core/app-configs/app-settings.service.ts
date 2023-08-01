@@ -94,6 +94,8 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/GC'),
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/GC'),
+            validarNit: EndPoints.uri('/generic/cre-validar-nit-entidad'),
+            entidadesNombres: EndPoints.uri('/generic/cre-consultar-entidades-nombre')
         }
     };
 

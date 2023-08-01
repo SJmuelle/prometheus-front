@@ -9,6 +9,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
+import { PermisosService } from 'app/core/services/permisos.service';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 // import { format} from 'date-fns'
 @Component({
   selector: 'app-form-dialog-negociacion',
@@ -22,6 +24,9 @@ export class FormDialogNegociacionComponent implements OnInit {
   listadoTipo: any;
   hoy = moment(new Date()).format("yyyy-MM-DD");
   manana: any;
+  public trazabilidad:boolean=false;
+
+  entidadOptionsNueva: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -30,13 +35,15 @@ export class FormDialogNegociacionComponent implements OnInit {
     public utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private comentariosService: ComentariosService,
-
+    private _permisosService: PermisosService,
+    private _fabricaService: FabricaCreditoService
   ) { }
 
   ngOnInit(): void {
     this.manana = moment().add(1, 'days');
     this.manana = moment(this.manana).format("yyyy-MM-DD");
     this.crearFormulario();
+
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion);
     this.form.controls.idRegistro.setValue(this.data.item.id);
@@ -44,11 +51,23 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.porcentajeConsultores.setValue(50);
     this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual))
     this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(0 + ''))
+    this.form.controls.nombreNegociador.setValue(this.data.item.Detalle.nombreNegociador)
+    this.form.controls.celularNegociador.setValue(this.data.item.Detalle.celularNegociador)
+    this.form.controls.valorRealCartera.setValue(this.data.item.Detalle.valorRealCartera)
+    this.form.controls.comentarioNegociacion.setValue(this.data.item.Detalle.comentarioNegociacion)
+    this.form.controls.fechaLimitePago.setValue(this.data.item.Detalle.fechaLimitePago)
+
+
     this.calcularDescuento();
+    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
+    if(this.trazabilidad){
+        this.form.disable()
+    }
+
   }
 
   /**
-   * @description: 
+   * @description:
    */
   public calcularDescuento() {
     let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)))
@@ -64,7 +83,7 @@ export class FormDialogNegociacionComponent implements OnInit {
   }
 
   /**
- * @description: 
+ * @description:
  */
   public calcularValorConsultores() {
     let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
@@ -152,6 +171,8 @@ export class FormDialogNegociacionComponent implements OnInit {
         valorRealCartera: ['', [Validators.required]],
         porcentajeConsultores: [50],
         comentarioNegociacion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(800)]],
+        nombreEntidadNueva: [''],
+        nit: ['']
       });
     } else {
       this.form = this.fb.group({
@@ -169,7 +190,13 @@ export class FormDialogNegociacionComponent implements OnInit {
         fechaLimitePago: ['', [Validators.required]],
         valorRealCartera: ['', [Validators.required]],
         comentarioNegociacion: [''],
+        nombreEntidadNueva: ['', Validators.required],
+        nit: ['',Validators.required]
       });
+
+      this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
+        this.getEntidadesObservableNueva(entidad);
+    })
     }
 
   }
@@ -190,6 +217,8 @@ export class FormDialogNegociacionComponent implements OnInit {
           this.onCerrar();
           Swal.close();
         }, 1000);
+      }, err => {
+        Swal.fire('Error', err.error.msg, 'error')
       });
   }
 
@@ -200,7 +229,24 @@ export class FormDialogNegociacionComponent implements OnInit {
     return (this.form.controls.comentarioNegociacion.errors?.minlength);
   }
 
+  getEntidadesObservableNueva(entidad: string) {
+    if(entidad.length > 0){
+        this._fabricaService.carteraEntidadNombres({
+            entidad
+        }).subscribe(({ data }) => {
+            this.entidadOptionsNueva = data
+            this.getNitApi()
+        })
+    }
+}
 
+getNitApi(){
+    console.log('length', this.entidadOptionsNueva.length);
+
+    if(this.entidadOptionsNueva.length === 1){
+        this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)
+    }
+}
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
