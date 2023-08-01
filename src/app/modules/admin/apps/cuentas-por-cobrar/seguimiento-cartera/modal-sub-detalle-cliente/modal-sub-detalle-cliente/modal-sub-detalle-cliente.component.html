@@ -1,7 +1,7 @@
 <ng-container>
 
     <div *ngIf="tittleModal!=='Seleccionar Dirección'" class="w-full h-auto flex flex-col gap-4">
-        <div class="w-full border-2  rounded-2xl p-3 shadow-md">
+        <!-- <div class="w-full border-2  rounded-2xl p-3 shadow-md">
             <div class="border-l-8 border-green-400 min-h-15">
 
                 <h4 class="  pl-4">{{tittleModal}}</h4>
@@ -10,6 +10,29 @@
 
             </div>
 
+        </div> -->
+
+        <div class="w-full border-2 flex flex-row rounded-2xl p-3 h-auto">
+            <div class=" w-10 h-10 min-w-10 min-h-10">
+
+                <img [src]="'assets/images/agendas/Asignacion.png'" class="w-full h-full object-cover">
+            </div>
+
+
+            <div class="flex flex-col -mt-1">
+
+                <span class="pl-2 font-semibold inline-block">{{tittleModal}}</span>
+                <span class="pl-2 font-semibold inline-block">{{ dataClient?.nombreCliente | dataTable: 'upperCase' }} -
+                    CC
+                    {{ dataClient?.cedula
+                    | dataTable:'document'}}</span>
+            </div>
+
+
+
+
+
+            <!-- <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4> -->
         </div>
 
         <div>
@@ -26,11 +49,20 @@
 
     <div *ngIf="tittleModal==='Seleccionar Dirección'" class="w-full h-auto flex flex-col gap-4">
 
-        <div class="w-full border-2  rounded-2xl p-3 shadow-md mb-4">
+        <!-- <div class="w-full border-2  rounded-2xl p-3 shadow-md mb-4">
             <div class="border-l-8 border-green-400 h-15">
                 <h4 class="  pl-4">{{tittleModal}}</h4>
             </div>
 
+        </div> -->
+
+
+        <div class="w-full border-2 flex flex-row rounded-2xl p-3 h-auto mb-4">
+            <div class="w-10 h-10 min-w-10 min-h-10">
+                <img [src]="'assets/images/agendas/Asignacion.png'" class="w-full h-full object-cover">
+            </div>
+            <span class="pl-2 font-semibold ">{{tittleModal}}</span>
+            <!-- <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4> -->
         </div>
 
         <form [formGroup]="formDireccion" (ngSubmit)="onsaveDireccion()">

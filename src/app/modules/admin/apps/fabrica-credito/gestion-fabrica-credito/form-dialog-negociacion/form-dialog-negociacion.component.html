@@ -1,125 +1,161 @@
 <h2 mat-dialog-title>Gestión de negociación</h2>
 
 <mat-dialog-content>
-  <div class="grid-cols-12 ">
-    <div class="col-span-12">
-      <form [formGroup]="form">
-        <div class="bg-white flex flex-col">
-          <div class="md:flex">
-            <ng-container>
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Nombre con quien se negoció</mat-label>
-                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'nombreNegociador'">
-              </mat-form-field>
-            </ng-container>
-          </div>
-          <div class="md:flex">
-            <ng-container>
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Celular donde se negoció</mat-label>
-                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'celularNegociador'">
-              </mat-form-field>
-            </ng-container>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <ng-container>
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Valor cartera </mat-label>
-                <span matPrefix>$&nbsp;</span>
-                <input autocomplete="off" matInput type="text" placeholder=""
-                  [formControlName]="'valorAComprarNoEditable'" readonly>
-              </mat-form-field>
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Valor cartera real </mat-label>
-                <span matPrefix>$&nbsp;</span>
-                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorRealCartera'"
-                  (keyup)="form.controls['valorRealCartera'].setValue(utility.formatearNumero(form.value.valorRealCartera));">
-                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+    <div class="grid-cols-12 ">
+        <div class="col-span-12">
+            <form [formGroup]="form">
+                <div class="bg-white flex flex-col">
+                    <div class="md:flex">
+                        <ng-container>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Nombre con quien se negoció</mat-label>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'nombreNegociador'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Celular donde se negoció</mat-label>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'celularNegociador'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <ng-container>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Valor cartera </mat-label>
+                                <span matPrefix>$&nbsp;</span>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'valorAComprarNoEditable'" readonly>
+                            </mat-form-field>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Valor cartera real </mat-label>
+                                <span matPrefix>$&nbsp;</span>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'valorRealCartera'"
+                                    (keyup)="form.controls['valorRealCartera'].setValue(utility.formatearNumero(form.value.valorRealCartera));">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
 
-              </mat-form-field>
-            </ng-container>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <ng-container *ngIf="data.evento!='NO EXITOSA'">
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Valor negociación </mat-label>
-                <span matPrefix>$&nbsp;</span>
-                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorAComprar'"
-                  (keyup)="form.controls['valorAComprar'].setValue(utility.formatearNumero(form.value.valorAComprar)); calcularDescuento();">
-              </mat-form-field>
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Valor descuento</mat-label>
-                <span matPrefix>$&nbsp;</span>
-                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorDescuento'"
-                  readonly>
-                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-              </mat-form-field>
-            </ng-container>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <ng-container *ngIf="data.evento!='NO EXITOSA'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <ng-container *ngIf="data.evento!='NO EXITOSA'">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Valor negociación </mat-label>
+                                <span matPrefix>$&nbsp;</span>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'valorAComprar'"
+                                    (keyup)="form.controls['valorAComprar'].setValue(utility.formatearNumero(form.value.valorAComprar)); calcularDescuento();">
+                            </mat-form-field>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Valor descuento</mat-label>
+                                <span matPrefix>$&nbsp;</span>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'valorDescuento'" readonly>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <ng-container *ngIf="data.evento!='NO EXITOSA'">
 
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Porcentaje consultores</mat-label>
-                <span matSuffix>%&nbsp;</span>
-                <input autocomplete="off" matInput type="number" placeholder=""
-                  [formControlName]="'porcentajeConsultores'" (keyup)="calcularValorConsultores()">
-                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Porcentaje consultores</mat-label>
+                                <span matSuffix>%&nbsp;</span>
+                                <input autocomplete="off" matInput type="number" placeholder=""
+                                    [formControlName]="'porcentajeConsultores'" (keyup)="calcularValorConsultores()">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
 
-              </mat-form-field>
-            </ng-container>
-            <ng-container *ngIf="data.evento!='NO EXITOSA'">
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Valor consultores</mat-label>
-                <span matPrefix>$&nbsp;</span>
-                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorConsultores'"
-                  readonly>
-                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf="data.evento!='NO EXITOSA'">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Valor consultores</mat-label>
+                                <span matPrefix>$&nbsp;</span>
+                                <input autocomplete="off" matInput type="text" placeholder=""
+                                    [formControlName]="'valorConsultores'" readonly>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
 
-              </mat-form-field>
-            </ng-container>
-          </div>
-          <div class="md:flex">
-            <ng-container *ngIf="data.evento!='NO EXITOSA'">
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Fecha limite de pagos</mat-label>
-                <input matInput type="date" placeholder="" min="{{manana}}" [formControlName]="'fechaLimitePago'">
-                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="data.evento!='NO EXITOSA'">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Fecha limite de pagos</mat-label>
+                                <input matInput type="date" placeholder="" min="{{manana}}"
+                                    [formControlName]="'fechaLimitePago'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
 
-              </mat-form-field>
-            </ng-container>
-          </div>
-          <ng-container>
-            <div class="md:flex">
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>{{data.evento=='NO EXITOSA'?'Motivo por lo cual no fue exitosa':'Comentario'}}
-                  ({{form.controls['comentarioNegociacion'].value.length}}/800)</mat-label>
-                <textarea class="h-50" matInput [formControlName]="'comentarioNegociacion'"
-                  [readonly]="data.idComentario">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <ng-container>
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>{{data.evento=='NO EXITOSA'?'Motivo por lo cual no fue exitosa':'Comentario'}}
+                                    ({{form.controls['comentarioNegociacion']?.value?.length}}/800)</mat-label>
+                                <textarea class="h-50" matInput [formControlName]="'comentarioNegociacion'"
+                                    [readonly]="data.idComentario">
                           </textarea>
-                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
 
-                <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
-                <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>
-                <mat-error *ngIf="form.controls.comentarioNegociacion.errors?.maxlength">Longitud máxima son 11 dígitos.
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </ng-container>
+                                <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
+                                <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>
+                                <mat-error *ngIf="form.controls.comentarioNegociacion.errors?.maxlength">Longitud máxima
+                                    son 11 dígitos.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="data.evento!='NO EXITOSA'">
+
+                        <div class="border-2"></div>
+                        <div class="my-3 font-semibold">
+                            Confirmación de entidad a pagar
+                        </div>
+                        <div class="flex gap-3">
+                            <mat-form-field class="w-full  fuse-mat-dense">
+                                <mat-label>Entidad financiera</mat-label>
+                                <input type="text" placeholder="" matInput [formControlName]="'nombreEntidadNueva'"
+                                    autocomplete="off" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of entidadOptionsNueva"
+                                        [value]="option.nombreEntidad">
+                                        {{option.nombreEntidad}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Nit</mat-label>
+                                <input type="text" placeholder="" matInput [formControlName]="'nit'" readonly
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
         </div>
-      </form>
     </div>
-  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-    <ng-container *ngIf="!data.idComentario">
-      <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
-        Guardar
-      </button>
-    </ng-container>
-    <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
-      Cerrar
-    </button>
-  </div>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <ng-container *ngIf="!data.idComentario">
+            <button *ngIf="!trazabilidad" mat-raised-button color="primary" type="button" (click)="onGuardar()"
+                [disabled]="form.invalid">
+                Guardar
+            </button>
+        </ng-container>
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
 </mat-dialog-actions>

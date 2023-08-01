@@ -10,6 +10,7 @@ import { FormDialogCarteraComprarComponent } from '../form-dialog-cartera-compra
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
 import { PermisosService } from 'app/core/services/permisos.service';
+import { FormDialogNegociacionComponent } from '../form-dialog-negociacion/form-dialog-negociacion.component';
 
 @Component({
   selector: 'app-grid-cartera',
@@ -79,7 +80,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
-        
+
         this.totales = res.data
 
       });
@@ -114,7 +115,7 @@ export class GridCarteraComponent implements OnInit {
           // Swal.fire('Completado', 'A', 'success');
           this.getListadoCartera(Number(this.numeroSolicitud));
         } else {
-          Swal.fire('Error', res.data.resultado, 'error');
+          Swal.fire('Error', res.data.respuesta, 'error');
         }
       });
 
@@ -192,6 +193,25 @@ export class GridCarteraComponent implements OnInit {
       this.informacionCompra=res.data;
       return res.data;
     });
+  }
+
+  public cambioEstadoNegociacion(event, item) {
+    if (event !== '') {
+      const dialogRef = this._dialog.open(FormDialogNegociacionComponent, {
+        minWidth: '30%',
+        minHeight: '30%',
+        data: {
+          numeroSolicitud: this.numeroSolicitud,
+          identificacion: this.identificacion,
+          evento: event,
+          item: item
+        }
+      });
+      dialogRef.afterClosed().toPromise().then((res) => {
+        this.getListadoCartera(Number(this.numeroSolicitud));
+      });
+    }
+
   }
 
 

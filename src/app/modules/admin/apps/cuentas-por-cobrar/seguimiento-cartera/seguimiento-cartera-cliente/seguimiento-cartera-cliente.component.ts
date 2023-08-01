@@ -92,16 +92,16 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
           iconAngularMaterial: 'edit',
           children: false
         },
-        {
-          nameFunction: 'Aplicar pagos',
-          callback: (data) => {
-            this.dialog.open(AplicarPagosCarteraClienteComponent, {
-              data
-            })
-          },
-          iconAngularMaterial: 'playlist_add_check',
-          children: false
-        }
+        // {
+        //   nameFunction: 'Aplicar pagos',
+        //   callback: (data) => {
+        //     this.dialog.open(AplicarPagosCarteraClienteComponent, {
+        //       data
+        //     })
+        //   },
+        //   iconAngularMaterial: 'playlist_add_check',
+        //   children: false
+        // }
 
       ]
     },
