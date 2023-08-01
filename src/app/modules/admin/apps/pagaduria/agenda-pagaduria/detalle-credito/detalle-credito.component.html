@@ -19,7 +19,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-20 mx-3">
             <ng-container *ngFor="let item of datos;  index as i;">
                 <div
-                    class="col-span-2 sm:col-span-1 relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+                    class="col-span-3 sm:col-span-1 relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
                     <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                         <mat-icon class="icon-size-24 opacity-25 " [ngClass]="item.color" [svgIcon]="item.icono">
                         </mat-icon>
@@ -55,10 +55,16 @@
                                         [innerHtml]="campo.valor3"></div>
                                     <div *ngIf="campo.valor4" class="text-sm font-medium "
                                         style="margin-top: 6px; line-height: 15px;" [innerHtml]="campo.valor4"></div>
-                                    <div *ngIf="campo.valor5" class="text-sm font-medium "
-                                        style="margin-top: 6px; line-height: 15px;"><a
-                                            class="text-primary-600 decoration-slice"
-                                            (click)="descargarArchivo()">{{campo.valor5}}</a>
+                                    <div *ngIf="campo.valor5"
+                                        class="text-sm font-medium cursor-pointer justify-start flex flex-col -mt-3"
+                                        style="line-height: 15px;">
+                                        <span class="text-primary-600 decoration-slice block  mb-1"
+                                            (click)="descargarArchivo()">{{campo.valor5}}</span>
+                                        <span class="text-primary-600 decoration-slice block">Descargar Descuento en
+                                            volante
+                                            de
+                                            nómina (No
+                                            incluye los descuentos de ley)</span>
                                     </div>
                                 </div>
                             </div>
@@ -70,15 +76,16 @@
 
 
             <div
-                class="sm:col-span-3  relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+                class="col-span-3  relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
                 <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-                    <mat-icon class="icon-size-24 opacity-25 " [ngClass]="'text-orange-800'" [svgIcon]="'heroicons_outline:currency-dollar'">
+                    <mat-icon class="icon-size-24 opacity-25 " [ngClass]="'text-orange-800'"
+                        [svgIcon]="'heroicons_outline:currency-dollar'">
                     </mat-icon>
                 </div>
                 <div class="flex items-center">
                     <div class="flex flex-col">
                         <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                           Obligaciones a recoger
+                            Obligaciones a recoger
                         </div>
                         <div class=" font-medium text-sm" [ngClass]="'text-orange-800'">
                             Listado de obligaciones pendiente del cliente

@@ -49,8 +49,8 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
   ) {
     this.crearFormulario();
-    this.dataLaboral=JSON.parse(localStorage.getItem("data"))
-    
+    this.dataLaboral = JSON.parse(localStorage.getItem("data"))
+
   }
 
 
@@ -197,7 +197,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
 
     this.form.controls.causal.valueChanges.subscribe((causal) => {
-      causal=parseInt(causal)
+      causal = parseInt(causal)
       switch (causal) {
         case 19:
           this.form.controls['cargo'].setValue("");
@@ -258,15 +258,47 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           this.form.controls['comisiones'].setValidators(Validators.required);
           this.form.controls['comisiones'].updateValueAndValidity();
           this.dataCreditoRechazo();
-          
+
           this.asignarValor();
-          
+
           break;
         default:
           break;
       }
 
     });
+  }
+
+  public errorForm(): boolean {
+    const { cartaLaboral, condicionesCredito } = this.form.getRawValue();
+    const cartaLaboralTouched = this.form.controls['cartaLaboral'].touched;
+    const condicionesCreditoTouched = this.form.controls['condicionesCredito'].touched
+    if ((!cartaLaboral || !condicionesCredito) && (cartaLaboralTouched || condicionesCreditoTouched)) {
+      return true
+    } else {
+      return false
+    }
+
+  }
+
+  public validarForm(): void {
+    const formcontrols = ['cartaLaboral', 'condicionesCredito']
+    console.log(this.form.controls['concepto'].value)
+    if (this.form.controls['concepto'].value === 'A') {
+      formcontrols.forEach((controlsValue) => {
+        this.form.controls[controlsValue]?.setValue(false);
+        this.form.controls[controlsValue]?.setValidators([Validators.requiredTrue]);
+        this.form.controls[controlsValue]?.updateValueAndValidity();
+
+      })
+    } else {
+      formcontrols.forEach((controlsValue) => {
+        this.form.controls[controlsValue]?.setValue(false);
+        this.form.controls[controlsValue]?.clearValidators();
+        this.form.controls[controlsValue]?.updateValueAndValidity();
+      })
+
+    }
   }
 
   /**
@@ -286,15 +318,18 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
       fechaFinalizacion: [''],
       descuentos: [''],
       comisiones: [''],
+      valorCuota: [''],
 
       cupo: [''],
       causal: [0],
+      cartaLaboral: [false,],
+      condicionesCredito: [false,]
     });
   }
 
-  
-  asignarValor():void{
-    
+
+  asignarValor(): void {
+
     this.form.controls['cargo'].setValue(this.dataLaboral.cargo);
     this.form.controls['tipoContrato'].setValue(this.dataLaboral.tipoContrato);
     this.form.controls['salario'].setValue(this.dataLaboral.salarioBasico);

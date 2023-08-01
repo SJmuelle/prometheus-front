@@ -10,7 +10,7 @@
                         <ng-container>
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Desición</mat-label>
-                                <mat-select [formControlName]="'concepto'">
+                                <mat-select (selectionChange)="validarForm()" [formControlName]="'concepto'">
                                     <mat-option [value]="''">
                                         Seleccionar
                                     </mat-option>
@@ -38,8 +38,15 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-                        <ng-container *ngIf="form.value.causal=='18'">
+                        <ng-container *ngIf="form.value.causal=='82'">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mr-2">
+
+                                <mat-form-field>
+                                    <mat-label>Valor cuota</mat-label>
+                                    <input matInput autocomplete="off" [formControlName]="'valorCuota'">
+                                    <span matPrefix>$&nbsp;</span>
+                                </mat-form-field>
+
                                 <mat-form-field class="w-full fuse-mat-dense col-span-2">
                                     <mat-label>Cargo</mat-label>
                                     <input matInput type="text" autocomplete="off" formControlName="cargo">
@@ -97,6 +104,9 @@
                                     <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
+
+
+
                                 <ng-container *ngIf="form.value.tipoContrato=='F'">
                                     <mat-form-field>
                                         <mat-label>Fecha finalización</mat-label>
@@ -112,12 +122,27 @@
                     </ng-container>
 
 
-                    <div class="md:flex">
+                    <div class="md:flex flex flex-col w-full">
                         <mat-form-field class="w-full mr-2 fuse-mat-dense">
                             <mat-label>Comentario: </mat-label>
                             <textarea matInput [formControlName]="'comentario'" class="resize-none" rows="4"></textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                         </mat-form-field>
+
+
+
+                        <div *ngIf="form.value.concepto==='A'" class="w-full  -mt-3 sm:-mt-0 flex flex-col gap-2">
+                            <mat-checkbox formControlName="cartaLaboral">Revisé la carta laboral</mat-checkbox>
+                            <mat-checkbox formControlName="condicionesCredito">Estoy de acuerdo con las condiciones del
+                                crédito</mat-checkbox>
+                            <mat-error class="text-md font-semibold" *ngIf="errorForm()">
+                                Este campo es requerido.
+                            </mat-error>
+                        </div>
+
+
+
+
                     </div>
 
                 </div>
@@ -127,7 +152,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" (click)="onGuardar()">
+        <button mat-raised-button color="primary" type="button" [disabled]="form.invalid" (click)="onGuardar()">
             Guardar
         </button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
