@@ -23,6 +23,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AgendaComercialRoutingModule } from '../agenda-comercial/agenda-comercial-routing.module';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -45,14 +46,15 @@ import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-refe
     FuseAlertModule,
     MatDialogModule,
     MatDatepickerModule,
-    NgxMatDatetimePickerModule,    
-    MatTooltipModule,    
+    NgxMatDatetimePickerModule,
+    MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatSelectModule,     
-    MatExpansionModule,  
-    AgendaReferenciacionModule 
+    MatSelectModule,
+    MatExpansionModule,
+    AgendaReferenciacionModule,
+    SharedModule
   ]
 })
 export class AgendaGestionCarteraModule { }

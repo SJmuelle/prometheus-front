@@ -20,6 +20,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
+  public datosAux: any[] = [];
   public page: number = 1;
   public tamanoTabl = new FormControl("10");
   public filtrarTabla = new FormControl('');
@@ -50,6 +51,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
 
       if (res.status === 200) {
         this.datos = res.data;
+        this.datosAux = res.data;
         this.mostrar = false;
 
       } else {
@@ -91,7 +93,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
    * @description: Guarda el comentario para devolvee
    */
   public onComentario(data): void {
-    //  
+    //
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -113,7 +115,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
  * @description: Guarda el comentario para devolvee
  */
   public onComentarioRechazar(data): void {
-    //  
+    //
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -148,9 +150,9 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
     });
   }
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   cambiarFecha(date) {
 
@@ -161,9 +163,9 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
     return 'No registra';
   }
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   cambiarHora(date) {
     if (date) {
@@ -174,12 +176,16 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param estado 
+   *
+   * @param estado
    */
   public cambiarEstado(estado) {
     this.mostrarTotales = estado;
   }
+
+  filtrarTablaTotalesEvent(datos){
+    this.datos = datos;
+}
 
 
   ngOnDestroy(): void {

@@ -20,6 +20,7 @@ export class GridAgendasVisitasComponent implements OnInit {
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
+  public datosAux: [] = [];
   public page: number = 1;
   public tamanoTabl = new FormControl("10");
   public filtrarTabla = new FormControl('');
@@ -49,6 +50,7 @@ export class GridAgendasVisitasComponent implements OnInit {
 
       if (res.status === 200) {
         this.datos = res.data;
+        this.datosAux = res.data;
         this.mostrar = false;
 
       } else {
@@ -90,7 +92,7 @@ export class GridAgendasVisitasComponent implements OnInit {
    * @description: Guarda el comentario para devolvee
    */
   public onComentario(data): void {
-    //  
+    //
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -112,7 +114,7 @@ export class GridAgendasVisitasComponent implements OnInit {
  * @description: Guarda el comentario para devolvee
  */
   public onComentarioRechazar(data): void {
-    //  
+    //
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -147,9 +149,9 @@ export class GridAgendasVisitasComponent implements OnInit {
     });
   }
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   cambiarFecha(date) {
 
@@ -160,9 +162,9 @@ export class GridAgendasVisitasComponent implements OnInit {
     return 'No registra';
   }
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   cambiarHora(date) {
     if (date) {
@@ -173,12 +175,16 @@ export class GridAgendasVisitasComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param estado 
+   *
+   * @param estado
    */
   public cambiarEstado(estado) {
     this.mostrarTotales = estado;
   }
+
+  filtrarTablaTotalesEvent(datos) {
+    this.datos = datos;
+}
 
 
   ngOnDestroy(): void {

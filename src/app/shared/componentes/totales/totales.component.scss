@@ -117,7 +117,13 @@
     width: 280px !important;
     max-width: 280px !important;
     min-width: 280px !important;
+    @media screen and (width < 600px) {
+        width: 320px !important;
+        max-width: 320px !important;
+        min-width: 320px !important;
+    }
 }
+
 
 .paddingCount{
     padding: 2px 1px;
@@ -130,4 +136,73 @@
     }
 }
 
+.previucosBTN{
 
+    cursor: pointer;
+    opacity: 0.1;
+    background-color: rgba(0, 0, 0, 0.111);
+    &:hover{
+        background-color: rgba(0, 0, 0, 0.356);
+        opacity: 0.9;
+    }
+}
+
+.nextBTN{
+    cursor: pointer;
+    opacity: 0.1;
+    background-color: rgba(0, 0, 0, 0.092);
+    &:hover{
+        background-color: rgba(0, 0, 0, 0.356);
+        opacity: 0.9;
+        color: black
+    }
+}
+
+.nextBTNContainer{
+    top: 9.2%;
+    left: calc(100% - 40px);
+    width: 0px;
+}
+
+.previusBTNContainer{
+    top: 9.2%;
+}
+
+
+.iconSizeCs{
+    width: 45px !important;
+    height: 45px !important;
+}
+
+.paddintTotalesContainer{
+    padding-left: 38px !important;
+    padding-right: 38px !important;
+    @media screen and (width < 600px) {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    }
+}
+
+
+
+.iconMarca{
+    font-size: 15px !important;
+    border: 1px solid white;
+}
+
+
+.mobilUnidadNgSelected{
+    filter: brightness(1.1)
+}
+
+
+.transitionCard{
+    transition: ease-in-out 0.5s;
+}
+
+.padingTable{
+    padding: 24px;
+    @media screen and (width < 600px) {
+        padding: 0px 24px;
+    }
+}

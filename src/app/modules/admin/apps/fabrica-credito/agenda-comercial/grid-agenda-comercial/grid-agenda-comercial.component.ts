@@ -22,12 +22,14 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     public unsubscribe$: Subject<any> = new Subject();
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = []
     public page: number = 1;
     public tamanoTabl = new FormControl("10");
     public filtrarTabla = new FormControl('');
     public mostrarTotales: boolean = true;
     public totales: any[];
     public rolID: number;
+    private scrollSpeed: number = 200;
     constructor(
         private agendaComercialService: AgendaComercialService,
         private _matDialog: MatDialog,
@@ -57,6 +59,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
+
                 this.mostrar = false;
 
             } else {
@@ -169,6 +173,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.totales = res.data;
+                console.log('totales', this.totales);
+
                 Swal.close();
             } else {
                 Swal.close();
@@ -229,4 +235,36 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         this.unsubscribe$.complete();
     }
 
+    nextTotalesSlider(){
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+        const currentScroll = slider.scrollLeft
+
+        slider.scroll({
+            left: currentScroll + this.scrollSpeed,
+            behavior: 'smooth'
+        })
+    }
+
+    previousTotalesSlider(){
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+        const currentScroll = slider.scrollLeft
+
+        slider.scroll({
+            left: currentScroll - this.scrollSpeed,
+            behavior: 'smooth'
+        })
+    }
+
+    public isMobil(){
+        return window.innerWidth < 600;
+    }
+
+    actualizarTabla($event){
+        this.getAgendaComercial();
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
+    }
+
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
+    }
 }

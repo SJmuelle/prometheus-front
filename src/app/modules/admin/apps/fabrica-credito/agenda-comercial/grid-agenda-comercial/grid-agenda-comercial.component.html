@@ -1,27 +1,40 @@
 <div class="h-screen overflow-auto w-full pb-40">
-    <div class="flex flex-col flex-auto">
+    <div class="flex flex-col flex-auto ">
 
-        <div class="flex relative flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+        <div class="flex md:relative sm:block flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
 
             <!-- Title and action buttons -->
-            <div class="flex items-center justify-between w-full">
+            <div class="flex  items-center justify-between w-full">
                 <div class="flex items-center ml-6">
-                    <div class="flex-0 w-16 h-16  overflow-hidden">
+                    <div class="flex-0 w-12 h-12  overflow-hidden">
                         <img src="assets/images/agendas/Comercial.png" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 mx-3">
-                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda comercial de crédito
-                        </div>
-                        <div class="flex items-center">
-                            <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
-                            <div class="font-medium tracking-tight text-secondary">
-                                Realiza la gestión del crédito
-                            </div>
+                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda comercial
                         </div>
                     </div>
+                    <div   *ngIf="isMobil()">
+                        <div class="absolute  top-5 right-5 rounded-full">
+                            <button class="icon-size-12 bg-white" [matMenuTriggerFor]="menu" mat-icon-button>
+                                <mat-icon class="icon-size-8" svgIcon="heroicons_outline:plus-circle">
+                                </mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" class="mlPorcentage w-auto" xPosition="before">
+                                <button mat-menu-item (click)="onGetAgendaDigital(null)">
+                                    <img alt="linea de negocio" class="w-11 mr-3"
+                                        src="assets/images/logo/logo-microcredito.png">
+                                    <span>Microcrédito</span>
+                                </button>
+                                <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
+                                    <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
+                                    <span>Libranza pública</span>
+                                </button>
+                            </mat-menu>
+                        </div>
 
+                    </div>
                 </div>
-                <div class="flex items-center ml-6">
+                <div class="flex items-center ">
                     <!-- <button class="hidden sm:inline-flex ml-3" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:save'"></mat-icon>
                         <span class="ml-2">Exportar</span>
@@ -41,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex z-99 absolute bottom-0 right-0 align-bottom justify-end ">
+            <div  *ngIf="!isMobil()" class="flex z-99 absolute bottom-0 right-0 align-bottom justify-end ">
                 <div class="sm:mr-0 md:mr-10 mat-mdc-menu-trigger mat-ripple relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
                     [matMenuTriggerFor]="menu">
                     <div class="flex items-center">
@@ -51,459 +64,29 @@
                         <div class="flex items-center justify-center pl-2">
                             <mat-icon svgIcon="heroicons_outline:chevron-down"></mat-icon>
                         </div>
+                        <mat-menu #menu="matMenu" >
+                            <button mat-menu-item (click)="onGetAgendaDigital(null)">
+                                <img alt="linea de negocio" class="w-11 mr-3"
+                                    src="assets/images/logo/logo-microcredito.png">
+                                <span>Microcrédito</span>
+                            </button>
+                            <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
+                                <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
+                                <span>Libranza pública</span>
+                            </button>
+                        </mat-menu>
                     </div>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="onGetAgendaDigital(null)">
-                            <img alt="linea de negocio" class="w-11 mr-3"
-                                src="assets/images/logo/logo-microcredito.png">
-                            <span>Microcrédito</span>
-                        </button>
-                        <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
-                            <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
-                            <span>Libranza pública</span>
-                        </button>
-                    </mat-menu>
+
                 </div>
             </div>
+
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
 
             </div>
-
-
-
         </div>
-        <div aria-haspopup="true" matripple=""
-            class=" z-10 marginAccordion mat-ripple mat-menu-trigger relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl  bg-default">
-            <div class="flex items-center">
-                <div class="overflow-hidden">
-                    <div class="font-medium leading-6 truncate">Totales</div>
-                </div>
-                <div class="flex items-center justify-center pl-2" *ngIf="mostrarTotales"
-                    (click)="cambiarEstado(false)">
-                    <mat-icon svgIcon="heroicons_solid:chevron-down"></mat-icon>
-                </div>
+        <app-totales *ngIf="totales"  [totales]="totales" [dataTable]="datosAux"  (dataFilter)="filtrarTablaTotalesEvent($event)"> </app-totales>
 
-                <div class=" items-center justify-center pl-2" *ngIf="!mostrarTotales" (click)="cambiarEstado(true)">
-                    <mat-icon svgIcon="heroicons_solid:chevron-right"></mat-icon>
-                </div>
+        <app-tabla *ngIf="datos" [datos]="datos" (actualizarTabla)="actualizarTabla($event)"></app-tabla>
 
-                <ng-container *ngFor="let item of totales">
-                    <div class="sm:grid hidden mr-3  items-center justify-center pl-2" *ngIf="!mostrarTotales"
-                        (click)="cambiarEstado(false)">
-                        <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
-                            [svgIcon]="'radio_button_checked'">
-                        </mat-icon>
-                        {{item.nombre_unidad_negocio}}: {{item.cantidad_solicitud
-                        <10? '0' +item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}}
-                            </div>
-                </ng-container>
-
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 w-full min-w-0 mt-3 px-5"
-            [ngClass]="mostrarTotales==false?'slide-out-top':'tilt-in-top-1'">
-            <!-- totales -->
-            <ng-container *ngFor="let item of totales">
-                <div class="flex flex-col flex-auto p-3 bg-card shadow rounded-2xl overflow-hidden">
-                    <div class="flex items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                            {{item.nombre_unidad_negocio}}
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center ">
-                        <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none"
-                            [ngStyle]="{'color': item.color}">
-                            {{item.cantidad_solicitud
-                            <10? '0' +item.cantidad_solicitud:item.cantidad_solicitud}} </div>
-                                <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
-                                    ${{item.total_solicitud | number:0}}
-                                </div>
-                                <div class="text-md font-medium truncate">Devolución</div>
-                                <div class="text-3xl sm:text-3xl font-bold tracking-tight leading-none"
-                                    [ngStyle]="{'color': item.color}">
-                                    {{item.cantidad_devolucion
-                                    <10? '0' +item.cantidad_devolucion:item.cantidad_devolucion}} </div>
-                                        <div class="flex items-center justify-center w-full text-secondary mt-1">
-                                            <!-- <div class="ml-1.5 text-lg font-semibold">{{item.cantidad_devolucion}}</div> -->
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-center w-full text-secondary title-secundary">
-                                            <div class="ml-1.5 text-lg font-semibold mt-1">${{item.total_devolucion|
-                                                number:0}}
-                                            </div>
-                                        </div>
-                                </div>
-                        </div>
-            </ng-container>
-        </div>
-
-        <div class="grid grid-cols-1 w-full px-5 pt-3">
-            <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
-                <div class="flex items-center justify-between">
-
-                    <div class="text-secondary font-medium"> <input
-                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
-                            autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla" (keydown)="changePageToOne()"
-                            placeholder="Filtrar..."></div>
-
-                    <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
-                        (change)="page=1">
-                        <option value="10">10</option>
-                        <option value="20"> 20</option>
-                        <option value="30"> 30</option>
-                    </select>
-
-                </div>
-                <div class="w-full  overflow-auto mt-2">
-                    <table class="p-0 ">
-
-                        <tbody class="bg-white">
-                            <ng-container
-                                *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
-
-                                <tr class="text-gray-700 border-t border-b ">
-                                    <td rowspan="2" class="py-3 text-sm my-3">
-                                        <div class="text-gray-700 grid-cols-2 grid min-w-20">
-                                            <div class="py-0 text-sm w-10">
-                                                <button mat-icon-button matTooltip="Gestionar"
-                                                    (click)="onGetAgenda(item)">
-                                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
-                                                </button>
-                                            </div>
-                                            <ng-container *ngIf="item.clienteDesistio === 'S'">
-                                                <div class="py-0 text-sm w-10">
-                                                    <button mat-icon-button matTooltip="Rechazar"
-                                                        (click)="onComentarioRechazar(item)">
-                                                        <mat-icon
-                                                            [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
-                                                    </button>
-                                                </div>
-                                            </ng-container>
-                                            <ng-container *ngIf="item.unidadNegocioFabrica ===32">
-                                                <div class="py-0 text-sm w-10">
-                                                    <button mat-icon-button (click)="onComentario(item)"
-                                                        matTooltip="Devolver a Fabrica">
-                                                        <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
-                                                    </button>
-                                                </div>
-                                            </ng-container>
-                                            <div class="py-0 text-sm ">
-                                                <button mat-icon-button matTooltip="Reprogramar"
-                                                    (click)="onReprogramar(item)">
-                                                    <mat-icon svgIcon="mat_outline:timer"></mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-0 pt-1" rowspan="2">
-                                        <div class="flex flex-column " rowspan="2">
-                                            <div class="flex-0 w-12 overflow-hidden">
-                                                <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-0 pt-1">
-                                        <div class="flex flex-column ">
-                                            <small class="text-accent-600 text-xs">Solicitud:</small>
-                                            <span class="text-md text-black font-medium"> {{
-                                                item.numeroSolicitud}}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-0 pt-1">
-                                        <div class="flex flex-column ">
-                                            <small class="text-accent-600 text-xs">Identificación: </small>
-                                            <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-0 pt-1" colspan="3">
-                                        <div class="flex flex-column ">
-                                            <small class="text-accent-600 text-xs">Cliente: </small>
-                                            <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-0 pt-1">
-                                        <div class="flex flex-column ">
-                                            <small class="text-accent-600 text-xs">Monto: </small>
-                                            <span class="text-lg text-black font-medium">
-                                                ${{ item.monto | number:0}}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td *ngIf="item.creditoExcepcion" class="px-2 pb-0 pt-1">
-                                        <div class="flex justify-center items-center">
-                                            <div class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest" >
-                                                Crédito con excepción
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                                <tr class="text-gray-700 border-t border-b ">
-                                    <td class="px-2  pb-1 pt-1">
-                                        <div class="flex flex-column ">
-
-                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                matTooltip="Agencia">
-                                                <mat-icon class="icon-size-3"
-                                                    svgIcon="heroicons_outline:location-marker"></mat-icon>
-                                                {{ item.agencia}}
-                                            </span>
-                                            <ng-container>
-                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                    matTooltip="Asesor Comercial">
-                                                    <mat-icon class="icon-size-3"
-                                                        svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
-                                                </span>
-                                            </ng-container>
-                                            <ng-container>
-                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                    matTooltip="Asesor fábrica">
-                                                    <mat-icon class="icon-size-3 text-blue-500"
-                                                        svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
-                                                </span>
-                                            </ng-container>
-                                            <ng-container *ngIf="item.unidadNegocioFabrica === 1">
-                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                    matTooltip="Asesor micro">
-                                                    <mat-icon class="icon-size-3 text-green-500"
-                                                        svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesorMicro==''?'No registro':item.asesorMicro}}
-                                                </span>
-                                            </ng-container>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-1 pt-1">
-                                        <div class="flex w-24">
-                                            <div class="flex flex-column ">
-                                                <small class="text-accent-600 text-xs">
-                                                    Fecha solicitud
-                                                </small>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                                                    </mat-icon>
-
-                                                    {{ cambiarFecha(item.fechaEmision) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
-                                                    </mat-icon>
-                                                    {{ cambiarHora(item.fechaEmision) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
-                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
-                                                    </mat-icon>
-                                                    {{item.diasTotalesCredito}} horas
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-1 pt-1">
-                                        <div class="flex w-24">
-                                            <div class="flex flex-column ">
-                                                <small class="text-accent-600 text-xs">
-                                                    Fecha Fábrica
-                                                </small>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                                                    </mat-icon>
-                                                    {{ cambiarFecha(item.fechaIngresoFabrica) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
-                                                    </mat-icon>
-                                                    {{ cambiarHora(item.fechaIngresoFabrica) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"
-                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
-                                                    </mat-icon>
-                                                    {{item.diasEnFabrica}} horas
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-1 pt-1">
-                                        <div class="flex w-24">
-                                            <div class="flex flex-column ">
-                                                <small class="text-accent-600 text-xs">
-                                                    Fecha agenda
-                                                </small>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                                                    </mat-icon>
-                                                    {{ cambiarFecha(item.fechaIngresoAgendaActual) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
-                                                    </mat-icon>
-                                                    {{ cambiarHora(item.fechaIngresoAgendaActual) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
-                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
-                                                    </mat-icon>
-                                                    {{item.diasEnAgendaActual}} horas
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-1 pt-1">
-                                        <div class="flex w-24">
-                                            <div class="flex flex-column ">
-                                                <small class="text-accent-600 text-xs">
-                                                    Reprogramación
-                                                </small>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                                                    </mat-icon>
-                                                    {{ cambiarFecha(item.fechaReprogramacion) }}
-                                                </span>
-                                                <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
-                                                    </mat-icon>
-                                                    {{ cambiarHora(item.fechaReprogramacion) }}
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-1 pt-1">
-                                        <div class="flex justify-between">
-                                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
-                                                [ngClass]="item.numeroIntentos<=2?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                                                <small class="text-xs">Nº Intentos</small>
-                                                <span class="text-current">
-                                                    {{ item.numeroIntentos}}
-                                                </span>
-                                                <small class="text-xs">{{
-                                                    cambiarFecha(item.fechaUltimaReprogramacion)}}</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 pb-1 pt-1">
-                                        <div class="flex justify-between">
-                                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
-                                                [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                                                <small class="text-xs">Devolución</small>
-                                                <span class="text-current">
-                                                    {{ item.cantidadDevolucion}}
-                                                </span>
-                                                <small class="text-xs">{{ cambiarFecha(item.fechaDevolucion)}}</small>
-                                            </div>
-                                            <button mat-icon-button matTooltip="ver devolución"
-                                                *ngIf="item.cantidadDevolucion>0"
-                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='v'?'f':'v'">
-                                                <mat-icon
-                                                    [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                                </mat-icon>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr *ngIf="item.mostrarDevolucion=='v'">
-                                    <td class="p-3 bg-hover" colspan="10">
-                                        <div class="flex justify-between">
-                                            <div
-                                                class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
-                                                <!-- Item content -->
-                                                <div
-                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
-                                                    <!-- titulo -->
-                                                    <div class="text-end">
-                                                        <div
-                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
-                                                            Última devolución
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Info -->
-                                                    <div class="flex items-center w-full">
-                                                        <!-- name -->
-                                                        <div class="mr-2 font-semibold truncate">
-                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
-                                                        </div>
-
-                                                        <!-- Date -->
-                                                        <div
-                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
-                                                            {{ cambiarFecha(item.fechaDevolucion) }}
-                                                        </div>
-                                                    </div>
-
-
-                                                    <!-- Subject -->
-                                                    <div class="flex items-center w-full">
-                                                        <span class="mr-2 font-semibold truncate">
-                                                            <span>Causal: </span> {{item.causalDevolucion}}
-                                                        </span>
-                                                    </div>
-
-                                                    <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto"
-                                                        style="display: inline !important">
-                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
-                                                        {{item.observacionDevolucion}}
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="relative flex border-t w-100 first:border-0 bg-white  text-md">
-                                                <!-- Item content -->
-                                                <div
-                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
-                                                    <!-- titulo -->
-                                                    <div class="text-end">
-                                                        <div
-                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
-                                                            Último Reintegro
-                                                        </div>
-                                                    </div>
-                                                    <!-- Info -->
-                                                    <div class="flex items-center w-full">
-                                                        <!-- Sender name -->
-                                                        <div class="mr-2 font-semibold truncate">
-                                                            <span>Usuario: </span> {{ item.usuarioReintegroDevolucion}}
-                                                        </div>
-
-                                                        <!-- Date -->
-                                                        <div
-                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
-                                                            {{ cambiarFecha(item.fechaReintegroDevolucion) }}
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Subject -->
-                                                    <div class="flex items-center w-full">
-                                                        <span class="mr-2 font-semibold truncate">
-                                                            <span>Concepto: </span> {{item.causalReintegroDevolucion}}
-                                                        </span>
-                                                    </div>
-                                                    <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto"
-                                                        style="display: inline !important">
-                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
-                                                        {{item.observacionReintegroDevolucion}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="flex items-center mt-auto">
-                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
-                    </pagination-controls>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>

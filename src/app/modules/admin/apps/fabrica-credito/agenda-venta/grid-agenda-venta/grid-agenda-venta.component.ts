@@ -23,6 +23,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
     public unsubscribe$: Subject<any> = new Subject();
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = [];
     public page: number = 1;
     public tamanoTabl = new FormControl("10");
     public filtrarTabla = new FormControl('');
@@ -157,6 +158,18 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
             })
     }
 
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
+        this.datosAux = datos;
+    }
+
+    actualizarTabla($event){
+        this.getAgenda();
+    }
+
+    public isMobil(){
+        return window.innerWidth < 600;
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();
