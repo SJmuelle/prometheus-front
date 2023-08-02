@@ -121,7 +121,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.getPagaduria()
         this.getSalarioBasico()
         // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
-        
+
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
         if(this.permisoEditar){
             this.form.disable();
@@ -397,7 +397,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
         const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
         const plazoFormato = Number(this.form.value.plazo);
-        // 
+        //
         const codigoBarrioFormato = codigoBarrio == undefined ? 0 : Number(codigoBarrio)
         // descuentoNomina
         delete data.ventasMensuales;
@@ -1224,7 +1224,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             default:
                 break;
         }
-        
+
         if ((tipo == 'PA') || (tipo == 'TC')|| (tipo == 'FV')|| (tipo == 'GEN')|| (tipo == 'FEN')) {
             mensaje += "?, Este campo modifica el motor de decisión y políticas SARC.";
         }else{

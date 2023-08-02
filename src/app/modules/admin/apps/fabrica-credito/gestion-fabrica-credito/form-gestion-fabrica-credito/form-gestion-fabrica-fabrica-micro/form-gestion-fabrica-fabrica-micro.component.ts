@@ -866,7 +866,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
-            tipoCredito: ['', Validators.required],
+            tipoCredito: [''],
             emision: [''],
             tipoDocumento: [''],
             identificacion: [''],
@@ -1005,8 +1005,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             clausulaAnticurrupcionClaracionAuto: [''],
             score: [''],
 
-            tipoCliente: [''],
-            categoriaSisben: ['', Validators.required]
+            // tipoCliente: [''],
+            // categoriaSisben: ['', Validators.required]
         },
         );
     }
@@ -1469,17 +1469,17 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
 
-        // fintra mujer
-        this.form.get('tipoCredito').valueChanges.subscribe((e: string) => {
-            if(e === 'FM'){
-                this.form.get('valorSolicitado').setValidators([Validators.required,
-                    Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo),
-                    Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
-            }else{
-                this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
-            }
+        // // fintra mujer
+        // this.form.get('tipoCredito').valueChanges.subscribe((e: string) => {
+        //     if(e === 'FM'){
+        //         this.form.get('valorSolicitado').setValidators([Validators.required,
+        //             Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo),
+        //             Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
+        //     }else{
+        //         this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
+        //     }
 
-        })
+        // })
 
     }
 

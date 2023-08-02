@@ -164,7 +164,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('otraPagaduria')?.setValidators(null)
                 this.datosLaborares.get('otraPagaduria')?.disable({ emitEvent: true, onlySelf: true })
 
-                this.datosLaborares.controls['otraPagaduria'].setValue('')
+              //  this.datosLaborares.controls['otraPagaduria'].setValue('')
             }
         })
 
@@ -180,7 +180,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('tipoPension')?.setValidators(null)
                 this.datosLaborares.get('tipoPension')?.disable({ emitEvent: true, onlySelf: true })
 
-                this.datosLaborares.controls['tipoPension'].setValue('')
+             //   this.datosLaborares.controls['tipoPension'].setValue('')
             }
             else {
                 if (e === 'PENSI') {
@@ -193,9 +193,9 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                     this.datosLaborares.get('cargo')?.setValidators(null)
                     this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
 
-                    this.datosLaborares.controls['cargo'].setValue('')
-                    this.datosLaborares.controls['fechaVinculacion'].setValue('')
-                    this.datosLaborares.controls['tipoContrato'].setValue('')
+                    // this.datosLaborares.controls['cargo'].setValue('')
+                    // this.datosLaborares.controls['fechaVinculacion'].setValue('')
+                    // this.datosLaborares.controls['tipoContrato'].setValue('')
                 }
             }
 
@@ -211,7 +211,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('otrosIngresos')?.setValidators(null)
                 this.datosLaborares.get('otrosIngresos')?.disable({ emitEvent: true, onlySelf: true })
 
-                this.datosLaborares.controls['otrosIngresos'].setValue('')
+               // this.datosLaborares.controls['otrosIngresos'].setValue('')
             }
         })
 
