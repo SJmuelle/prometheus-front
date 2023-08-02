@@ -4,7 +4,7 @@ export const environment = {
     password: btoa("123456"),
     apiUrl: "http://demo.fintra.co:8084/",
 
-    // apiUrl:"https://prometheus.fintra.co:8443/",
+    // apiUrl: "https://prometheus.fintra.co:8443/",
     urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     // apiUrl: "http://demo.fintra.co:8084/",
 

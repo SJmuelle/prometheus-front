@@ -85,12 +85,13 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             nivelEstudio: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
 
-            genero: ['', Validators.required],
-            tipoCredito: ['', Validators.required],
-            categoriaSisben: ['', Validators.required]
+            // genero: ['', Validators.required],
+            // tipoCredito: ['', Validators.required],
+            // categoriaSisben: ['', Validators.required]
         })
 
         this.datosNegocio = this.fb.group({
+            genero: [''], // no se usa
             tipoActividad: ['', [Validators.required]],
             camaraComercio: ['', [Validators.required]],
             tipoLocal: ['', [Validators.required]],
@@ -166,25 +167,25 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         });
 
         this.datosDelCredito.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
-
-            if(this.datosBasicos.get('tipoCredito').value === 'FM'){
-                this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
-            }else{
-                this.getPlazosCredito(!!valor ? valor : '0')
-            }
+            this.getPlazosCredito(!!valor ? valor : '0')
+            // if(this.datosBasicos.get('tipoCredito').value === 'FM'){
+            //     this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
+            // }else{
+            //     this.getPlazosCredito(!!valor ? valor : '0')
+            // }
         })
 
 
-        this.datosBasicos.get('tipoCredito')?.valueChanges.subscribe((valor: string) => {
-            if(valor === 'FM'){
-                this.datosBasicos.controls['genero'].setValue('F')
-                this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
-                this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo), Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
-            }else{
-                this.getPlazosCredito(!!valor ? valor : '0')
-                this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
-            }
-        })
+        // this.datosBasicos.get('tipoCredito')?.valueChanges.subscribe((valor: string) => {
+        //     if(valor === 'FM'){
+        //         this.datosBasicos.controls['genero'].setValue('F')
+        //         this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
+        //         this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo), Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
+        //     }else{
+        //         this.getPlazosCredito(!!valor ? valor : '0')
+        //         this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
+        //     }
+        // })
 
         setTimeout(() => {
             if ((this.tipoIdentificacion) && (this.identificacion)) {

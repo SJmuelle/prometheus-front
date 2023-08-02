@@ -402,7 +402,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
         const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
         const plazoFormato = Number(this.form.value.plazo);
-        // 
+        //
         const codigoBarrioFormato = codigoBarrio == undefined ? 0 : Number(codigoBarrio)
         // descuentoNomina
         delete data.ventasMensuales;
@@ -1212,7 +1212,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         let data = {
             pagaduria: pagaduria,
             salario: Number(this.utility.enviarNumero(salarioBasico)),
-            codigoTipoCargo:0
+            codigoTipoCargo: 0
         }
         this.fabricaCreditoService.validacionMonto(data).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
@@ -1254,15 +1254,15 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         let data = {
             pagaduria: pagaduria,
             tipoContrato: tipoContrato,
-            fechaInicio: fechaVinculacion!='0099-01-01' ? moment(fechaVinculacion).format("MM-DD-YYYY") : '',
-            fechaFin: fechaFinalizacionContrato!='0099-01-01' ? moment(fechaFinalizacionContrato).format("MM-DD-YYYY") : ''
+            fechaInicio: fechaVinculacion != '0099-01-01' ? moment(fechaVinculacion).format("MM-DD-YYYY") : '',
+            fechaFin: fechaFinalizacionContrato != '0099-01-01' ? moment(fechaFinalizacionContrato).format("MM-DD-YYYY") : ''
         }
         this.fabricaCreditoService.validacionPlazo(data).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 if (data[0].aplicaplazo == true) {
                     this.plazoMinimo = data[0].plazominimo
                     this.plazoMaximo = data[0].plazomaximo
-                }else{
+                } else {
                     this.plazoMinimo = 1
                     this.plazoMaximo = 1000
                 }

@@ -29,8 +29,10 @@
                             <p (click)="tooltip.toggle()"  [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                             matTooltipTouchGestures="on" #tooltip="matTooltip" class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple':
                                 'No cumple'}}</p>
+<!--
+                            <div  *ngIf="permisoExcepcion && unidadNegocio === 1 && politica.key === 'T' && item.estadoAccion !== 'CUMPLE' || item.excepcion && item.estadoAccion !== 'CUMPLE'" -->
+                                <div *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1 && politica.key === 'T'"
 
-                            <div  *ngIf="permisoExcepcion && unidadNegocio === 1 && politica.key === 'T' && item.estadoAccion !== 'CUMPLE' || item.excepcion && item.estadoAccion !== 'CUMPLE'"
                                 class="py-0 text-sm md:w-full sm:w-auto flex justify-center items-center">
                                 <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones"
                                     class="customBTNSize">

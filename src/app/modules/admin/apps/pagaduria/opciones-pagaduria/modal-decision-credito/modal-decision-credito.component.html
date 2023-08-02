@@ -51,10 +51,10 @@
                                     </mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field class="fuse-mat-dense">
+                                <mat-form-field class="fuse-mat-dense mat-form-field-disabled">
                                     <mat-label>Valor cuota</mat-label>
-                                    <input matInput [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
-                                        [formControlName]="'valorCuota'">
+                                    <input [readonly]="true" matInput [mask]="'separator.0'" [thousandSeparator]="'.'"
+                                        autocomplete="off" [formControlName]="'valorCuota'">
                                     <span matPrefix>$&nbsp;</span>
                                 </mat-form-field>
 
