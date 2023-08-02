@@ -135,7 +135,7 @@
                                 Este campo es requerido.
                             </mat-error>
                         </mat-form-field>
-                        <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
                             <mat-label>Tipo de crédito</mat-label>
                             <mat-select formControlName="tipoCredito">
                                 <mat-option *ngFor="let tipoCredito of dataInicial?.tiposCreditosSelect"
@@ -167,7 +167,7 @@
                             <mat-error *ngIf="datosBasicos.controls.categoriaSisben.errors?.required">
                                 Este campo es requerido.
                             </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
                         <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-3 mt-2 px-3 xl:col-span-3">
                             <button mat-raised-button color="primary" type="button" matStepperNext>
                                 Siguiente
@@ -320,10 +320,12 @@
                             Este campo es requerido.
                         </mat-error>
                         <mat-error *ngIf="datosDelCredito.controls.valorCredito.errors?.min">
-                            Monto mínimo de {{datosDelCredito.controls.valorCredito.errors?.min.min}}
+                            Monto mínimo de {{salarioMinimo}}
+                            <!-- Monto mínimo de {{datosDelCredito.controls.valorCredito.errors?.min.min}} -->
                         </mat-error>
                         <mat-error *ngIf="datosDelCredito.controls.valorCredito.errors?.max">
-                            Monto máximo de {{datosDelCredito.controls.valorCredito.errors?.max.max}}
+                            Monto máximo de 100.000.000
+                            <!-- Monto máximo de {{datosDelCredito.controls.valorCredito.errors?.max.max}} -->
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
