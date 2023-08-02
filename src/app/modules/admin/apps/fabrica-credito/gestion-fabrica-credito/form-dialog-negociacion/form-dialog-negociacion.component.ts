@@ -45,6 +45,11 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.manana = moment(this.manana).format("yyyy-MM-DD");
     this.crearFormulario();
 
+    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
+    if(this.trazabilidad){
+        this.form.disable()
+    }
+
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion);
     this.form.controls.idRegistro.setValue(this.data.item.id);
@@ -60,10 +65,7 @@ export class FormDialogNegociacionComponent implements OnInit {
 
 
     this.calcularDescuento();
-    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
-    if(this.trazabilidad){
-        this.form.disable()
-    }
+
 
   }
 
