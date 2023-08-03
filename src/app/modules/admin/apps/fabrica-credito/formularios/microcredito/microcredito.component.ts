@@ -113,6 +113,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
             valorCouta: [''],
+            fechaPrimerPago: ['', [Validators.required,this.mayorAHoyValidation.bind(this)]],
 
             numeroOTP: [''],
         })
@@ -339,6 +340,19 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const errors = { dateError: true };
         // Set the validation error on the matching control
         if (this.fechaActual.isBefore(date)) {
+
+            return errors
+        } else {
+            return null
+        }
+    }
+
+    private mayorAHoyValidation(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        const date = moment(valueControl).format('YYYY-MM-DD')
+        const errors = { dateMayor: true };
+        // Set the validation error on the matching control
+        if (this.fechaActual.isAfter(date)) {
 
             return errors
         } else {
@@ -582,6 +596,26 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
 
         firstInvalidControl?.focus(); //without smooth behavior
+    }
+
+    calcularCuotaAproximada(){
+        const dataMap = {
+            monto : this.datosDelCredito.get('valorCredito').value,
+            num_cuotas : this.datosDelCredito.get('plazoCredito').value,
+            fecha_pago : this.datosDelCredito.get('fechaPrimerPago').value,
+            departamento : this.datosNegocio.get('departamentoNegocio').value,
+            compra_cartera : "N"
+          }
+
+        if(dataMap.monto && dataMap.num_cuotas && dataMap.fecha_pago && dataMap.departamento){
+            const nuevaFecha = moment(dataMap.fecha_pago).add(30,'days').format('YYYY-MM-DD')
+            dataMap.fecha_pago = nuevaFecha
+            // this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe((rep => {
+            //     console.log('respuesta', rep);
+            // }))
+            console.log('data a enviar', dataMap);
+
+        }
     }
 
     irAtras() {

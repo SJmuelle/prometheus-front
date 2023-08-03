@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
+import { HttpClient } from "@angular/common/http";
 import { AppSettingsService } from '../app-configs/app-settings.service';
 import { map } from 'rxjs/operators';
 
@@ -10,6 +11,7 @@ export class FormularioCreditoService {
 
     constructor(
         private _utilityService: UtilityService,
+        private _http: HttpClient,
         private _appSettings: AppSettingsService
     ) { }
 
@@ -19,7 +21,7 @@ export class FormularioCreditoService {
             .pipe(map((res: any) => {
                 return res;
             }));
-    }    
+    }
 
     validatarOTP(data){
         return this._utilityService.postQuery(this._appSettings.formulario.url.validarOTP, data)
@@ -93,5 +95,16 @@ export class FormularioCreditoService {
             .pipe(map((res: any) => {
                 return res;
             }));
+    }
+
+    calcularValorCoutaAProximada(data){
+         let options = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+
+        return this._http.post(this._appSettings.formulario.url.calcularValorAprox, data, options)
+
     }
 }

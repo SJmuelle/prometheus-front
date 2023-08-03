@@ -299,6 +299,7 @@
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
+
                     <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-2 mt-2 px-3 xl:col-span-3">
                         <button mat-raised-button color="primary" type="button" matStepperNext>
                             Siguiente
@@ -314,7 +315,7 @@
                 <form [formGroup]="datosDelCredito" class="grid sm:grid-cols-1 md:grid-cols-2">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
-                        <input matInput type="text" autocomplete="off" formControlName="valorCredito" mask="separator.0"
+                        <input matInput type="text" (change)="calcularCuotaAproximada()" autocomplete="off" formControlName="valorCredito" mask="separator.0"
                             thousandSeparator="." matTooltip="¿Cuánto dinero necesitas para tu negocio?">
                         <mat-error *ngIf="datosDelCredito.controls.valorCredito.errors?.required">
                             Este campo es requerido.
@@ -330,7 +331,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
-                        <input matInput type="number" autocomplete="off" [min]="plazosCredito?.data[0].plazoMinimo"
+                        <input matInput type="number" autocomplete="off" (change)="calcularCuotaAproximada()" [min]="plazosCredito?.data[0].plazoMinimo"
                             [max]="plazosCredito?.data[0].plazoMaximo" formControlName="plazoCredito">
                         <mat-error *ngIf="datosDelCredito.controls.plazoCredito.errors?.required">
                             Este campo es requerido.
@@ -348,7 +349,18 @@
                             No puede ser mayor a {{plazosCredito?.data[0].plazoMaximo}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                    <mat-form-field class="w-full px-3 fuse-mat-dense ">
+                        <mat-label>Fecha del primer pago</mat-label>
+                        <input style="max-height: 18px !important;" (change)="calcularCuotaAproximada()" matInput type="date" autocomplete="off"
+                            formControlName="fechaPrimerPago">
+                        <mat-error *ngIf="datosDelCredito.controls.fechaPrimerPago.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                        <mat-error *ngIf="datosDelCredito.controls.fechaPrimerPago.errors?.dateMayor">
+                            La fecha no puede ser menor al día de hoy.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense mat-form-field-disabled">
                         <mat-label>Asesor de microcrédito</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
 
