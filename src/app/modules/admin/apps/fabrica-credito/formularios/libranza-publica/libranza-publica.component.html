@@ -29,7 +29,7 @@
         <mat-step [stepControl]="datosBasicos">
             <form [formGroup]="datosBasicos">
                 <ng-template matStepLabel>Datos básicos</ng-template>
-                <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-2">
+                <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-3">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de documento</mat-label>
                         <mat-select formControlName="tipoDocumento" (selectionChange)="preCargueDeDatos()">
@@ -71,7 +71,7 @@
                         <mat-error *ngIf="datosBasicos.controls.email.errors?.required">
                             Este campo es requerido.
                         </mat-error>
-                        <mat-error *ngIf="datosBasicos.controls.email.errors?.email">
+                        <mat-error *ngIf="datosBasicos.controls.email.errors?.pattern">
                             Email invalido
                         </mat-error>
                     </mat-form-field>
@@ -132,7 +132,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <div class="bg-white rounded flex justify-end items-center gap-4">
+                    <div class="bg-white rounded col-span-3 flex justify-end items-end gap-4">
                         <button mat-raised-button color="primary" type="button" matStepperNext>
                             Siguiente
                             <mat-icon svgIcon="arrow_right"></mat-icon>
@@ -209,11 +209,14 @@
                         <mat-error *ngIf="datosLaborares.controls.fechaVinculacion.errors?.required">
                             Este campo es requerido.
                         </mat-error>
+                        <mat-error *ngIf="datosLaborares.controls.fechaVinculacion.errors?.dateError">
+                            La fecha no puede ser mayor al día de hoy.
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Cargo</mat-label>
                         <mat-select formControlName="cargo">
-                            <mat-option *ngFor="let tipoContrato of dataInicial?.tiposContratos"
+                            <mat-option *ngFor="let tipoContrato of dataInicial?.cargos"
                                 [value]="tipoContrato.codigo">
                                 {{tipoContrato.nombre}}
                             </mat-option>
@@ -304,10 +307,11 @@
                                 <mat-error *ngIf="datosBasicos.controls.email.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="datosBasicos.controls.email.errors?.email">
+                                <mat-error *ngIf="datosBasicos.controls.email.errors?.pattern">
                                     Email invalido
                                 </mat-error>
                             </mat-form-field>
+
                             <div class="w-full flex gap-2 flex-col md:flex-row">
                                 <mat-form-field class="md:w-4/6 w-full md:pl-12 pl-0  fuse-mat-dense">
                                     <span matPrefix class="flex justify-center items-center h-full"><mat-icon

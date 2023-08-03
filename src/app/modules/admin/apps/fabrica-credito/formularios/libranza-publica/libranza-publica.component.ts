@@ -84,7 +84,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             tipoDocumento: ['', [Validators.required]],
             documento: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
             celular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             genero: ['', Validators.required],
@@ -172,7 +172,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             if (e === "EPLDO") {
                 this.datosLaborares.get('tipoContrato')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('tipoContrato')?.enable({ emitEvent: true, onlySelf: true })
-                this.datosLaborares.get('fechaVinculacion')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('fechaVinculacion')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.datosLaborares.get('fechaVinculacion')?.enable({ emitEvent: true, onlySelf: true })
                 this.datosLaborares.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
