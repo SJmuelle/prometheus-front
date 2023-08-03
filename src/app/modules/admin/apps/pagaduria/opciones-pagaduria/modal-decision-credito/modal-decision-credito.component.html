@@ -9,7 +9,7 @@
                     <div class="md:flex">
                         <ng-container>
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                <mat-label>Desición</mat-label>
+                                <mat-label>Decisión</mat-label>
                                 <mat-select (selectionChange)="validarForm()" [formControlName]="'concepto'">
                                     <mat-option [value]="''">
                                         Seleccionar
@@ -51,10 +51,10 @@
                                     </mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field class="fuse-mat-dense mat-form-field-disabled">
+                                <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Valor cuota</mat-label>
-                                    <input [readonly]="true" matInput [mask]="'separator.0'" [thousandSeparator]="'.'"
-                                        autocomplete="off" [formControlName]="'valorCuota'">
+                                    <input matInput [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                                        [formControlName]="'valorCuota'">
                                     <span matPrefix>$&nbsp;</span>
                                 </mat-form-field>
 
@@ -115,13 +115,13 @@
                                 <ng-container *ngIf="form.value.tipoContrato=='F'">
                                     <mat-form-field>
                                         <mat-label>Fecha finalización</mat-label>
-                                        <input matInput [matDatepicker]="picker2"
-                                            [formControlName]="'fechaFinalizacion'">
+                                        <input matInput [matDatepicker]="picker2" formControlName="fechaFinalizacion">
 
                                         <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                                         <mat-datepicker #picker2></mat-datepicker>
                                     </mat-form-field>
                                 </ng-container>
+                                <!-- <div>{{form.value.fechaFinalizacion}}</div> -->
                             </div>
                         </ng-container>
                     </ng-container>

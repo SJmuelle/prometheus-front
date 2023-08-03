@@ -153,7 +153,7 @@ export class DetalleCreditoComponent implements OnInit, OnDestroy {
             color: "bg-yellow-100 text-yellow-800",
             valor2: "<span class='text-sm font-medium text-secondary'>Salario: </span> $" + this.separatos(data.resumenLaboral.salarioBasico),
             valor: "<span class='text-sm font-medium text-secondary'>Comision: </span> $" + this.separatos(data.resumenLaboral.comisiones),
-            valor3: "<span class='text-sm font-medium text-secondary'>Descuentos: </span> $" + this.separatos(data.resumenLaboral.descuentoNomina)
+            valor3: "<span class='text-sm font-medium text-secondary'>Descuento en volante de nómina (No inlcuye los descuentos de ley) : </span> $" + this.separatos(data.resumenLaboral.descuentoNomina)
           },
           {
             icono: "mat_outline:download_for_offline",
