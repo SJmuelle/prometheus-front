@@ -66,8 +66,8 @@
                                         <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
                                         Rechazar</button>
 
-                                    <button *ngIf="item.unidadNegocioFabrica ===32 && item.idAgenda !== 'FO' && item.idAgenda !== 'CO' && item.idAgenda !== 'RE'" (click)="onComentario(item)"
-                                        mat-menu-item (click)="onGetAgenda(item)">
+                                    <button *ngIf="item.unidadNegocioFabrica ===32 && item.idAgenda !== 'FO' && item.idAgenda !== 'CO' && item.idAgenda !== 'RE'"
+                                        mat-menu-item (click)="onComentario(item)">
                                         <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
                                         Devolver a Fabrica</button>
 
