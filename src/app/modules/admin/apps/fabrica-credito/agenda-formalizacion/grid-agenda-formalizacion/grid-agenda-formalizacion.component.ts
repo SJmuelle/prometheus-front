@@ -21,6 +21,7 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
     public tamanoTabl = new FormControl("10");
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = [];
     public mostrarTotales: boolean = true;
     public totales: any[];
     public headerColums: string[] = ['numeroSolicitud', 'identificacion', 'nombreCompleto', 'monto', 'agencia', 'asesor'];
@@ -54,6 +55,7 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
                 this.mostrar = false;
                 Swal.close();
             } else {
@@ -103,6 +105,10 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
     public changePageToOne(){
         this.page = 1;
     }
+
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
+        }
 
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();
