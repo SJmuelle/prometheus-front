@@ -62,7 +62,6 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.valorRealCartera.setValue(this.data.item.Detalle.valorRealCartera)
     this.form.controls.comentarioNegociacion.setValue(this.data.item.Detalle.comentarioNegociacion)
     this.form.controls.fechaLimitePago.setValue(this.data.item.Detalle.fechaLimitePago)
-    console.log('data', this.data);
 
     this.form.controls.nit.setValue(this.data.item.Detalle.nit)
 
@@ -225,7 +224,6 @@ export class FormDialogNegociacionComponent implements OnInit {
   private postGuardado(data: any): void {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.confirmarNit(data.nombreEntidadNueva, data.nit).pipe(takeUntil(this.unsubscribe$)).subscribe(guardar => {
-        console.log('data', this.data);
 
         if(guardar || this.data.evento === 'NO EXITOSA'){
             this._listadoCarteraService.gestionCartera(data).pipe(takeUntil(this.unsubscribe$))
@@ -270,7 +268,6 @@ export class FormDialogNegociacionComponent implements OnInit {
 }
 
 getNitApi(){
-    console.log('length', this.entidadOptionsNueva.length);
 
     if(this.entidadOptionsNueva.length === 1){
         this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)
