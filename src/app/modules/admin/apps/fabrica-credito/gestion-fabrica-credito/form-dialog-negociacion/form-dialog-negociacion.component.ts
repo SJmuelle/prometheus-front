@@ -55,7 +55,6 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.identificacion.setValue(this.data.identificacion);
     this.form.controls.idRegistro.setValue(this.data.item.id);
     this.form.controls.resultadoNegociacion.setValue(this.data.evento);
-    this.form.controls.porcentajeConsultores.setValue(50);
     this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual))
     this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(0 + ''))
     this.form.controls.nombreNegociador.setValue(this.data.item.Detalle.nombreNegociador)
@@ -70,9 +69,11 @@ export class FormDialogNegociacionComponent implements OnInit {
 
     if(!this.trazabilidad){
         this.form.controls.nombreEntidadNueva.setValue(this.data.item.entidad)
+        this.form.controls.porcentajeConsultores.setValue(50);
         this.calcularDescuento();
 
     }else{
+        this.form.controls.porcentajeConsultores.setValue(this.data.item.Detalle.porcentajeConsultores);
         this.form.controls.nombreEntidadNueva.setValue(this.data.item.Detalle.entidadGirador)
         this.form.controls.valorDescuento.setValue(this.data.item.Detalle.valorDescuento)
         this.form.controls.valorConsultores.setValue(this.data.item.Detalle.valorConsultores);
@@ -87,12 +88,12 @@ export class FormDialogNegociacionComponent implements OnInit {
    * @description:
    */
   public calcularDescuento() {
-    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)))
-    let valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)))
+    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorRealCartera+'')))
+    let valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar + '')))
     let valor = valorAComprarNoEditable - valorAComprar
     if (valor < 0) {
       this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(valorAComprarNoEditable + ''))
-      this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(0 + ''))
+      this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(0))
     } else {
       this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(valor + ''))
     }
@@ -103,7 +104,7 @@ export class FormDialogNegociacionComponent implements OnInit {
  * @description:
  */
   public calcularValorConsultores() {
-    let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
+    let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento + '')));
     let porcentajeConsultores = Number((this.form.value.porcentajeConsultores));
     let valor = (valorDescuento * (porcentajeConsultores / 100));
     valor = Math.round(valor);
@@ -123,10 +124,10 @@ export class FormDialogNegociacionComponent implements OnInit {
 
     if (this.form.valid) {
       const data: any = this.form.getRawValue();
-      const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)));
-      const valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
-      const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores)));
-      const valorRealCartera = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)));
+      const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar + '')));
+      const valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento + '')));
+      const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores + '')));
+      const valorRealCartera = Number(this.utility.enviarNumero((this.form.value.valorRealCartera + '')));
 
       if (this.data.evento != 'NO EXITOSA') {
         if (valorAComprar == 0) {
@@ -211,7 +212,7 @@ export class FormDialogNegociacionComponent implements OnInit {
         nit: ['',Validators.required]
       });
 
-      if(this.trazabilidad){
+      if(!this.trazabilidad){
         this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
             this.getEntidadesObservableNueva(entidad);
         })
