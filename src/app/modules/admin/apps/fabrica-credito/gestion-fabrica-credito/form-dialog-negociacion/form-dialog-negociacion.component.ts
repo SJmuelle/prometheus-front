@@ -43,9 +43,10 @@ export class FormDialogNegociacionComponent implements OnInit {
   ngOnInit(): void {
     this.manana = moment().add(1, 'days');
     this.manana = moment(this.manana).format("yyyy-MM-DD");
+    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
+
     this.crearFormulario();
 
-    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
     if(this.trazabilidad){
         this.form.disable()
     }
@@ -62,9 +63,22 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.valorRealCartera.setValue(this.data.item.Detalle.valorRealCartera)
     this.form.controls.comentarioNegociacion.setValue(this.data.item.Detalle.comentarioNegociacion)
     this.form.controls.fechaLimitePago.setValue(this.data.item.Detalle.fechaLimitePago)
+    console.log('data', this.data);
+
+    this.form.controls.nit.setValue(this.data.item.Detalle.nit)
 
 
-    this.calcularDescuento();
+    if(!this.trazabilidad){
+        this.form.controls.nombreEntidadNueva.setValue(this.data.item.entidad)
+        this.calcularDescuento();
+
+    }else{
+        this.form.controls.nombreEntidadNueva.setValue(this.data.item.Detalle.entidadGirador)
+        this.form.controls.valorDescuento.setValue(this.data.item.Detalle.valorDescuento)
+        this.form.controls.valorConsultores.setValue(this.data.item.Detalle.valorConsultores);
+        this.form.controls.valorAComprar.setValue(this.data.item.Detalle.valorAComprar)
+    }
+
 
 
   }
@@ -197,9 +211,12 @@ export class FormDialogNegociacionComponent implements OnInit {
         nit: ['',Validators.required]
       });
 
-      this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
-        this.getEntidadesObservableNueva(entidad);
-    })
+      if(this.trazabilidad){
+        this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
+            this.getEntidadesObservableNueva(entidad);
+        })
+      }
+
     }
 
   }
