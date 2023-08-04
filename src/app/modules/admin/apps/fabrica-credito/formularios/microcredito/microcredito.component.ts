@@ -64,7 +64,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             console.log('mes actual');
 
             return !!this.filter.find(item => currentDay < item && item === day)
-        }else if(currentMonth + month + 1){
+        }else if(currentMonth + 1 == month){
             return !!this.filter.find(item => currentDay > item && item === day)
         }
         return false;
@@ -627,7 +627,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             departamento : this.datosNegocio.get('departamentoNegocio').value,
             compra_cartera : "N"
           }
-
 
         if(dataMap.monto && dataMap.num_cuotas && dataMap.fecha_pago && dataMap.departamento){
             const nuevaFecha = moment(dataMap.fecha_pago).add(30,'days').format('YYYY-MM-DD')
