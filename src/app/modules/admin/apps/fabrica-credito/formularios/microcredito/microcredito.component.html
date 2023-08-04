@@ -24,7 +24,7 @@
             <app-fabrica-opciones *ngIf="!numeroSolicitud"></app-fabrica-opciones>
         </div>
     </div>
-    <mat-stepper [linear]="false" [orientation]="orientationStep" #stepper class="md:px-8 sm:px-0"
+    <mat-stepper [linear]="true" [orientation]="orientationStep" #stepper class="md:px-8 sm:px-0"
         (selectionChange)="onStepChange($event)">
         <mat-step [stepControl]="datosBasicos">
             <div class="bg-white  pt-6 grid grid-cols-1   ">
