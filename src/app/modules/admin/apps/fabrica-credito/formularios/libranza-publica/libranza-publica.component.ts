@@ -34,6 +34,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     numeroOTP: string;
     datosBasicos: FormGroup;
     datosLaborares: FormGroup;
+    datosCredito: FormGroup;
     validationOTPForm: FormGroup;
     orientationStep: StepperOrientation;
     currentScreenSize: string;
@@ -108,6 +109,11 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             descuentoNomina: ['', [Validators.required]],
 
         });
+
+        this.datosCredito = this.fb.group({
+            plazo: ['',Validators.required],
+            monto: ['', Validators.required]
+        })
 
         this.validationOTPForm = this.fb.group({
             numeroOTP: ['', [Validators.required, Validators.minLength(6)]],

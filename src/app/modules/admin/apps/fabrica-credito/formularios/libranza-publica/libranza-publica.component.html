@@ -29,7 +29,7 @@
         <mat-step [stepControl]="datosBasicos">
             <form [formGroup]="datosBasicos">
                 <ng-template matStepLabel>Datos básicos</ng-template>
-                <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-3">
+                <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-2">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de documento</mat-label>
                         <mat-select formControlName="tipoDocumento" (selectionChange)="preCargueDeDatos()">
@@ -132,7 +132,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <div class="bg-white rounded col-span-3 flex justify-end items-end gap-4">
+                    <div class="bg-white rounded flex justify-end items-end gap-4">
                         <button mat-raised-button color="primary" type="button" matStepperNext>
                             Siguiente
                             <mat-icon svgIcon="arrow_right"></mat-icon>
@@ -267,6 +267,40 @@
                     </div>
                 </div>
             </form>
+        </mat-step>
+        <mat-step [stepControl]="datosCredito">
+            <form [formGroup]="datosCredito">
+                <ng-template matStepLabel>Datos del crédito</ng-template>
+                <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-2">
+                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <mat-label>Monto</mat-label>
+                        <input matInput type="text" prefix="$" autocomplete="off" formControlName="monto" mask="separator.0"
+                            thousandSeparator="." matTooltip="¿Cuánto dinero necesitas para tu negocio?">
+                        <mat-error *ngIf="datosCredito.controls.monto.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                        <mat-error *ngIf="datosCredito.controls.monto.errors?.min">
+                            Monto mínimo de {{salarioMinimo}}
+                            <!-- Monto mínimo de {{datosDelCredito.controls.valorCredito.errors?.min.min}} -->
+                        </mat-error>
+                        <mat-error *ngIf="datosCredito.controls.monto.errors?.max">
+                            Monto máximo de 100.000.000
+                            <!-- Monto máximo de {{datosDelCredito.controls.valorCredito.errors?.max.max}} -->
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
+                        <input matInput type="number" autocomplete="off" formControlName="plazo">
+                    </mat-form-field>
+                    <div class="bg-white rounded col-span-3 flex justify-end items-end gap-4">
+                        <button mat-raised-button color="primary" type="button" matStepperNext>
+                            Siguiente
+                            <mat-icon svgIcon="arrow_right"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </mat-step>
         <mat-step [stepControl]="validationOTPForm">
             <ng-template matStepLabel>Autorizaciones</ng-template>
