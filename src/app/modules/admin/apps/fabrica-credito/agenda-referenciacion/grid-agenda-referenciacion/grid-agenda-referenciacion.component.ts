@@ -27,6 +27,9 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     public datosAux: any[] = [];
     public mostrarTotales: boolean = true;
     public totales: any[];
+
+    public loadingDataTable: boolean = false;
+
     constructor(
         private agendaReferenciaService: AgendaReferenciacionService,
         private router: Router,
@@ -64,7 +67,7 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     }
 
     private getAgendaReferenciacion(): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.loadingDataTable = true;
         this.agendaReferenciaService.getAgendaReferenciacion().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
@@ -72,10 +75,9 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
                 this.datos = res.data;
                 this.datosAux = res.data;
                 this.mostrar = false;
-                Swal.close();
             } else {
-                Swal.close();
             }
+            this.loadingDataTable = false;
         });
     }
     /**

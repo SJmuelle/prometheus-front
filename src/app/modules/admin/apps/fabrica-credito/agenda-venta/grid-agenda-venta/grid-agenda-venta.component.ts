@@ -32,6 +32,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
     minuto = 0;
     porcentaje: number;
     intervalVentaDigital: any;
+    public loadingDataTable: boolean = false;
 
 
     constructor(
@@ -69,6 +70,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
       */
     private getAgenda(): void {
         // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.loadingDataTable = true;
         this._agendaVentaService.getAgendaVenta().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
@@ -76,7 +78,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
             if (res.status === 200) {
                 this.datos = res.data;
                 this.mostrar = false;
-
+                this.loadingDataTable = false;
             } else {
             }
         });

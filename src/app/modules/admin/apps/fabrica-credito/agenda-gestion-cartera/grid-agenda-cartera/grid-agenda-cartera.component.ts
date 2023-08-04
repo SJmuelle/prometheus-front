@@ -25,6 +25,8 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
     public filtrarTabla = new FormControl('');
     public mostrarTotales: boolean = true;
     public totales: any[];
+    public loadingDataTable: boolean = false;
+
     constructor(
         private agendaComercialService: AgendaComercialService,
         // private agendaCarteraService: AgendaCarteraService,
@@ -45,7 +47,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
        * @description: Obtiene el listado de agenda de completacion
       */
     private getAgenda(): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.loadingDataTable = true;
         this.agendaComercialService.getAgendaCartera().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
@@ -53,6 +55,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
             if (res.status === 200) {
                 this.datos = res.data;
                 this.datosAux = res.data;
+                this.loadingDataTable = false;
                 this.mostrar = false;
 
             } else {

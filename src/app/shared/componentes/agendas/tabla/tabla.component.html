@@ -148,6 +148,7 @@
                                                 svgIcon="heroicons_outline:location-marker"></mat-icon>
                                         <span class="text-md text-black font-medium">{{ item.agencia}}</span>
                                     </div>
+
                                     <div class="flex  items-center" matTooltip="Asesor">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                         <span class="text-md text-black font-medium">
@@ -191,6 +192,11 @@
                                             <mat-icon class="icon-size-3"
                                                 svgIcon="heroicons_outline:location-marker"></mat-icon>
                                             {{ item.agencia}}
+                                        </span>
+                                        <span *ngIf="item.unidadNegocioFabrica === 1" class="text-xs text-black font-medium" matTooltipPosition="right"
+                                            matTooltip="Origen">
+                                            <mat-icon class="icon-size-3">home</mat-icon>
+                                            {{ item.origen}}
                                         </span>
                                         <ng-container>
                                             <span class="text-xs text-black font-medium" matTooltipPosition="right"
@@ -315,7 +321,7 @@
                                                 cambiarFecha(item.fechaUltimaReprogramacion)}}</small>
                                         </div>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between gap-4">
                                         <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
                                             [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                                             <small class="text-xs">Devolución</small>
@@ -425,17 +431,24 @@
                     </ng-container>
                 </tbody>
             </table>
-            <ng-template #noHaYDatos>
-                <div class="flex items-center content-center justify-center mt-7 gap-3 w-full min-h-26">
+            <ng-template #noHaYDatos >
+                <div *ngIf="!isLoading" class="flex items-center content-center justify-center mt-7 gap-3 w-full min-h-26">
                     <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                     <p class="text-5xl font-semibold tracking-tight">
                         {{ "Aviso" }}
                     </p>
                 </div>
-                <p class="text-lg mb-8 w-full flex justify-center items-center font-semibold">
+                <p *ngIf="!isLoading" class="text-lg mb-8 w-full flex justify-center items-center font-semibold">
                     {{ "Lo sentimos, no se encontraron datos " }}
                 </p>
             </ng-template>
+            <div *ngIf="isLoading" class="flex justify-center items-center min-h-60 flex-col gap-2">
+                    <div>
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    <span class="font-bold text-gray-600 ">Cargando...</span>
+            </div>
+
         </div>
         <div *ngIf="isMobil()" class="w-full  overflow-auto mt-2">
             <div class="flex justify-center items-center gap-4 flex-col">
@@ -523,6 +536,10 @@
                                     <div class="flex justify-evenly items-end gap-1">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                         <p class="m-0 text-xs font-semibold leading-3"> {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'NO REGISTRO':item.asesorMicro : item.asesorCredito == '' ? 'NO REGISTRO':item.asesorCredito }}</p>
+                                    </div>
+                                    <div class="flex justify-center items-center gap-1">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:window"></mat-icon>
+                                        <p class="m-0 text-xs font-semibold leading-3"> {{ item.origen}}</p>
                                     </div>
                                     <div class="flex justify-center items-center gap-1">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:location-marker"></mat-icon>

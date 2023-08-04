@@ -25,6 +25,9 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
     public mostrarTotales: boolean = true;
     public totales: any[];
     public headerColums: string[] = ['numeroSolicitud', 'identificacion', 'nombreCompleto', 'monto', 'agencia','asesor'];
+
+    public loadingDataTable: boolean = false;
+
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private router: Router
@@ -49,7 +52,7 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
     private getAgendaCompletacion(): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.loadingDataTable = true;
         this.agendaCompletacionService.getAgendaCompletacion().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
@@ -61,6 +64,7 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
             } else {
                 Swal.close();
             }
+            this.loadingDataTable = false;
         });
     }
 

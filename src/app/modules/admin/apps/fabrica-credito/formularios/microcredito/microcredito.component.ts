@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -50,6 +50,26 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     orientationStep: StepperOrientation;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
+    private filter = [2,20,30]
+
+    primerPagoValidation = (d: any | null | undefined): boolean => {
+        const currentMonth = this.fechaActual.month() + 1
+        const currentDay = this.fechaActual.date()
+        const day =  d?.date();
+        const month = d?.month() + 1
+
+        console.log('day', day , 'current Month' , currentMonth, 'current day', currentDay, 'month' , month);
+        // Prevent Saturday and Sunday from being selected.
+        if(currentMonth == month){
+            console.log('mes actual');
+
+            return !!this.filter.find(item => currentDay < item && item === day)
+        }else if(currentMonth + month + 1){
+            return !!this.filter.find(item => currentDay > item && item === day)
+        }
+        return false;
+      };
+
 
     currentScreenSize: string;
     displayNameMap = new Map([
@@ -112,7 +132,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
-            valorCouta: [''],
+            valorCoutaAprox: [''],
             fechaPrimerPago: ['', [Validators.required,this.mayorAHoyValidation.bind(this)]],
 
             numeroOTP: [''],
@@ -415,6 +435,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         })
     }
 
+
     public getAsesor() {
 
         const cod = this.datosNegocio.controls.barrioNegocio.value
@@ -607,14 +628,14 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             compra_cartera : "N"
           }
 
+
         if(dataMap.monto && dataMap.num_cuotas && dataMap.fecha_pago && dataMap.departamento){
             const nuevaFecha = moment(dataMap.fecha_pago).add(30,'days').format('YYYY-MM-DD')
             dataMap.fecha_pago = nuevaFecha
-            // this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe((rep => {
-            //     console.log('respuesta', rep);
-            // }))
+            this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe(((rep: any) => {
+                this.datosDelCredito.get('valorCoutaAprox').setValue(rep.info.data.valor_cuota)
+            }))
             console.log('data a enviar', dataMap);
-
         }
     }
 

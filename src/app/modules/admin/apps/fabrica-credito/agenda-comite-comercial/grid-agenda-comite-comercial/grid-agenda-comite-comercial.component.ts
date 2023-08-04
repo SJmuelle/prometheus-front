@@ -26,6 +26,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
+  public loadingDataTable: boolean = false;
 
   constructor(private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
@@ -45,17 +46,19 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
+    this.loadingDataTable = true;
     this.agendaComercialService.getAgendaComiteComercial().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
 
-      if (res.status === 200) {
-        this.datos = res.data;
-        this.datosAux = res.data;
-        this.mostrar = false;
+        if (res.status === 200) {
+            this.datos = res.data;
+            this.datosAux = res.data;
+            this.mostrar = false;
 
-      } else {
-      }
+        } else {
+        }
+        this.loadingDataTable = false;
     });
   }
 

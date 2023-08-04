@@ -30,6 +30,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     public totales: any[];
     public rolID: number;
     private scrollSpeed: number = 200;
+    private loadingDatosTabla: boolean = false;
     constructor(
         private agendaComercialService: AgendaComercialService,
         private _matDialog: MatDialog,
@@ -53,6 +54,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
        * @description: Obtiene el listado de agenda de completacion
       */
     private getAgendaComercial(): void {
+        this.loadingDatosTabla = true;
         this.agendaComercialService.getAgendaComercial().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
@@ -60,7 +62,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
             if (res.status === 200) {
                 this.datos = res.data;
                 this.datosAux = res.data;
-
+                this.loadingDatosTabla = false;
                 this.mostrar = false;
 
             } else {

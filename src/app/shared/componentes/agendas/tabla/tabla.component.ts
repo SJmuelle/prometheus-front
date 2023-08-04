@@ -21,6 +21,7 @@ export class TablaComponent implements OnInit {
     public unsubscribe$: Subject<any> = new Subject();
 
     @Input() datos;
+    @Input() isLoading;
     public page: number = 1;
     @Output() actualizarTabla:  EventEmitter<string> = new EventEmitter;
 

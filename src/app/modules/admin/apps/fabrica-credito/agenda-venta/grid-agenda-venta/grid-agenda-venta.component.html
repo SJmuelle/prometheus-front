@@ -52,7 +52,7 @@
         </div>
 
 
-    <app-tabla *ngIf="datos" [datos]="datos" (actualizarTabla)="actualizarTabla($event)"></app-tabla>
+    <app-tabla *ngIf="datos" [datos]="datos" (actualizarTabla)="actualizarTabla($event)" [isLoading]="loadingDataTable"></app-tabla>
 
     </div>
 </div>

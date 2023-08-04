@@ -27,6 +27,8 @@ export class GridAgendasVisitasComponent implements OnInit {
   public mostrarTotales: boolean = true;
   public totales: any[];
 
+  public loadingDataTable: boolean = false;
+
   constructor(private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
     private agendaReferenciaService: AgendaReferenciacionService,
@@ -44,6 +46,7 @@ export class GridAgendasVisitasComponent implements OnInit {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
+    this.loadingDataTable = true;
     this.agendaComercialService.getAgendaVisitas().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
@@ -55,6 +58,7 @@ export class GridAgendasVisitasComponent implements OnInit {
 
       } else {
       }
+      this.loadingDataTable = false;
     });
   }
 
