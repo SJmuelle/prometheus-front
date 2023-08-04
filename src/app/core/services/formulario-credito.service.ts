@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { AppSettingsService } from '../app-configs/app-settings.service';
 import { map } from 'rxjs/operators';
 
@@ -103,8 +103,10 @@ export class FormularioCreditoService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         };
+        const body = new HttpParams()
+        .set('data', JSON.stringify(data))
 
-        return this._http.post(this._appSettings.formulario.url.calcularValorAprox, data, options)
+        return this._http.post(this._appSettings.formulario.url.calcularValorAprox, body, {headers : new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })})
 
     }
 }

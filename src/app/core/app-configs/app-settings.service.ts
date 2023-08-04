@@ -123,7 +123,7 @@ export class AppSettingsService {
             validarOTP: EndPoints.uri('/firma/solicitud-validar-otp'),
             gurdadoPreSolicitud: EndPoints.uri('/generic/guardado-pre-solicitud-microcredito'),
             solicitarGenerarOTP: EndPoints.uri('/firma/solicitud-generar-otp'),
-            calcularValorAprox: EndPoints.uri('/fintracredit/webresources/hdc/calculate_value')
+            calcularValorAprox: EndPoints.uriPaga('fintracredit/webresources/hdc/calculate_value')
         }
     }
     /**
