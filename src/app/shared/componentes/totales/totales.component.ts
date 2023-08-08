@@ -28,8 +28,6 @@ export class TotalesComponent implements OnInit {
         if(this.isMobil()){
             this.currentTotalMobil = this.totales.find(total => total.nombre_unidad_negocio === 'Totales')
         }
-        console.log('datos totales', this.totales);
-
     }
 
     ngAfterViewInit(): void {

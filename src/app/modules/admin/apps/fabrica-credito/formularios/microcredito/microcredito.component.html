@@ -353,7 +353,7 @@
                         <mat-label>Fecha del primer pago</mat-label>
                         <input matInput [matDatepickerFilter]="primerPagoValidation" formControlName="fechaPrimerPago" disabled (dateChange)="calcularCuotaAproximada()"  [matDatepicker]="picker">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker disabled="false"></mat-datepicker>
+                        <mat-datepicker  #picker disabled="false"></mat-datepicker>
                         <mat-error *ngIf="datosDelCredito.controls.fechaPrimerPago.errors?.required">
                             Este campo es requerido.
                         </mat-error>

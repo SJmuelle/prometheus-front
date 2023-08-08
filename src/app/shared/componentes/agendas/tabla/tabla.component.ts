@@ -39,7 +39,6 @@ export class TablaComponent implements OnInit {
         //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
         //Add '${implements OnChanges}' to the class.
         this.changePageToOne();
-        console.log(this.datos, 'Datos tabla');
 
     }
 

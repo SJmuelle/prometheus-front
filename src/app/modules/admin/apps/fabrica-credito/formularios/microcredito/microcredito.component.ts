@@ -50,24 +50,15 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     orientationStep: StepperOrientation;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
-    private filter = [2,20,30]
+    private filter = [2,6,10,12]
 
     primerPagoValidation = (d: any | null | undefined): boolean => {
-        const currentMonth = this.fechaActual.month() + 1
-        const currentDay = this.fechaActual.date()
         const day =  d?.date();
-        const month = d?.month() + 1
 
-        console.log('day', day , 'current Month' , currentMonth, 'current day', currentDay, 'month' , month);
+        const diff = d?.diff(this.fechaActual, 'days') + 1  | 0
         // Prevent Saturday and Sunday from being selected.
-        if(currentMonth == month){
-            console.log('mes actual');
+        return diff > 30 && diff < 60 && !!this.filter.find(item => day === item)
 
-            return !!this.filter.find(item => currentDay < item && item === day)
-        }else if(currentMonth + 1 == month){
-            return !!this.filter.find(item => currentDay > item && item === day)
-        }
-        return false;
       };
 
 
@@ -490,7 +481,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log('cargue inicial', this.dataInicial);
+                this.filter = resp.data.diasPagoMicro.map(diaPago =>  Number(diaPago.valor));
             }
         })
     }
@@ -634,7 +625,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe(((rep: any) => {
                 this.datosDelCredito.get('valorCoutaAprox').setValue(rep.info.data.valor_cuota)
             }))
-            console.log('data a enviar', dataMap);
         }
     }
 
