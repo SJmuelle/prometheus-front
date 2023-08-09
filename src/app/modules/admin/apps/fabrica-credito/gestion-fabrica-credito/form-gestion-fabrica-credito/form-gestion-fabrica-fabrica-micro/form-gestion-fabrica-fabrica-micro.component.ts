@@ -443,7 +443,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.setConyugueNombreCompleto()
 
                 this.formatearDataInicial();
-                this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
+                console.log("controls", this.form.controls)
+                this.form.controls.fechaPrimerPago.setValue(data?.fechaPrimeraCuota === "0099-01-01" ? "NO REGISTRA" : data?.fechaPrimeraCuota);
+                this.form.controls.valorCuotaAprox.setValue(data?.valorCuota === 0 ? "NO REGISTRA" : data?.valorCuota);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
                 this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
                 this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
@@ -1004,6 +1006,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
             score: [''],
+
+            valorCuotaAprox: [''],
+            fechaPrimerPago: ['']
 
             // tipoCliente: [''],
             // categoriaSisben: ['', Validators.required]
