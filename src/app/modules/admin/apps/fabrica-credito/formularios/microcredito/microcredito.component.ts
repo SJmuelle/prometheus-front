@@ -123,7 +123,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
-            valorCoutaAprox: [''],
+            valorCuotaAprox: [''],
             fechaPrimerPago: ['', [Validators.required,this.mayorAHoyValidation.bind(this)]],
 
             numeroOTP: [''],
@@ -523,6 +523,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
 
+        data.fechaPrimerPago = moment(data.fechaPrimerPago).format('YYYY-MM-DD');
+        data.valorCuotaAprox = Number(data.valorCuotaAprox);
+
         Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).pipe(takeUntil(this.unSubscribe$)).subscribe((datos) => {
             if (datos.data.resultado === 'OK') {
@@ -620,7 +623,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
           }
 
         if(dataMap.monto && dataMap.num_cuotas && dataMap.fecha_pago && dataMap.departamento){
-            const nuevaFecha = moment(dataMap.fecha_pago).add(30,'days').format('YYYY-MM-DD')
+            const nuevaFecha = moment(dataMap.fecha_pago).format('YYYY-MM-DD')
             dataMap.fecha_pago = nuevaFecha
             this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe(((rep: any) => {
                 this.datosDelCredito.get('valorCoutaAprox').setValue(rep.info.data.valor_cuota)
