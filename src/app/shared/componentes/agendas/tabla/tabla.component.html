@@ -57,9 +57,13 @@
                                 </div>
                                 <mat-menu #menuOption="matMenu" class="p-2 flex flex-col">
                                     <!-- value.arrayChildren.nameChildren -->
-                                    <button *ngIf="item.idAgenda !== 'FO'" mat-menu-item (click)="onGetAgenda(item)">
+                                    <button *ngIf="item.idAgenda !== 'FO' && item.idAgenda !== 'VD'" mat-menu-item (click)="onGetAgenda(item)">
                                         <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                         Gestionar</button>
+
+                                        <button *ngIf="item.idAgenda === 'VD'" mat-menu-item (click)="onGetAgendaVD(item)">
+                                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                            Gestionar</button>
 
                                     <button *ngIf="item.clienteDesistio === 'S'" mat-menu-item
                                         (click)="onComentarioRechazar(item)">
@@ -152,7 +156,7 @@
                                     <div class="flex  items-center" matTooltip="Asesor">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                         <span class="text-md text-black font-medium">
-                                            {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'NO REGISTRO':item.asesorMicro : item.asesorCredito == '' ? 'NO REGISTRO':item.asesorCredito }}
+                                            {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No registra':item.asesorMicro : item.asesorCredito == '' ? 'No registra':item.asesorCredito }}
                                         </span>
                                     </div>
                                 </div>
@@ -231,12 +235,12 @@
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                 </mat-icon>
 
-                                                {{ cambiarFecha(item.fechaEmision) }}
+                                                {{ cambiarFecha(item.fechaEmision) | uppercase}}
                                             </span>
                                             <span class="text-xs text-black font-medium">
                                                 <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
                                                 </mat-icon>
-                                                {{ cambiarHora(item.fechaEmision) }}
+                                                {{ cambiarHora(item.fechaEmision) | uppercase}}
                                             </span>
                                             <span class="text-xs text-black font-medium">
                                                 <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
@@ -277,12 +281,12 @@
                                             <span class="text-xs text-black font-medium">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                 </mat-icon>
-                                                {{ cambiarFecha(item.fechaIngresoAgendaActual) }}
+                                                {{ cambiarFecha(item.fechaIngresoAgendaActual) | uppercase }}
                                             </span>
                                             <span class="text-xs text-black font-medium">
                                                 <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
                                                 </mat-icon>
-                                                {{ cambiarHora(item.fechaIngresoAgendaActual) }}
+                                                {{ cambiarHora(item.fechaIngresoAgendaActual) | uppercase}}
                                             </span>
                                             <span class="text-xs text-black font-medium">
                                                 <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
@@ -485,9 +489,14 @@
                                 </div> -->
                                 <mat-menu #menuOption="matMenu" class="p-2 flex flex-col">
                                     <!-- value.arrayChildren.nameChildren -->
-                                    <button *ngIf="item.idAgenda !== 'FO'" mat-menu-item (click)="onGetAgenda(item)">
+                                    <button *ngIf="item.idAgenda !== 'FO' && item.idAgenda !== 'VD'" mat-menu-item (click)="onGetAgenda(item)">
                                         <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                         Gestionar</button>
+
+                                    <button *ngIf="item.idAgenda === 'VD'" mat-menu-item (click)="onGetAgendaVD(item)">
+                                        <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                            Gestionar
+                                    </button>
 
                                     <button *ngIf="item.clienteDesistio === 'S'" mat-menu-item
                                         (click)="onComentarioRechazar(item)">
@@ -535,7 +544,7 @@
                                 <div class="flex justify-evenly w-full items-start gap-4 borderTopCard py-2">
                                     <div class="flex justify-evenly items-end gap-1">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                        <p class="m-0 text-xs font-semibold leading-3"> {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'NO REGISTRO':item.asesorMicro : item.asesorCredito == '' ? 'NO REGISTRO':item.asesorCredito }}</p>
+                                        <p class="m-0 text-xs font-semibold leading-3"> {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No registra':item.asesorMicro : item.asesorCredito == '' ? 'No registra':item.asesorCredito }}</p>
                                     </div>
                                     <div class="flex justify-center items-center gap-1">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:window"></mat-icon>
