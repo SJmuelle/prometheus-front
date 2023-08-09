@@ -57,9 +57,13 @@
                                 </div>
                                 <mat-menu #menuOption="matMenu" class="p-2 flex flex-col">
                                     <!-- value.arrayChildren.nameChildren -->
-                                    <button *ngIf="item.idAgenda !== 'FO'" mat-menu-item (click)="onGetAgenda(item)">
+                                    <button *ngIf="item.idAgenda !== 'FO' && item.idAgenda !== 'VD'" mat-menu-item (click)="onGetAgenda(item)">
                                         <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                         Gestionar</button>
+
+                                        <button *ngIf="item.idAgenda === 'VD'" mat-menu-item (click)="onGetAgendaVD(item)">
+                                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                            Gestionar</button>
 
                                     <button *ngIf="item.clienteDesistio === 'S'" mat-menu-item
                                         (click)="onComentarioRechazar(item)">
@@ -485,9 +489,14 @@
                                 </div> -->
                                 <mat-menu #menuOption="matMenu" class="p-2 flex flex-col">
                                     <!-- value.arrayChildren.nameChildren -->
-                                    <button *ngIf="item.idAgenda !== 'FO'" mat-menu-item (click)="onGetAgenda(item)">
+                                    <button *ngIf="item.idAgenda !== 'FO' && item.idAgenda !== 'VD'" mat-menu-item (click)="onGetAgenda(item)">
                                         <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                         Gestionar</button>
+
+                                    <button *ngIf="item.idAgenda === 'VD'" mat-menu-item (click)="onGetAgendaVD(item)">
+                                        <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                            Gestionar
+                                    </button>
 
                                     <button *ngIf="item.clienteDesistio === 'S'" mat-menu-item
                                         (click)="onComentarioRechazar(item)">

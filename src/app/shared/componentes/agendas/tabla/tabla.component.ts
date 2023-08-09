@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 import { FormDialogDevolverFabricaComponent } from 'app/modules/admin/apps/fabrica-credito/agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { FormDecisionComponent } from 'app/modules/admin/apps/fabrica-credito/agenda-decision/form-decision/form-decision.component';
 import { FormDialogReprogramarComponent } from 'app/modules/admin/apps/fabrica-credito/agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
@@ -28,7 +29,8 @@ export class TablaComponent implements OnInit {
     constructor( private router: Router,
         private _matDialog: MatDialog,
         private fabricaCreditoService: FabricaCreditoService,
-        private _dialog: MatDialog) { }
+        private _dialog: MatDialog,
+        public _permisosService: PermisosService) { }
 
     ngOnInit(): void {
 
@@ -164,4 +166,20 @@ export class TablaComponent implements OnInit {
     public isMobil(){
         return window.innerWidth < 600;
     }
+
+
+        /**
+     * @description: abre la agenda
+     */
+        public onGetAgendaVD(data: any): void {
+            if (data) {
+                const { tipoDocumento, identificacion,numeroSolicitud } = data;
+                this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
+            } else {
+                //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+
+                this._permisosService.ruta = 'venta-digital'
+                this.router.navigate([`/credit-factory/formularios/microcredito`]);
+            }
+        }
 }
