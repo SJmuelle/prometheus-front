@@ -626,7 +626,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             const nuevaFecha = moment(dataMap.fecha_pago).format('YYYY-MM-DD')
             dataMap.fecha_pago = nuevaFecha
             this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe(((rep: any) => {
-                this.datosDelCredito.get('valorCoutaAprox').setValue(rep.info.data.valor_cuota)
+                this.datosDelCredito.get('valorCuotaAprox').setValue(rep.info.data.valor_cuota)
             }))
         }
     }
