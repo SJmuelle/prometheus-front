@@ -7,9 +7,10 @@ import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import { Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { skip, takeUntil } from 'rxjs/operators';
 import { ModalActualizarClienteComponent } from '../modal-actualizar-cliente/modal-actualizar-cliente/modal-actualizar-cliente.component';
 import { ModalDetailsCarteraClienteComponent } from '../modal-details-cartera-cliente/modal-details-cartera-cliente/modal-details-cartera-cliente.component';
+import { ModalSelectViewClienteComponent } from '../modal-selectView-cliente/modal-select-view-cliente.component';
 import { AplicarPagosCarteraClienteComponent } from './aplicar-pagos-cartera-cliente/aplicar-pagos-cartera-cliente/aplicar-pagos-cartera-cliente.component';
 
 @Component({
@@ -20,10 +21,16 @@ import { AplicarPagosCarteraClienteComponent } from './aplicar-pagos-cartera-cli
 export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
   public dataRows: any[] = []
+  public ArrayDataTables: any[] = []
   public formSearch: FormGroup;
+  public tittleFilter: string = 'Filtros'
   public openSearch: boolean = true
   public unidadesNegocio: any[] = []
   public periodosFotos: any[] = []
+  public allData: any[] = null
+  public opened: boolean = false
+  public viewMode: any = { display: false, tab: false }
+  public subcriptionTwo$: Subscription = new Subscription();
   public optionsTable: IoptionTable[] = [
     {
       name: 'Opciones',
@@ -65,7 +72,26 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
                 },
                 iconAngularMaterial: 'timeline',
                 children: false
-              }]
+              },
+              {
+                nameFunction: 'Pantalla dividida',
+                callback: (data) => {
+                  const searchValues = this.formSearch.getRawValue();
+                  const estados = this.estadosCartera.value
+                  const dataValues = {
+                    ...searchValues,
+                    ...data,
+                    estados
+                  }
+                  // this.allData = { ...dataValues }
+                  this._carteraClienteServices.saveSearch({ ...dataValues });
+
+                  this.dialog.open(ModalSelectViewClienteComponent, {})
+                },
+                iconAngularMaterial: 'chrome_reader_mode',
+                children: false
+              }
+            ]
           }
         },
         // {
@@ -109,13 +135,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'cedula',
       text: 'Cédula',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'nombreCliente',
       text: 'Cliente',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'direccion',
@@ -127,7 +155,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'barrio',
       text: 'Barrio',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
     },
     {
       name: 'ciudad',
@@ -139,13 +167,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'telcontacto',
       text: 'Celular',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'telefono',
       text: 'Teléfono',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'negocio',
@@ -169,7 +199,8 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'Dia de pago',
       text: 'Día de pago',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
 
     {
@@ -184,13 +215,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       text: 'Recaudo',
       typeField: 'text',
       pipeName: 'number',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'cumplimiento',
       text: '% cumplimiento',
       typeField: 'text',
-      pipeName: 'percentage'
+      pipeName: 'percentage',
+      view: false
     },
     {
       name: 'valoraPagar',
@@ -203,13 +236,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'fechaultCompromiso',
       text: 'Fecha último compromiso',
       typeField: 'text',
+      view: false
     },
     {
       name: 'compromiso de pago',
       text: '$ compromiso de pago',
       typeField: 'text',
       pipeName: 'number',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'reestructuracion',
@@ -233,6 +268,9 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   private unsuscribe$: Subject<any> = new Subject<any>();
   public subcription$: Subscription = new Subscription();
   public estadosCartera: FormControl = new FormControl(['porVencer', 'vencido'])
+
+  public subcriptionTree$: Subscription = new Subscription();
+
   constructor(
     private _carteraClienteServices: CarteraClientesService,
     private fb: FormBuilder,
@@ -244,12 +282,19 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
     this.subcription$.unsubscribe();
     this.unsuscribe$.next(null);
     this.unsuscribe$.complete();
+    this.subcriptionTwo$.unsubscribe();
+    this.subcriptionTree$.unsubscribe();
   }
 
   ngOnInit(): void {
     this.loadsearch()
     this.formSearchBuilder();
     this.listenObservable();
+  }
+
+  public viewDetail(dataRow): void {
+    console.log('viewDetail', dataRow);
+    this.opened = true
   }
 
   public openDialog(viewModal: string, dataRow: any): void {
@@ -501,10 +546,12 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
             if (!resp.data.length) {
               this._sweetAlerService.alertInfo({});
               this.dataRows = []
+              this.tittleFilter = 'Filtros'
             } else {
               this.openSearch = false
               this._sweetAlerService.stopLoading();
               this.dataRows = resp?.data || []
+              this.tittleFilter = `${this.dataRows[0].nombreCliente} CC - ${this.dataRows[0].cedula}`
             }
             resolve(this.dataRows);
           },
@@ -518,10 +565,14 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
             if (!resp.data.length) {
               this._sweetAlerService.alertInfo({});
               this.dataRows = []
+              this.tittleFilter = 'Filtros'
             } else {
               this.openSearch = false
               this._sweetAlerService.stopLoading();
               this.dataRows = resp?.data || []
+
+
+              this.tittleFilter = `${this.dataRows[0].nombreCliente} CC - ${this.dataRows[0].cedula}`
             }
             resolve(this.dataRows);
           },
@@ -542,6 +593,17 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
 
   }
 
+  public tittleString(value: string): string {
+
+    if (value) {
+      const firstCaracter = (value as string)?.charAt(0)?.toUpperCase();
+      const word = (value as string)?.substring(1)?.toLowerCase();
+      return `${firstCaracter}${word}`;
+    }
+
+
+  }
+
 
   public reloadData(): void {
     this.searchClient().then(() => this._sweetAlerService.alertSuccess())
@@ -553,6 +615,36 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
         this.reloadData();
       }
     })
+
+    this.subcriptionTwo$ = this._carteraClienteServices.selectedOption$.pipe(takeUntil(this.unsuscribe$), skip(1)).subscribe({
+      next: (resp) => {
+        this.viewMode = { display: false, tab: true }
+        const dataSearch = this._carteraClienteServices.getSearchData();
+        this.allData = { ...dataSearch }
+      }
+    })
+
+    this.subcriptionTree$ = this._carteraClienteServices.dataTablesSelected$.pipe(takeUntil(this.unsuscribe$), skip(1)).subscribe({
+      next: (resp) => {
+        console.log(resp, 'prueba')
+
+        const { length } = resp
+        resp.forEach((item, index) => {
+          if (length === 1) {
+            item.class = 'sm:col-span-2'
+          } else {
+            item.class = 'sm:col-span-1'
+          }
+          if ((index === 2) && (length === 3)) {
+            item.class = 'sm:col-span-2'
+          }
+        })
+
+        this.ArrayDataTables = [...resp]
+        this.viewMode = { display: true, tab: false }
+      }
+    })
+
   }
 
   private formSearchBuilder(): void {
@@ -560,7 +652,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
     this.formSearch = this.fb.group({
       periodo: [, [Validators.required]],
       unidadNegocio: [''],
-      identificacion: [, [Validators.required, Validators.pattern(pattern)]],
+      identificacion: ['1129517344', [Validators.required, Validators.pattern(pattern)]],
       // alDia: [false],
       // porVencer: [true],
       // vencido: [true]

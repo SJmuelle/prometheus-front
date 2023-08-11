@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CarteraClientesService } from 'app/core/services/cartera-clientes.service';
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
@@ -43,7 +43,8 @@ export class ModalSubDetalleClienteComponent implements OnInit, OnDestroy {
     private _carteraServices: CarteraClientesService,
     private fb: FormBuilder,
     private _sweetAlertService: Sweetalert2Service,
-    private _dialRef: MatDialogRef<ModalSubDetalleClienteComponent>
+    private _dialRef: MatDialogRef<ModalSubDetalleClienteComponent>,
+    private dialog: MatDialog
   ) { }
 
 
@@ -103,6 +104,33 @@ export class ModalSubDetalleClienteComponent implements OnInit, OnDestroy {
 
   public closeModal(): void {
     this._dialRef.close()
+  }
+
+  public openDiagGestion(): void {
+
+
+    const data = {
+      viewModal: 'Seleccionar Dirección',
+      valuesData: [],
+      width: '30%'
+    }
+
+    this.loadingModal(data)
+
+  }
+
+
+  public loadingModal({ viewModal, valuesData, width }): void {
+    const dialogRef = this.dialog.open(ModalSubDetalleClienteComponent,
+      {
+        maxWidth: '90vw',
+        maxHeight: '80vh',
+        width,
+        data: { viewModal, valuesData },
+        disableClose: false
+      })
+
+
   }
 
   private initForm(): void {

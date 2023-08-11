@@ -198,11 +198,14 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     this.dataSource.sort = this.sort;
 
     this.copyTableOptions = this.dataOptionTable
+    if (this.Options.footer) {
+      this.dataOptionTable[0].valueFooter = 'Totales'
 
-    this.dataOptionTable[0].valueFooter = 'Totales'
+      this.calculateFooterSum()
+      this.calculateFooter();
 
-    this.calculateFooterSum()
-    this.calculateFooter();
+    }
+
 
 
   }
@@ -283,10 +286,14 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
     this.dataFunctions = [...valuesmenus]
 
-    this.dataOptionTable[0].valueFooter = 'Totales'
+    if (this.Options.footer) {
+      this.dataOptionTable[0].valueFooter = 'Totales'
 
-    this.calculateFooterSum()
-    this.calculateFooter();
+
+      this.calculateFooterSum()
+      this.calculateFooter();
+
+    }
 
 
 
@@ -345,7 +352,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
 
   public actionSelectRow(row): void {
-    // console.log(row);
+    this.dataRowSelect.emit(row);
 
   }
 

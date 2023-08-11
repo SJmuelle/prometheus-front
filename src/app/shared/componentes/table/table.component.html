@@ -256,8 +256,8 @@
                 <ng-container [matColumnDef]="dataOption.name"
                     *ngFor="let dataOption of this.dataOptionTable; let i = index">
 
-                    <th class=" sticky top-0 " style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef
-                        mat-sort-header>
+                    <th class=" sticky top-0 pl-2 header-table" style="background: #E2E8F0;" mat-header-cell
+                        *matHeaderCellDef mat-sort-header>
                         {{ dataOption.text }}
                     </th>
 
@@ -495,8 +495,9 @@
     </div>
 
     <div class="relative">
-        <mat-paginator (page)="pageEvent($event)" class="border-t border-b rounded-t-none rounded-xl"
-            style="background-color: #E2E8F0;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
+        <mat-paginator (page)="pageEvent($event)"
+            class="border-t border-b border flex flex-row items-center h-22 sm:h-14 rounded-t-none rounded-xl"
+            style="background-color: #ffffff;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
             [pageSize]="5" [pageSizeOptions]="[3,5]">
         </mat-paginator>
 

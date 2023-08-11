@@ -15,7 +15,9 @@ export class CarteraClientesService {
   public dataCliente$: BehaviorSubject<any> = new BehaviorSubject(values)
   public direccionCliente$: BehaviorSubject<string> = new BehaviorSubject('')
   public reloadData$: Subject<any[]> = new Subject();
-
+  public dataTablesSelected$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  public allDataSearch: any = null;
+  public selectedOption$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   constructor(private _http: HttpClient, private _appSettings: AppSettingsService) { }
 
   /**
@@ -26,6 +28,25 @@ export class CarteraClientesService {
     // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
     return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarUnidad}`)
   }
+
+  /**
+   * 
+   * @param data 
+   */
+  public saveSearch(data: any): void {
+
+    this.allDataSearch = { ...data }
+  }
+
+  /**
+ * 
+ * @param data 
+ */
+  public getSearchData(): any {
+    return this.allDataSearch;
+  }
+
+
 
   /**
    * 

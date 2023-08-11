@@ -189,7 +189,8 @@ mat-tab-group>.mat-tab-body-wrapper {
 }
 
 .text-centerTable>thead>tr>th>.mat-sort-header-container {
-    // justify-content: center;
+    justify-content: start;
+    padding-left: 6px;
 }
 
 .text-centerTable>thead>tr>th>.mat-sort-header-container {
@@ -242,4 +243,8 @@ mat-form-field.dltMB .mat-form-field-wrapper {
         }
     }
 
+}
+
+.header-table {
+    justify-content: start !important;
 }
