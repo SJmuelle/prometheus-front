@@ -1,0 +1,236 @@
+<div class="flex flex-col w-full h-auto overflow-y-auto p-2  justify-center">
+
+
+    <div class="border bg-white border-gray-50 rounded-md shadow-md h-auto w-full flex flex-col gap-4 p-4">
+
+        <h3 class="text-2xl font-semibold -mb-2">{{infoCliente?.nombreCliente}}</h3>
+
+        <hr class="my-0">
+
+        <div class="flex flex-col -mt-3">
+
+            <div class="border mb-4 rounded-md m-1 flex flex-col gap-2 p-2">
+
+                <span class="text-2xl font-semibold">Información personal</span>
+
+                <hr class="my-0">
+
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Cedula : </span>
+                    <span>{{infoCliente?.cedula}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Negocio : </span>
+                    <span>{{infoCliente?.negocio}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Nombre del convenio : </span>
+                    <span>{{infoCliente?.nombreConvenio}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Ciudad : </span>
+                    <span>{{infoCliente?.ciudad}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Barrio : </span>
+                    <span>{{infoCliente?.barrio}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Dirección : </span>
+                    <span>{{infoCliente?.direccion}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Telefono contacto : </span>
+                    <span>{{infoCliente?.telcontacto}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Celular : </span>
+                    <span>{{infoCliente?.telefono}}</span>
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="border rounded-md m-1 flex flex-col gap-2 p-2">
+
+                <span class="text-2xl font-semibold">Detalle pago</span>
+
+                <hr class="my-0">
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Fecha ultimo compromiso : </span>
+                    <span>{{infoCliente?.fechaultCompromiso}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">cumplimiento : </span>
+                    <span>{{infoCliente?.cumplimiento | dataTable :'percentage'}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Vencimiento mayor : </span>
+                    <span>{{infoCliente?.vencimientoMayor}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Pagaduria : </span>
+                    <span>{{infoCliente?.pagaduria}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Juridica : </span>
+                    <span>{{infoCliente?.juridica}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Reestructuración : </span>
+                    <span>{{infoCliente?.reestructuracion}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">refinanciacion : </span>
+                    <span>{{infoCliente?.refinanciacion}}</span>
+
+
+                </div>
+
+
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Recaudos por cuota: </span>
+                    <span>{{infoCliente?.recaudosxCuota}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Recaudos por cuota fenalco: </span>
+                    <span>{{infoCliente?.recaudosxcuotaFenalco}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Recaudos por cuota fiducia: </span>
+                    <span>{{infoCliente?.recaudosxcuotaFiducia}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Valor asignado : </span>
+                    <span>{{infoCliente?.valorAsignado}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Valor a pagar : </span>
+                    <span>{{infoCliente?.valoraPagar}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Debido a cobrar : </span>
+                    <span>{{infoCliente?.debidoCobrar}}</span>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+    <div class="flex flex-row justify-end mb-40 mt-2.5">
+        <button mat-raised-button color="primary" (click)="closePage.emit()">Cerrar</button>
+    </div>
+
+</div>

@@ -193,6 +193,14 @@
                         <mat-label>Segmento</mat-label>
                         <input matInput type="text" [formControlName]="'segmento'" [readonly]="true" />
                     </mat-form-field>
+                     <mat-form-field class="mat-form-field-disabled">
+                        <mat-label>Fecha primera cuota</mat-label>
+                        <input matInput type="text" [formControlName]="'fechaPrimerPago'" [readonly]="true" />
+                    </mat-form-field>
+                     <mat-form-field class="mat-form-field-disabled">
+                        <mat-label>Valor cuota aproximada</mat-label>
+                        <input matInput type="text" [mask]="form.get('valorCuotaAprox')?.value === 'NO REGISTRA' ? '' : 'separator.0'" [thousandSeparator]="form.get('valorCuotaAprox')?.value === 'NO REGISTRA' ? '' : '.'" [formControlName]="'valorCuotaAprox'" [readonly]="true" />
+                    </mat-form-field>
                 </div>
 
                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de riesgo</span>

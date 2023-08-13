@@ -28,8 +28,9 @@
                     </p>
                 </div>
 
-                <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
-                    class="border-1 p-4 flex flex-col">
+                <div (click)="actionSelectRow(value)"
+                    *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
+                    class="border-1 p-4 flex flex-col cursor-pointer">
 
 
 
@@ -256,7 +257,7 @@
                 <ng-container [matColumnDef]="dataOption.name"
                     *ngFor="let dataOption of this.dataOptionTable; let i = index">
 
-                    <th class=" sticky top-0 pl-2 header-table" style="background: #E2E8F0;" mat-header-cell
+                    <th class=" sticky top-0 pl-2.5 header-table" style="background: #E2E8F0;" mat-header-cell
                         *matHeaderCellDef mat-sort-header>
                         {{ dataOption.text }}
                     </th>
@@ -501,7 +502,7 @@
             [pageSize]="5" [pageSizeOptions]="[3,5]">
         </mat-paginator>
 
-        <button #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button
+        <button *ngIf="Options.config" #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button
             class="absolute buttonSettings"><mat-icon>settings</mat-icon></button>
 
 

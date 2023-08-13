@@ -43,9 +43,10 @@ export class FormDialogNegociacionComponent implements OnInit {
   ngOnInit(): void {
     this.manana = moment().add(1, 'days');
     this.manana = moment(this.manana).format("yyyy-MM-DD");
+    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
+
     this.crearFormulario();
 
-    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
     if(this.trazabilidad){
         this.form.disable()
     }
@@ -54,7 +55,6 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.identificacion.setValue(this.data.identificacion);
     this.form.controls.idRegistro.setValue(this.data.item.id);
     this.form.controls.resultadoNegociacion.setValue(this.data.evento);
-    this.form.controls.porcentajeConsultores.setValue(50);
     this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual))
     this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(0 + ''))
     this.form.controls.nombreNegociador.setValue(this.data.item.Detalle.nombreNegociador)
@@ -63,8 +63,22 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.comentarioNegociacion.setValue(this.data.item.Detalle.comentarioNegociacion)
     this.form.controls.fechaLimitePago.setValue(this.data.item.Detalle.fechaLimitePago)
 
+    this.form.controls.nit.setValue(this.data.item.Detalle.nit)
 
-    this.calcularDescuento();
+
+    if(!this.trazabilidad){
+        this.form.controls.nombreEntidadNueva.setValue(this.data.item.entidad)
+        this.form.controls.porcentajeConsultores.setValue(50);
+        this.calcularDescuento();
+
+    }else{
+        this.form.controls.porcentajeConsultores.setValue(this.data.item.Detalle.porcentajeConsultores);
+        this.form.controls.nombreEntidadNueva.setValue(this.data.item.Detalle.entidadGirador)
+        this.form.controls.valorDescuento.setValue(this.data.item.Detalle.valorDescuento)
+        this.form.controls.valorConsultores.setValue(this.data.item.Detalle.valorConsultores);
+        this.form.controls.valorAComprar.setValue(this.data.item.Detalle.valorAComprar)
+    }
+
 
 
   }
@@ -73,12 +87,12 @@ export class FormDialogNegociacionComponent implements OnInit {
    * @description:
    */
   public calcularDescuento() {
-    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)))
-    let valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)))
+    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorRealCartera+'')))
+    let valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar + '')))
     let valor = valorAComprarNoEditable - valorAComprar
     if (valor < 0) {
       this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(valorAComprarNoEditable + ''))
-      this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(0 + ''))
+      this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(0))
     } else {
       this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(valor + ''))
     }
@@ -89,7 +103,7 @@ export class FormDialogNegociacionComponent implements OnInit {
  * @description:
  */
   public calcularValorConsultores() {
-    let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
+    let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento + '')));
     let porcentajeConsultores = Number((this.form.value.porcentajeConsultores));
     let valor = (valorDescuento * (porcentajeConsultores / 100));
     valor = Math.round(valor);
@@ -109,10 +123,10 @@ export class FormDialogNegociacionComponent implements OnInit {
 
     if (this.form.valid) {
       const data: any = this.form.getRawValue();
-      const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)));
-      const valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
-      const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores)));
-      const valorRealCartera = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)));
+      const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar + '')));
+      const valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento + '')));
+      const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores + '')));
+      const valorRealCartera = Number(this.utility.enviarNumero((this.form.value.valorRealCartera + '')));
 
       if (this.data.evento != 'NO EXITOSA') {
         if (valorAComprar == 0) {
@@ -197,9 +211,12 @@ export class FormDialogNegociacionComponent implements OnInit {
         nit: ['',Validators.required]
       });
 
-      this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
-        this.getEntidadesObservableNueva(entidad);
-    })
+      if(!this.trazabilidad){
+        this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
+            this.getEntidadesObservableNueva(entidad);
+        })
+      }
+
     }
 
   }
@@ -207,7 +224,6 @@ export class FormDialogNegociacionComponent implements OnInit {
   private postGuardado(data: any): void {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.confirmarNit(data.nombreEntidadNueva, data.nit).pipe(takeUntil(this.unsubscribe$)).subscribe(guardar => {
-        console.log('data', this.data);
 
         if(guardar || this.data.evento === 'NO EXITOSA'){
             this._listadoCarteraService.gestionCartera(data).pipe(takeUntil(this.unsubscribe$))
@@ -252,7 +268,6 @@ export class FormDialogNegociacionComponent implements OnInit {
 }
 
 getNitApi(){
-    console.log('length', this.entidadOptionsNueva.length);
 
     if(this.entidadOptionsNueva.length === 1){
         this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)

@@ -38,10 +38,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { SharedModule } from 'app/shared/shared.module';
 
 
+
 @NgModule({
   declarations: [
     MicrocreditoComponent,
-    LibranzaPublicaComponent,  
+    LibranzaPublicaComponent,
   ],
   imports: [
     CommonModule,

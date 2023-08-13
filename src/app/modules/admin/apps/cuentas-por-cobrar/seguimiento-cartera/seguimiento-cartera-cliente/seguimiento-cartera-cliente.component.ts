@@ -30,6 +30,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   public allData: any[] = null
   public opened: boolean = false
   public viewMode: any = { display: false, tab: false }
+  public rowSelected: any = null
   public subcriptionTwo$: Subscription = new Subscription();
   public optionsTable: IoptionTable[] = [
     {
@@ -295,6 +296,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   public viewDetail(dataRow): void {
     console.log('viewDetail', dataRow);
     this.opened = true
+    this.rowSelected = { ...dataRow }
   }
 
   public openDialog(viewModal: string, dataRow: any): void {

@@ -22,6 +22,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-refe
     MatSlideToggleModule,
     MatSelectModule,
     MatExpansionModule,
-    AgendaReferenciacionModule 
+    AgendaReferenciacionModule,
+    SharedModule
   ]
 })
 export class AgendaComiteComercialModule { }

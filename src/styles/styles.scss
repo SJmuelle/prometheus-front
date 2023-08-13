@@ -183,19 +183,19 @@ mat-tab-group>.mat-tab-body-wrapper {
     min-height: 40px !important;
 }
 
-.mat-sort-header-container {
-    display: flex !important;
-    justify-content: center !important;
-}
+// .mat-sort-header-container {
+//     display: flex !important;
+//     justify-content: center !important;
+// }
 
-.text-centerTable>thead>tr>th>.mat-sort-header-container {
-    justify-content: start;
-    padding-left: 6px;
-}
+// .text-centerTable>thead>tr>th>.mat-sort-header-container {
+//     justify-content: start;
+//     padding-left: 6px;
+// }
 
-.text-centerTable>thead>tr>th>.mat-sort-header-container {
-    justify-content: center;
-}
+// .text-centerTable>thead>tr>th>.mat-sort-header-container {
+//     justify-content: center;
+// }
 
 .mat-vertical-content-container {
     margin-left: 0px !important;
@@ -245,6 +245,10 @@ mat-form-field.dltMB .mat-form-field-wrapper {
 
 }
 
-.header-table {
-    justify-content: start !important;
+td.mat-calendar-body-cell:not(.mat-calendar-body-disabled) .mat-calendar-body-cell-content.mat-focus-indicator {
+    background: rgb(141 141 169 / 15%);
+}
+
+.mat-calendar-body-cell-content.mat-focus-indicator.mat-calendar-body-selected {
+    color: black;
 }

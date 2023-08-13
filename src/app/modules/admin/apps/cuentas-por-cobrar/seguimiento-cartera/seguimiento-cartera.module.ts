@@ -12,6 +12,7 @@ import { AplicarPagosCarteraClienteComponent } from './seguimiento-cartera-clien
 import { ModalSelectViewClienteComponent } from './modal-selectView-cliente/modal-select-view-cliente.component';
 import { FullViewsDetailsClienteComponent } from './full-views-details-cliente/full-views-details-cliente.component';
 import { ModalTabDetalleClienteComponent } from './modal-tab-detalle-cliente/modal-tab-detalle-cliente.component';
+import { VistaDetalleClienteComponent } from './vista-detalle-cliente/vista-detalle-cliente.component';
 
 
 
@@ -28,7 +29,8 @@ import { ModalTabDetalleClienteComponent } from './modal-tab-detalle-cliente/mod
     AplicarPagosCarteraClienteComponent,
     ModalSelectViewClienteComponent,
     FullViewsDetailsClienteComponent,
-    ModalTabDetalleClienteComponent
+    ModalTabDetalleClienteComponent,
+    VistaDetalleClienteComponent
   ],
   imports: [
     CommonModule,

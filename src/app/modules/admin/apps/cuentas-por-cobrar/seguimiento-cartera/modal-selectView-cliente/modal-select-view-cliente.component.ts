@@ -107,7 +107,8 @@ export class ModalSelectViewClienteComponent implements OnInit {
     private dialog: MatDialogRef<ModalSelectViewClienteComponent>,
     private _seguimientoCarteraService: CarteraClientesService,
     private _sweetAlerService: Sweetalert2Service,
-    private _modalTab: MatDialog
+    private _modalTab: MatDialog,
+    private modalRef: MatDialogRef<ModalSelectViewClienteComponent>
   ) { }
 
   ngOnInit(): void {
@@ -226,6 +227,10 @@ export class ModalSelectViewClienteComponent implements OnInit {
       })
     })
 
+  }
+
+  public cerrarModal(): void {
+    this.modalRef.close();
   }
 
   public async loadData(): Promise<void> {

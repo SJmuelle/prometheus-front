@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -50,6 +50,17 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     orientationStep: StepperOrientation;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
+    private filter = [2,6,10,12]
+
+    primerPagoValidation = (d: any | null | undefined): boolean => {
+        const day =  d?.date();
+
+        const diff = d?.diff(this.fechaActual, 'days') + 1  | 0
+        // Prevent Saturday and Sunday from being selected.
+        return diff > 30 && diff < 60 && !!this.filter.find(item => day === item)
+
+      };
+
 
     currentScreenSize: string;
     displayNameMap = new Map([
@@ -112,6 +123,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
+            valorCuotaAprox: [''],
+            fechaPrimerPago: ['', [Validators.required,this.mayorAHoyValidation.bind(this)]],
 
             numeroOTP: [''],
         })
@@ -345,6 +358,19 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
     }
 
+    private mayorAHoyValidation(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        const date = moment(valueControl).format('YYYY-MM-DD')
+        const errors = { dateMayor: true };
+        // Set the validation error on the matching control
+        if (this.fechaActual.isAfter(date)) {
+
+            return errors
+        } else {
+            return null
+        }
+    }
+
     private validateMayorEdad(control: AbstractControl) {
         const valueControl = control?.value ?? '';
         const date = moment(valueControl).format('YYYY-MM-DD')
@@ -400,6 +426,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         })
     }
 
+
     public getAsesor() {
 
         const cod = this.datosNegocio.controls.barrioNegocio.value
@@ -454,7 +481,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log('cargue inicial', this.dataInicial);
+                this.filter = resp.data.diasPagoMicro.map(diaPago =>  Number(diaPago.valor));
             }
         })
     }
@@ -495,6 +522,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.autorizacionCentrales = 'S',
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
+
+        data.fechaPrimerPago = moment(data.fechaPrimerPago).format('YYYY-MM-DD');
+        data.valorCuotaAprox = Number(data.valorCuotaAprox);
 
         Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).pipe(takeUntil(this.unSubscribe$)).subscribe((datos) => {
@@ -581,6 +611,24 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
 
         firstInvalidControl?.focus(); //without smooth behavior
+    }
+
+    calcularCuotaAproximada(){
+        const dataMap = {
+            monto : this.datosDelCredito.get('valorCredito').value,
+            num_cuotas : this.datosDelCredito.get('plazoCredito').value,
+            fecha_pago : this.datosDelCredito.get('fechaPrimerPago').value,
+            departamento : this.datosNegocio.get('departamentoNegocio').value,
+            compra_cartera : "N"
+          }
+
+        if(dataMap.monto && dataMap.num_cuotas && dataMap.fecha_pago && dataMap.departamento){
+            const nuevaFecha = moment(dataMap.fecha_pago).format('YYYY-MM-DD')
+            dataMap.fecha_pago = nuevaFecha
+            this._formularioCreditoService.calcularValorCoutaAProximada(dataMap).subscribe(((rep: any) => {
+                this.datosDelCredito.get('valorCuotaAprox').setValue(rep.info.data.valor_cuota)
+            }))
+        }
     }
 
     irAtras() {

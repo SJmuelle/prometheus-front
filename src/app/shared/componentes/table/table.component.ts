@@ -12,7 +12,7 @@ interface Ioptions {
   multifunction?: boolean,
   function?: boolean
   footer?: boolean
-
+  config?: boolean
 }
 
 interface IFuntions {
@@ -123,7 +123,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @Input() allDataRows: any[] = []
   @Input() dataOptionTable: IoptionTable[] = []
-  @Input() Options: Ioptions = { modeMobil: false, multifunction: false, function: false, footer: false, }
+  @Input() Options: Ioptions = { modeMobil: false, multifunction: false, function: false, footer: false, config: false }
   @Input() Funtions: IFuntions[] = []
   @Output() dataRowSelect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataFunctionSelect: EventEmitter<any> = new EventEmitter<any>();

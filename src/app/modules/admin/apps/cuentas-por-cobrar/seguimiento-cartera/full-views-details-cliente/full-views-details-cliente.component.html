@@ -1,8 +1,10 @@
-<div class="flex flex-col w-full h-screen overflow-y-auto">
+<div class="flex flex-col w-full h-screen ">
 
     <!-- <div class="w-full flex flex-col">
         <app-header [infoTitulo]="infoTitulo"></app-header>
     </div> -->
+
+
 
     <div class="flex flex-col gap-4 h-auto">
 
@@ -19,11 +21,17 @@
         </div> -->
 
 
-        <div class="bg-white rounded-lg w-full flex flex-col mb-40 gap-4 h-auto border border-gray-50">
+        <div class="bg-white rounded-lg w-full p-4 flex flex-col mb-40 gap-4 h-auto border border-gray-50">
+
+            <div class="text-2xl font-semibold">
+                Información detalle del cliente
+            </div>
+
+            <hr class="my-0 -mb-5">
 
             <div *ngIf="!!allDataTable.length" class="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
 
-                <div [ngClass]="'col-span-1 '+ item?.class "
+                <div style="transition: all 3s ease-in-out !important;" [ngClass]="'col-span-1 '+ item?.class "
                     class="flex flex-col gap-2 border border-gray-100 rounded-md p-6 "
                     *ngFor="let item of allDataTable; let last = last; let id = index">
                     <div class="flex flex-row justify-between items-center">

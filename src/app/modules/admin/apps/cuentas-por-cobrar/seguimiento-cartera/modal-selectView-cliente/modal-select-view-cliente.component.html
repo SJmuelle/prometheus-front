@@ -5,9 +5,9 @@
     <form [formGroup]="formView" (ngSubmit)="Onsave()">
 
 
-        <div class="grid grid-cols-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
 
-            <mat-form-field class="fuse-mat-dense flex-grow">
+            <mat-form-field class="fuse-mat-dense flex-grow col-span-1 sm:col-span-2">
                 <mat-label>Visualizar tabulaciones</mat-label>
 
 
@@ -48,6 +48,8 @@
                     <mat-option [value]="item" *ngFor="let item of selected.SelectFor">{{item}}</mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <button mat-stroked-button (click)="cerrarModal()" type="button">Cerrar</button>
 
             <button [disabled]="validform()" mat-raised-button color="primary" type="submit">Visualizar</button>
 
