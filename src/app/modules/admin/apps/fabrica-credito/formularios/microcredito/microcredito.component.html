@@ -135,6 +135,39 @@
                                 Este campo es requerido.
                             </mat-error>
                         </mat-form-field>
+                        <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
+                            <mat-label>Tipo de crédito</mat-label>
+                            <mat-select formControlName="tipoCredito">
+                                <mat-option *ngFor="let tipoCredito of dataInicial?.tiposCreditosSelect"
+                                    [value]="tipoCredito.codigo">{{tipoCredito.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="datosBasicos.controls.tipoCredito.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="w-full px-3 fuse-mat-dense">
+                            <mat-label>Género</mat-label>
+                            <mat-select formControlName="genero">
+                                <mat-option *ngFor="let genero of dataInicial?.generos" [value]="genero.codigo">
+                                    {{genero.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="datosBasicos.controls.genero.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="w-full px-3 fuse-mat-dense">
+                            <mat-label>Categoría de sisbén</mat-label>
+                            <mat-select formControlName="categoriaSisben">
+                                <mat-option *ngFor="let sisben of dataInicial?.categoriasSisben" [value]="sisben.codigo">
+                                    {{sisben.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="datosBasicos.controls.categoriaSisben.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                        </mat-form-field> -->
                         <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-3 mt-2 px-3 xl:col-span-3">
                             <button mat-raised-button color="primary" type="button" matStepperNext>
                                 Siguiente
@@ -266,6 +299,7 @@
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
+
                     <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-2 mt-2 px-3 xl:col-span-3">
                         <button mat-raised-button color="primary" type="button" matStepperNext>
                             Siguiente
@@ -281,21 +315,23 @@
                 <form [formGroup]="datosDelCredito" class="grid sm:grid-cols-1 md:grid-cols-2">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
-                        <input matInput type="text" autocomplete="off" formControlName="valorCredito" mask="separator.0"
+                        <input matInput type="text" (change)="calcularCuotaAproximada()" autocomplete="off" formControlName="valorCredito" mask="separator.0"
                             thousandSeparator="." matTooltip="¿Cuánto dinero necesitas para tu negocio?">
                         <mat-error *ngIf="datosDelCredito.controls.valorCredito.errors?.required">
                             Este campo es requerido.
                         </mat-error>
                         <mat-error *ngIf="datosDelCredito.controls.valorCredito.errors?.min">
                             Monto mínimo de {{salarioMinimo}}
+                            <!-- Monto mínimo de {{datosDelCredito.controls.valorCredito.errors?.min.min}} -->
                         </mat-error>
                         <mat-error *ngIf="datosDelCredito.controls.valorCredito.errors?.max">
                             Monto máximo de 100.000.000
+                            <!-- Monto máximo de {{datosDelCredito.controls.valorCredito.errors?.max.max}} -->
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
-                        <input matInput type="number" autocomplete="off" [min]="plazosCredito?.data[0].plazoMinimo"
+                        <input matInput type="number" autocomplete="off" (change)="calcularCuotaAproximada()" [min]="plazosCredito?.data[0].plazoMinimo"
                             [max]="plazosCredito?.data[0].plazoMaximo" formControlName="plazoCredito">
                         <mat-error *ngIf="datosDelCredito.controls.plazoCredito.errors?.required">
                             Este campo es requerido.
@@ -314,9 +350,26 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <mat-label>Fecha del primer pago</mat-label>
+                        <input matInput [matDatepickerFilter]="primerPagoValidation" formControlName="fechaPrimerPago" disabled (dateChange)="calcularCuotaAproximada()"  [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker  #picker disabled="false"></mat-datepicker>
+                        <mat-error *ngIf="datosDelCredito.controls.fechaPrimerPago.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                        <mat-error *ngIf="datosDelCredito.controls.fechaPrimerPago.errors?.dateMayor">
+                            La fecha no puede ser menor al día de hoy.
+                        </mat-error>
+                      </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense mat-form-field-disabled">
                         <mat-label>Asesor de microcrédito</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
 
+                    </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense mat-form-field-disabled">
+                        <mat-label>Valor cuota aproximada</mat-label>
+                        <input matInput type="text" autocomplete="off" mask="separator.0"
+                        thousandSeparator="." prefix="$ " formControlName="valorCuotaAprox" readonly>
                     </mat-form-field>
                     <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-2 mt-2 px-3">
                         <button mat-raised-button color="primary" type="button" matStepperNext>

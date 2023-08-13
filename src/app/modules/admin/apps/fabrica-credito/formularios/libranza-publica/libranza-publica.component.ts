@@ -163,6 +163,8 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             else {
                 this.datosLaborares.get('otraPagaduria')?.setValidators(null)
                 this.datosLaborares.get('otraPagaduria')?.disable({ emitEvent: true, onlySelf: true })
+
+              //  this.datosLaborares.controls['otraPagaduria'].setValue('')
             }
         })
 
@@ -177,19 +179,23 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
                 this.datosLaborares.get('tipoPension')?.setValidators(null)
                 this.datosLaborares.get('tipoPension')?.disable({ emitEvent: true, onlySelf: true })
+
+             //   this.datosLaborares.controls['tipoPension'].setValue('')
             }
             else {
                 if (e === 'PENSI') {
                     this.datosLaborares.get('tipoPension')?.setValidators([Validators.required, Validators.min(0)])
                     this.datosLaborares.get('tipoPension')?.enable({ emitEvent: true, onlySelf: true })
-
-
                     this.datosLaborares.get('tipoContrato')?.setValidators(null)
                     this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
                     this.datosLaborares.get('fechaVinculacion')?.setValidators(null)
                     this.datosLaborares.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
                     this.datosLaborares.get('cargo')?.setValidators(null)
                     this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
+
+                    // this.datosLaborares.controls['cargo'].setValue('')
+                    // this.datosLaborares.controls['fechaVinculacion'].setValue('')
+                    // this.datosLaborares.controls['tipoContrato'].setValue('')
                 }
             }
 
@@ -204,6 +210,8 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             else {
                 this.datosLaborares.get('otrosIngresos')?.setValidators(null)
                 this.datosLaborares.get('otrosIngresos')?.disable({ emitEvent: true, onlySelf: true })
+
+               // this.datosLaborares.controls['otrosIngresos'].setValue('')
             }
         })
 

@@ -13,6 +13,7 @@ import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
 import { DecisionesService } from 'app/core/services/decisiones.service';
 import { TablaEvidenteComponent } from '../tabla-evidente/tabla-evidente.component';
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
+import { ModalDetalleFirmaDigitalComponent } from '../modal-detalle-firma-digital/modal-detalle-firma-digital/modal-detalle-firma-digital.component';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -25,6 +26,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public datos: any[] = [];
   public page: number = 1;
   public tamanoTabl = new FormControl("10");
+  public page_number: number = 0
+  public page_size: number = 10
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
@@ -96,6 +99,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
           const count = this.datos.filter(value => value.etapaFirma?.toUpperCase() === item.state?.charAt(0)?.toUpperCase())
           item.count = count.length
         })
+        const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
+        this.datos = [...filter]
         this.mostrar = false;
       }
     });
@@ -214,12 +219,30 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
-  public UpdateEstadoEvidente(numeroSolicitud, identificacion): void {
+  public UpdateEstadoEvidente(item, tipo = ''): void {
+
     let data =
     {
-      numeroSolicitud: numeroSolicitud,
-      identificacion: identificacion
+      // numeroSolicitud: item.numeroSolicitud,
+      numeroSolicitud: 555555555,
+      identificacion: item.identificacion
     }
+
+    if (item.idUnidadNegocio === 32 && item.tipoDocumento === 'NIT') {
+
+      data.identificacion = item.identificacionRepresentante
+    }
+
+
+    if (tipo === 'C') {
+      data.identificacion = item.identificacionCodeudor
+    }
+
+    if (tipo === 'S') {
+
+      data.identificacion = item.identificacionDeudor
+    }
+
     Swal.fire({ title: 'Cargando', html: 'Actualizando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
     this._agendaFirma.UpdateEstadoEvidente(data).pipe(
       takeUntil(this.unsubscribe$)
@@ -246,11 +269,30 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
-  public obtenerIntentosEvidente(identificacion): void {
+  public obtenerIntentosEvidente(item, tipo = ''): void {
     let data =
     {
-      identificacion: identificacion
+      identificacion: item.identificacion
     }
+
+    if (item.idUnidadNegocio === 32 && item.tipoDocumento === 'NIT') {
+
+      data.identificacion = item.identificacionRepresentante
+    }
+
+    if (tipo === 'C') {
+      data.identificacion = item.identificacionCodeudor
+    }
+
+    if (tipo === 'S') {
+
+      data.identificacion = item.identificacionDeudor
+    }
+
+
+
+
+
     Swal.fire({ title: 'Cargando', html: 'Actualizando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
     this._agendaFirma.obtenerIntentosEvidente(data).pipe(
       takeUntil(this.unsubscribe$)
@@ -279,11 +321,32 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
+  public viewEvidente(row): void {
+
+    this.loadingModal(row);
+  }
+
+  public loadingModal(valuesData): void {
+    const dialogRef = this.dialog.open(ModalDetalleFirmaDigitalComponent,
+      {
+        maxWidth: '90vw',
+        maxHeight: '80vh',
+        width: '30%',
+        data: valuesData,
+        disableClose: false
+      })
+
+
+  }
+
+
   public updateReenviarFirma(numeroSolicitud, tipo): void {
     let data =
     {
       numeroSolicitud: numeroSolicitud,
+
     }
+    console.log('tipo', tipo);
     Swal.fire({ title: 'Cargando', html: 'Enviando correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this._agendaFirma.updateReenviarFirma(data).pipe(
       takeUntil(this.unsubscribe$)
@@ -449,8 +512,6 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       this.intervalVentaFima = setInterval(() => {
         this.getAgendaFirmaDigital();
         this.minuto = 0;
-        const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
-        this.datos = [...filter]
       }, 30000);
 
       this.intervalProgressBar = setInterval(() => {

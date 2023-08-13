@@ -240,6 +240,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
+                console.log('data inicial', this.dataInicial)
                 this.antiBucle = resp.data
                 this.subscribeInput();
             }
@@ -442,7 +443,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.setConyugueNombreCompleto()
 
                 this.formatearDataInicial();
-                this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
+                console.log("controls", this.form.controls)
+                this.form.controls.fechaPrimerPago.setValue(data?.fechaPrimeraCuota === "0099-01-01" ? "NO REGISTRA" : data?.fechaPrimeraCuota);
+                this.form.controls.valorCuotaAprox.setValue(data?.valorCuota === 0 ? "NO REGISTRA" : data?.valorCuota);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
                 this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
                 this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
@@ -1002,7 +1005,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionVeredaNegocio: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            score: ['']
+            score: [''],
+
+            valorCuotaAprox: [''],
+            fechaPrimerPago: ['']
+
+            // tipoCliente: [''],
+            // categoriaSisben: ['', Validators.required]
         },
         );
     }
@@ -1465,7 +1474,17 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
 
+        // // fintra mujer
+        // this.form.get('tipoCredito').valueChanges.subscribe((e: string) => {
+        //     if(e === 'FM'){
+        //         this.form.get('valorSolicitado').setValidators([Validators.required,
+        //             Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo),
+        //             Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
+        //     }else{
+        //         this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
+        //     }
 
+        // })
 
     }
 

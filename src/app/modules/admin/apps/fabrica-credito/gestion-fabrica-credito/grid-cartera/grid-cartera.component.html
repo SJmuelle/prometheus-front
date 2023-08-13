@@ -59,6 +59,7 @@
                 <th class="px-4 py-3 text-center w-1/12">Saldo real</th>
                 <th class="px-4 py-3 text-center w-1/12">Altura de mora</th>
                 <th class="px-4 py-3 text-center w-3/12">Estado</th>
+                <th *ngIf="permisoEditar" class="px-4 py-3 text-center w-3/12">Gestión</th>
                 <th class="px-4 py-3 text-center w-3/12"></th>
             </tr>
         </thead>
@@ -91,6 +92,14 @@
                                     {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
                             </span>
                         </td>
+                        <td *ngIf="permisoEditar" class="border">
+                            <div *ngIf="item.gestionCartera === 'NEG'"  class="flex justify-center items-center" >
+                                <button mat-icon-button (click)="cambioEstadoNegociacion($event,item)" matTooltip="Ver información">
+                                    <mat-icon class="rounded-full icon-size-8 p-1"
+                                        [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
                         <td class="text-sm border w-0">
                             <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
                                 (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
@@ -99,13 +108,14 @@
                                 </mat-icon>
                             </button>
                         </td>
+
                     </tr>
                     <ng-container *ngIf="item.mostrarEstado=='v'">
                         <tr>
                             <td colspan="9" class="text-sm border text-left px-4 py-2 m-0" >
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
-                                 
+
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
@@ -124,7 +134,7 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>  
+                        </tr>
                     </ng-container>
                 </ng-container>
             </ng-container>
@@ -162,6 +172,7 @@
                 <th class="px-4 py-3 text-center w-1/12">Saldo HDC</th>
                 <th class="px-4 py-3 text-center w-1/12">Saldo real</th>
                 <th class="px-4 py-3 text-center w-3/12">Estado</th>
+                <th *ngIf="permisoEditar" class="px-4 py-3 text-center w-3/12">Gestión</th>
                 <th class="px-4 py-3 text-center w-3/12"></th>
             </tr>
         </thead>
@@ -192,6 +203,14 @@
                                     {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
                             </span>
                         </td>
+                        <td *ngIf="permisoEditar" class="border">
+                            <div *ngIf="item.gestionCartera === 'NEG'"  class="flex justify-center items-center" >
+                                <button mat-icon-button (click)="cambioEstadoNegoiciacion($event,item)" matTooltip="Ver información">
+                                    <mat-icon class="rounded-full icon-size-8 p-1"
+                                        [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
                         <td class="text-sm border w-0">
                             <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'" [disabled]="!permisoEditar"
                                 (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
@@ -206,7 +225,7 @@
                             <td colspan="8" class="text-sm border text-left px-4 py-2 m-0" >
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
-                                 
+
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
@@ -225,7 +244,7 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>  
+                        </tr>
                     </ng-container>
                 </ng-container>
             </ng-container>

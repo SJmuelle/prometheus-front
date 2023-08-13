@@ -15,6 +15,7 @@ import { FuseCardModule } from '@fuse/components/card';
 import {MatTableModule} from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatBadgeModule} from '@angular/material/badge';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatBadgeModule} from '@angular/material/badge';
         FuseCardModule,
         MatTableModule,
         MatTooltipModule,
-        MatBadgeModule
+        MatBadgeModule,
+        SharedModule
     ]
 })
 export class AgendaCompletacionModule { }

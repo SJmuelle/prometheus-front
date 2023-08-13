@@ -104,19 +104,25 @@
                             </div>
                         </td>
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput"
-                                *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                            <mat-form-field  class="p-0 w-full mt-0 marginInput"
+                                *ngIf="item.entidad!='CONSULTORES DE CREDITO' && !trazabilidad">
                                 <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
                                     [disabled]="(datoFabrica.agenda!='GC') || (item.gestionCartera=='') || (item.gestionCartera=='COM')"
-                                    (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
+                                    (ngModelChange)="cambioEstadoNegociacion($event,item)">
                                     <mat-option value="" disabled>Seleccione</mat-option>
                                     <mat-option value="EXITOSA">Exitosa</mat-option>
                                     <mat-option value="NO EXITOSA">No exitosa</mat-option>
                                 </mat-select>
                             </mat-form-field>
+                                <div *ngIf="trazabilidad && item.gestionCartera === 'NEG'"  class="flex justify-center items-center" >
+                                    <button mat-icon-button (click)="cambioEstadoNegociacion($event,item)" matTooltip="Ver información">
+                                        <mat-icon class="rounded-full icon-size-8 p-1"
+                                            [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                    </button>
+                                </div>
                         </td>
                         <td class="text-sm border w-0" *ngIf="item.gestionCartera=='COM'">
-                            <button mat-icon-button matTooltip="ver Detalles de la compra"  
+                            <button mat-icon-button matTooltip="ver Detalles de la compra"
                                 (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'" *ngIf="item.mostarDetalle=='N'">
                                 <mat-icon
                                     [svgIcon]="item.mostrarEstado=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
@@ -281,7 +287,7 @@
                             <td colspan="10" class="text-sm border text-left px-4 py-2 m-0" >
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
-                                 
+
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <div class="grid grid-cols-1 gap-y-4 mt-2 ">
@@ -300,7 +306,7 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>  
+                        </tr>
                     </ng-container>
                 </ng-container>
             </ng-container>
@@ -371,7 +377,7 @@
                             </div>
                         </td>
                         <td class="text-sm border w-0" *ngIf="item.mostrarDetalle=='S'">
-                            <button mat-icon-button matTooltip="ver Detalles" 
+                            <button mat-icon-button matTooltip="ver Detalles"
                                 (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
                                 <mat-icon
                                     [svgIcon]="item.mostrarEstado=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
@@ -384,7 +390,7 @@
                             <td colspan="10" class="text-sm border text-left px-4 py-2 m-0" >
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
-                                 
+
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <div class="grid grid-cols-1 gap-y-4 mt-2 ">
@@ -403,7 +409,7 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>  
+                        </tr>
                     </ng-container>
                 </ng-container>
             </ng-container>

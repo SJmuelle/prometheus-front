@@ -38,6 +38,11 @@ import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatListModule } from '@angular/material/list';
+import { TotalesComponent } from './componentes/totales/totales.component';
+import { TablaComponent } from './componentes/agendas/tabla/tabla.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -71,12 +76,15 @@ import { MatListModule } from '@angular/material/list';
                 MatExpansionModule,
                 MatMenuModule,
                 MatProgressBarModule,
+                Ng2SearchPipeModule,
                 // FabricaCreditoModule,
                 MatCheckboxModule,
                 NgxMaskModule.forRoot(),
                 // FabricaCreditoModule,
-                MatListModule
-
+                MatListModule,
+                MatPaginatorModule,
+                NgxPaginationModule,
+                MatAutocompleteModule,
         ],
         exports: [
                 CommonModule,
@@ -109,7 +117,11 @@ import { MatListModule } from '@angular/material/list';
                 MatProgressBarModule,
                 MatCheckboxModule,
                 OTPComponent,
-                MatListModule
+                MatListModule,
+                TotalesComponent,
+                TablaComponent,
+                MatTooltipModule,
+                MatAutocompleteModule
         ],
         declarations: [
                 DirectionsBasicComponent,
@@ -118,7 +130,9 @@ import { MatListModule } from '@angular/material/list';
                 TableComponent,
                 HeaderComponent,
                 NoDataComponent,
-                OTPComponent
+                OTPComponent,
+                TotalesComponent,
+                TablaComponent
         ],
 })
 export class SharedModule { }

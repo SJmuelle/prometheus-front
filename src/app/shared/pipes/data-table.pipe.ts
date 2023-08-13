@@ -16,18 +16,31 @@ export class DataTablePipe implements PipeTransform {
 
 
   private pipeDataTable: PipeDataTable = {
-    text: (value: any = '---') => value,
-    number: (value: any = 0.00) => `$ ${Intl.NumberFormat('es-ES').format(Math.trunc(value))}`,
-    percentage: (value: any) => `${value}%`,
+    text: (value: any = '---') => value === '' ? '---' : value,
+
+    number: (value: any) => value ? `$ ${new Intl.NumberFormat('es-ES', {
+      style: 'decimal',
+      minimumFractionDigits: 0, maximumFractionDigits: 0,
+    }).format(Math.trunc(value))}` : '$ 0',
+
+    document: (value: any) => value ? `${new Intl.NumberFormat('es-ES', {
+      style: 'decimal',
+      minimumFractionDigits: 0, maximumFractionDigits: 0,
+    }).format(Math.trunc(value))}` : '0',
+
+    percentage: (value: any = '---') => `${value}%`,
+
     date: (value: any) => value ? this.convertDateAlert(value) : '---',
-    titleCase: (value: any) => {
+
+    titleCase: (value: any = '---') => {
       if (value) {
         const firstCaracter = (value as string)?.charAt(0)?.toUpperCase();
         const word = (value as string)?.substring(1)?.toLowerCase();
         return `${firstCaracter}${word}`;
       }
     },
-    upperCase: (value: any) => {
+
+    upperCase: (value: any = '---') => {
       if (value) {
         const valueString = (value as string)?.toUpperCase();
         return `${valueString}`;
