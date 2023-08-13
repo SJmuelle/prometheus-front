@@ -245,6 +245,10 @@ mat-form-field.dltMB .mat-form-field-wrapper {
 
 }
 
-.header-table {
-    justify-content: start !important;
+td.mat-calendar-body-cell:not(.mat-calendar-body-disabled) .mat-calendar-body-cell-content.mat-focus-indicator {
+    background: rgb(141 141 169 / 15%);
+}
+
+.mat-calendar-body-cell-content.mat-focus-indicator.mat-calendar-body-selected {
+    color: black;
 }

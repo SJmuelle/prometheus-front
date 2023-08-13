@@ -23,6 +23,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import { FormDialogDevolverFabricaComponent } from './form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -44,15 +45,16 @@ import { MatMenuModule } from '@angular/material/menu';
     FuseAlertModule,
     MatDialogModule,
     MatDatepickerModule,
-    NgxMatDatetimePickerModule,    
-    MatTooltipModule,    
+    NgxMatDatetimePickerModule,
+    MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatSelectModule,     
-    MatExpansionModule,  
+    MatSelectModule,
+    MatExpansionModule,
     AgendaReferenciacionModule,
-    MatMenuModule
+    MatMenuModule,
+    SharedModule
   ],
 })
 export class AgendaComercialModule { }

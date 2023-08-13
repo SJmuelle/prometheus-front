@@ -20,11 +20,14 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
+  public datosAux: any[] = [];
   public page: number = 1;
   public tamanoTabl = new FormControl("10");
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
+
+  public loadingDataTable: boolean = false;
   constructor(
     private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
@@ -39,23 +42,24 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
   }
 
 
- 
+
 
   /**
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
-    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    this.loadingDataTable = true;
     this.agendaComercialService.getAgendaDecision().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
-      Swal.close();
       if (res.status === 200) {
         this.datos = res.data;
+        this.datosAux = res.data;
         this.mostrar = false;
 
       } else {
       }
+      this.loadingDataTable = false;
     });
   }
 
@@ -123,7 +127,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
    * @description: Guarda el comentario para devolvee
    */
     public onComentarioRechazar(data): void {
-      //  
+      //
       const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
         width: '30%',
         data: {
@@ -132,9 +136,9 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
         },
         disableClose: true
       });
-  
+
       dialogRef.afterClosed().subscribe((res) => {
-  
+
         this.getAgendaComercial();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
         setTimeout(() => {
@@ -160,18 +164,18 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
     });
   }
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   cambiarFecha(date) {
     moment.locale('es');
     return moment(date).format('MMMM D YYYY')
   }
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   cambiarHora(date) {
     moment.locale('es');
@@ -179,13 +183,16 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param estado 
+   *
+   * @param estado
    */
   public cambiarEstado(estado) {
     this.mostrarTotales = estado;
   }
 
+  filtrarTablaTotalesEvent(datos){
+    this.datos = datos;
+    }
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
