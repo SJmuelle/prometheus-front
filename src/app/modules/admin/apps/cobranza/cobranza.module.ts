@@ -5,7 +5,8 @@ import { CobranzaRoutingModule } from './cobranza-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     CobranzaRoutingModule
