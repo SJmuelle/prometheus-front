@@ -1,0 +1,23 @@
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+    height: calc(100vh - 255px);
+  }
+  
+  .map-frame {
+    border: 2px solid #1c344432;
+    height: 100%;
+  }
+  
+  #map {
+    height: 100%;
+    z-index: 9 !important;
+  }
+
+  .h-cal{
+    height: calc(100% - 129px);
+  }

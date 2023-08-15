@@ -9,8 +9,8 @@ export const environment = {
     // apiUrl: "http://localhost:8010/",
     // apiUrl: "https://fae7-181-57-229-82.ngrok-free.app/",
     // apiUrl: "https://prometheus.fintra.co:8443/",
-    // apiUrl: "http://demo.fintra.co:8084/",
-    apiUrl: "https://prometheus.fintra.co:8443/",
+    apiUrl: "http://demo.fintra.co:8084/",
+    // apiUrl: "https://prometheus.fintra.co:8443/",
     alfaFintra: "http://alfa.fintra.co:3100/",
     urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
 };

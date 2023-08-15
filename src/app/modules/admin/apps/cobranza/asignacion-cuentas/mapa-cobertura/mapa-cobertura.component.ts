@@ -43,20 +43,20 @@ export class MapaCoberturaComponent implements OnInit {
           fillColor: 'green',
           fillOpacity: 0.5,
           radius: 6,
-          id: item.numeroSolicitud
+          id: item.numero_solicitud
         }).addTo(this.map);
         circle.on('click', function (e) {
           let numeroSolicitud = e.sourceTarget.options.id
           window.location.href = `#/cobranza/asignacion-cuentas/${numeroSolicitud}`;
         });
 
-        let nombre = '<strong>' + item.cliente + '</strong>' + '<br />' + item.direccion + ',  ' + item.barrio + '<br />' + '$' + item.saldoCartera.toLocaleString()
+        let nombre = '<strong>' + item.cliente + '</strong>' + '<br />' + item.direccion + ',  ' + '<br />' + '$' + item.saldo_cartera.toLocaleString()
 
         let tooltip = L.tooltip(loc, {
           content: nombre,
           className: "bg-accent-800 text-white border-none",
           permanent: true,
-          id: item.numeroSolicitud
+          id: item.numero_solicitud
         }).addTo(this.map);
         tooltip.on('click', function (e) {
           let numeroSolicitud = e.sourceTarget.options.id

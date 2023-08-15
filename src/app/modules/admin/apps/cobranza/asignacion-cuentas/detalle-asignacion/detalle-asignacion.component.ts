@@ -28,7 +28,7 @@ export class DetalleAsignacionComponent implements OnInit {
       this.numeroSolicitud = param.numeroSolicitud;
       this._cobranzaService.cuentasAsignadas$.subscribe((res) => {
         this.listado = res;
-        this.credito = this.listado.find(data => data.numeroSolicitud == this.numeroSolicitud);
+        this.credito = this.listado.find(data => data.numero_solicitud == this.numeroSolicitud);
       });
     });
 

@@ -15,6 +15,7 @@ import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
 import { TransportadorasModule } from './modules/admin/apps/transportadoras/transportadoras.module';
 import { CuentasPorCobrarModule } from './modules/admin/apps/cuentas-por-cobrar/cuentas-por-cobrar.module';
 import { MercadeoModule } from './modules/admin/apps/mercadeo/mercadeo.module';
+import { CobranzaModule } from './modules/admin/apps/cobranza/cobranza.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -151,7 +152,10 @@ export const appRoutes: Route[] = [
                 loadChildren: () => import('./modules/admin/apps/negociaciones/negociaciones.module').then(m => m.NegociacionesModule)
             },
 
-
+            {
+                path: 'cobranza',
+                loadChildren: () => CobranzaModule
+            },
             // {
             //     path: 'act',
             //     loadChildren: () => ActivitiesModule
