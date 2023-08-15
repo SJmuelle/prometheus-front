@@ -449,6 +449,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.datosDelCredito.controls.autorizacionCentrales.setValue(resp.data?.autorizacionCentrales === 'S');
                     this.datosDelCredito.controls.clausulaVeracidad?.setValue(resp.data?.clausulaVeracidad === 'S');
                     this.datosDelCredito.controls.terminosCondiciones.setValue(resp.data?.terminosCondiciones === 'S');
+
+                    this.datosDelCredito.controls.fechaPrimerPago.setValue(resp.data?.fechaPrimerPago === '0099-01-01' ? '' : resp.data?.fechaPrimerPago)
                     this.datosBasicos.controls.fechaNacimiento.setValue(resp.data?.fechaNacimiento === '0099-01-01' ? '' : resp.data?.fechaNacimiento)
 
                     if (resp.data?.celular) {
