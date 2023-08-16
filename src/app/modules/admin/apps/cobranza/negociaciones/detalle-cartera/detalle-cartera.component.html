@@ -1,0 +1,60 @@
+<!-- Main --> 
+<div class="flex-auto bg-white h-full h-screen overflow-auto pb-20">
+
+    <!-- Header -->
+    <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+        <!-- Title -->
+        <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 overflow-hidden">
+                <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Detalle de la negociaciones
+                </div>
+                <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                    <div class="font-medium tracking-tight text-secondary">
+                        {{tipoEstrategia=='AC'?'Congela la deuda':'Refinancimiento'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <button class="ml-4" mat-flat-button [color]="'primary'" [routerLink]="['../']">
+                <mat-icon [svgIcon]="'mat_outline:arrow_back'"></mat-icon>
+                <span class="ml-2 mr-1">Atras</span>
+            </button>
+        </div>
+
+    </div>
+    <div class="flex flex-auto justify-between items-center">
+        <form [formGroup]="form">
+            <div class="w-full flex items-baseline">
+                <mat-form-field class="w-90 mx-8">
+                    <mat-label>Fecha de negociacion</mat-label>
+                    <input matInput [min]="maxDate" [matDatepicker]="picker" formControlName="fecha">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <button mat-raised-button class="bg-accent text-white"
+                    (click)="getInformacionNegocios()">Buscar</button>
+            </div>
+        </form>
+
+        <button *ngIf="dataRow.length>0" class="mr-9 mx-10" mat-flat-button [color]="'primary'" (click)="irFormRefinacionamiento()">
+            <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+            <span class="ml-2 mr-1">Refinancimiento</span>
+        </button>
+    </div>
+
+
+    <div class="relative h-cal">
+        <div class="m-8">
+            <app-table [allDataRows]="dataRow" [dataOptionTable]="optionsTable"></app-table>
+
+        </div>
+    </div>
+
+</div>
