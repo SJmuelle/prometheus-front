@@ -6,7 +6,7 @@ import { CarteraClientesService } from 'app/core/services/cartera-clientes.servi
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import { forkJoin, Subject, Subscription } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-select-view-cliente',
@@ -14,7 +14,7 @@ import { map, takeUntil } from 'rxjs/operators';
   styleUrls: ['./modal-select-view-cliente.component.scss']
 })
 export class ModalSelectViewClienteComponent implements OnInit {
-  public options: string[] = ['Detalle cartera', 'Detalle Pagos', 'Plan de pagos', 'Detalle gestiones', 'Compromisos de pagos']
+  public options: string[] = ['Detalle cartera', 'Detalle Pagos', 'Detalle gestiones', 'Compromisos de pagos']
   public selected: any = { selectOne: [...this.options], selectTwo: [], selectTree: [], SelectFor: [] }
   public formView: FormGroup = new FormGroup({});
   public Alldata: any = null;
@@ -86,6 +86,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
     { name: 'fecha_ingreso', text: 'Fecha ingreso', typeField: 'text', pipeName: 'date', classTailwind: 'whitespace-pre' },
     { name: 'fecha_consignacion', text: 'Fecha consignación', typeField: 'text', pipeName: 'date', classTailwind: 'whitespace-pre' },
     { name: 'descripcion_ingreso', text: 'Descripción', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'documento', text: 'Factura', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'negocio', text: 'Negocio', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'valor_ingreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end whitespace-pre' },
 
@@ -278,16 +279,29 @@ export class ModalSelectViewClienteComponent implements OnInit {
         }
       },
       'Detalle Pagos': () => {
-        const visualizarPagos = {
-          periodo: this.Alldata.periodo,
-          negocio: this.Alldata.negocio
-        }
-        const verPagosClientes = this._seguimientoCarteraService.verPagosClientes(visualizarPagos).pipe(takeUntil(this.unsuscribe$), map((res) => {
-          const response = { vista: 'Detalle Pagos', valueVista: res.data || [], optionsTable: [...this.visualizarPagos], }
-          return response
-        }))
+        // const visualizarPagos = {
+        //   periodo: this.Alldata.periodo,
+        //   negocio: this.Alldata.negocio
+        // }
+        // const verPagosClientes = this._seguimientoCarteraService.verPagosClientes(visualizarPagos).pipe(takeUntil(this.unsuscribe$), map((res) => {
+        //   const response = { vista: 'Detalle Pagos', valueVista: res.data || [], optionsTable: [...this.visualizarPagos], }
+        //   return response
+        // }))
 
-        this.arrayPromises.push(verPagosClientes);
+        // this.arrayPromises.push(verPagosClientes);
+
+        const { negocio, periodo } = this.Alldata
+        const detallePagos = {
+          negocio,
+          periodo
+        }
+        const verDetallePagoCliente = this._seguimientoCarteraService.verDetallePagoCliente(detallePagos)
+          .pipe(takeUntil(this.unsuscribe$), map((res) => {
+            const response = { vista: 'Detalle de pagos', valueVista: res.data.filter((values: any) => values.valor_ingreso > 0) || [], optionsTable: [...this.visualizarPlanPago], }
+            return response
+          }))
+        this.arrayPromises.push(verDetallePagoCliente);
+
 
       },
       'Detalle gestiones': () => {
@@ -317,16 +331,6 @@ export class ModalSelectViewClienteComponent implements OnInit {
       'Editar información': () => {
       },
       'Plan de pagos': () => {
-        const { negocio, periodo } = this.Alldata
-        const detallePagos = {
-          negocio,
-          periodo
-        }
-        const verDetallePagoCliente = this._seguimientoCarteraService.verDetallePagoCliente(detallePagos).pipe(takeUntil(this.unsuscribe$), map((res) => {
-          const response = { vista: 'Plan de pagos', valueVista: res.data || [], optionsTable: [...this.visualizarPlanPago], }
-          return response
-        }))
-        this.arrayPromises.push(verDetallePagoCliente);
 
       }
     }

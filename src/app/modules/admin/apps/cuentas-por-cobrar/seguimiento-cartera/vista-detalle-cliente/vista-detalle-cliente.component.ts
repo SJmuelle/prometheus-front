@@ -140,8 +140,18 @@ export class VistaDetalleClienteComponent implements OnInit, OnDestroy {
   private listenObservable(): void {
     this.suscription$ = this._carteraClienteServices.dataCliente$.pipe(takeUntil(this.destroyed)).subscribe({
       next: (resp) => {
-        if (resp?.gestiones) {
+        const ancho = window.innerWidth
+
+        if (resp?.gestiones && ancho >= 600) {
           this.viewMode = { gestiones: true, detalle: true }
+          return
+        } else if (!resp?.gestiones && ancho >= 600) {
+          this.viewMode = { gestiones: false, detalle: true }
+          return
+        }
+        if (ancho <= 600 && resp?.gestiones) {
+          this.viewMode = { gestiones: true, detalle: false }
+          return
         } else {
           this.viewMode = { gestiones: false, detalle: true }
         }

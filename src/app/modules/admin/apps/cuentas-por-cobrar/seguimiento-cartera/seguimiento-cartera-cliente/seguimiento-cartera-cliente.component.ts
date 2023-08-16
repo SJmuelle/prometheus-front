@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NgSwitch } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -305,9 +306,20 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   public subcription$: Subscription = new Subscription();
   public estadosCartera: FormControl = new FormControl(['porVencer', 'vencido'])
 
+  public displayNameMap = new Map([
+    [Breakpoints.XSmall, 'XSmall'],
+    [Breakpoints.Small, 'Small'],
+    [Breakpoints.Medium, 'Medium'],
+    [Breakpoints.Large, 'Large'],
+    [Breakpoints.XLarge, 'XLarge'],
+  ]);
+
+  public currentScreenSize: string;
+  public paddingClass: string = 'p-1'
 
   constructor(
     private _carteraClienteServices: CarteraClientesService,
+    private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
     private _sweetAlerService: Sweetalert2Service,
     private dialog: MatDialog) { }
@@ -324,6 +336,32 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
     this.loadsearch()
     this.formSearchBuilder();
     this.listenObservable();
+
+
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ])
+      .pipe(takeUntil(this.unsuscribe$))
+      .subscribe((result: any) => {
+        for (const query of Object.keys(result.breakpoints)) {
+          if (result.breakpoints[query]) {
+            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+            if (this.currentScreenSize.includes('mall')) {
+              this.paddingClass = 'p-1'
+            } else {
+              this.paddingClass = 'p-4'
+            }
+
+
+          }
+        }
+      });
+
+
   }
 
   public viewDetail(dataRow, gestiones: boolean): void {
@@ -332,11 +370,11 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
 
     this._sweetAlerService.startLoading({});
     if (dataRow.vencimientoMayor.includes('CORRIENTE')) {
-      dataRow.class = 'bg-green-300'
-    } else if (dataRow.vencimientoMayor.inlcudes('30')) {
-      dataRow.class = 'bg-green-300'
+      dataRow.class = 'bg-green-400'
+    } else if (dataRow.vencimientoMayor.includes('30')) {
+      dataRow.class = 'bg-orange-400'
     } else {
-      dataRow.class = 'bg-red-300'
+      dataRow.class = 'bg-red-400'
     }
     const cliente = {
       periodo: this.formSearch.controls['periodo'].value,
@@ -700,6 +738,8 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       }
     })
 
+
+
     this.subcription$ = this._carteraClienteServices.dataTablesSelected$.pipe(takeUntil(this.unsuscribe$), skip(1)).subscribe({
       next: (resp) => {
 
@@ -721,6 +761,8 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
     })
 
   }
+
+
 
   private formSearchBuilder(): void {
     const pattern = `^[0-9]+$`

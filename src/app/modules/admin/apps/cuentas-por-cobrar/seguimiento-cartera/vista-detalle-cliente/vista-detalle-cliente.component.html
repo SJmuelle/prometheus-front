@@ -1,22 +1,28 @@
-<div class="h-full flex flex-row pt-4 pl-4 pr-4 sm:pr-0 gap-4 rounded-md w-screen sm:w-max " style="min-width: 360px;">
+<div class="h-full flex flex-row sm:pt-4 sm:pl-4 sm:pr-0 pl-1 pr-1 pt-1 gap-4 rounded-md w-screen sm:w-max "
+    style="min-width: 360px;">
     <!-- 506 1320 -->
 
 
-    <div *ngIf="viewMode.detalle" [ngClass]="!viewMode.gestiones? 'mr-4' : 'mr-0' "
+    <div *ngIf="viewMode.detalle" [ngClass]="!viewMode.gestiones? ' mr-0 ' : ' mr-0 ' "
         [ngStyle]="{'height': calculateWith()>1400? '90%' : '87.5%'}"
         class="border bg-white border-gray-50  rounded-md shadow-md  w-120 xl:w-160 flex flex-col p-1 ">
 
-        <h3 class="text-2xl font-semibold  sticky pl-2 pt-2">{{infoCliente?.nombreCliente}}</h3>
+        <div class="flex flex-row items-center justify-start">
+
+            <mat-icon class="mt-0.5">supervisor_account</mat-icon>
+
+            <h3 class="text-2xl font-semibold  sticky pl-2 pt-2">{{infoCliente?.nombreCliente}}</h3>
+        </div>
 
         <hr class="my-0 mt-2">
 
-        <div class="flex flex-col mt-2 overflow-y-auto">
+        <div class="flex flex-col mt-2.5 h-full overflow-y-auto">
 
             <div class="border mb-4 rounded-md m-1 flex flex-col gap-2 p-2">
 
-                <span class="text-2xl font-semibold">Datos del crédito</span>
+                <!-- <span class="text-2xl font-semibold">Datos del crédito</span> -->
 
-                <hr class="my-0">
+                <!-- <hr class="my-0"> -->
 
 
                 <div class="flex flex-row  justify-between gap-2">
@@ -205,7 +211,7 @@
 
 
 
-            <div class="border rounded-md m-1 flex flex-col gap-2 p-2">
+            <div class="border rounded-md m-1 flex flex-col gap-2 p-2 h-full">
 
                 <span class="text-2xl font-semibold">Detalle pago</span>
 
@@ -276,8 +282,9 @@
 
         </div>
 
-        <div class="flex flex-row justify-end mt-2 gap-4 mb-6">
-            <button mat-raised-button color="primary" (click)="openGestiones()">Agregar gestiones</button>
+        <div class="flex flex-row justify-end mt-2 gap-4 mb-6 mr-4">
+            <button mat-raised-button color="primary" [ngClass]="this.viewMode.gestiones? ' hidden ' : 'inline-flex' "
+                (click)="openGestiones()">Agregar gestiones</button>
             <button mat-stroked-button (click)="closePage.emit()">Cerrar</button>
         </div>
 
