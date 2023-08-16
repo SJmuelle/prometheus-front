@@ -114,6 +114,9 @@ export class AppSettingsService {
             latitudLongitud: EndPoints.alfa('/geocoding-address'),
             microcredito: EndPoints.uri('/credito/microcredito/guardado-solicitud-microcredito'),
             cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
+            cargueInicialLibranza: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
+            guardarFormularioLibranza: EndPoints.uri('/credito/tk/guardar-formulario-solicitud'),
+            guardarFormularioLibranzaLaboral: EndPoints.uri('/credito/libranza/guardar-presolicitud-datos-laborales'),
             cargueActividadEconomica: EndPoints.uri('/generic/qry/obtener-actividades-form-micro'),
             cargueSolicitudesFormularioSimulaciones: EndPoints.uri('/generic/qry/solicitudes-formulario-simulaciones'),
             listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
@@ -146,10 +149,13 @@ export class AppSettingsService {
             agendaReferenciacionGuardarPregunta: EndPoints.uri('/credito/fabrica/guardado-preguntas-referenciacion'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
+            resumenesPagaduria: EndPoints.uri('/credito/tk/property/cards-informacion-visado'),
             historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
+            validacionMonto: EndPoints.uri('/generic/cre-lib-monto'),
+            validacionPlazo: EndPoints.uri('/generic/cre-lib-plazo'),
             autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp'),
             getRolID: EndPoints.uri('/generic/qry/tk/obtener-rol-id-usuario')
         }
@@ -197,6 +203,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
             basetk: EndPoints.uri('/generic/qry/tk'),
+            baseGenerica: EndPoints.uri('/generic/qry'),
             unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio'),
             referenciaComercial: EndPoints.uri('/generic/qry/consulta-lista-generica/RELACION-COMERCIAL')
         }
@@ -314,16 +321,21 @@ export class AppSettingsService {
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
+            baseDecisionNoVisado: EndPoints.uri('/generic/cre-lib-no-visar'),
+            dataCreditoRechazo: EndPoints.uri('/generic/cre-lib-actu-rechazo'),
             smsUnidades: EndPoints.uri('/credito/info-sms-unidades'),
             baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
+            baseCausalRechazoPagaduria: EndPoints.uri('/generic/qry/cau-rechazo-pagaduria'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
             baseCausalAnulacion: EndPoints.uri('/generic/cau-anulacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
-            getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda')
+            getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda'),
+            baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/volante-nomina')
+
         }
     };
     /**
@@ -410,6 +422,15 @@ export class AppSettingsService {
     };
 
     /**
+ * @description: End-point agenda pagaduria
+ * https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/solicitudes-pagaduria/
+ */
+    public agendaPagadura = {
+        url: {
+            base: EndPoints.uri('/generic/solicitudes-pagaduria')
+        }
+    }
+    /*
      * @description: End-point agenda firma digital
      */
     public agendaFirmaDigital = {
@@ -513,6 +534,22 @@ export class AppSettingsService {
         }
     };
 
+    /**
+ * @description: End-point gestion pagaduria
+ */
+    public gestionPagaduria = {
+        url: {
+            pagadurias: EndPoints.uri('/generic/qry/cre-lib-pagadurias'),
+            configuracion: EndPoints.uri('/generic/qry/cre-lib-configuracion-plazos'),
+            guardarPlazo: EndPoints.uri('/generic/cre-lib-guardar-plazo'),
+            eliminarPlazo: EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
+            editarPlazo: EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
+            informacion: EndPoints.uri('/generic/cre-lib-info-pagadurias'),
+            crear: EndPoints.uri('/generic/cre-lib-guardar-pagaduria'),
+            actualizar: EndPoints.uri('/generic/cre-lib-actualizar-pagaduria')
+
+        }
+    }
 
     /**
  * @description: End-Point
@@ -533,8 +570,8 @@ export class AppSettingsService {
             guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
             listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
             negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera'),
-            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera')
-
+            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera'),
+            obtenerNegociaciones: EndPoints.uri('/generic/qry/obtener-negociaciones-cartera')
         }
     };
 
@@ -566,7 +603,8 @@ export class AppSettingsService {
             listarNomenclaturas: EndPoints.uri('/generic/qry/nomenclarturas'),
             listarBarrios: EndPoints.uri('/generic/qry/listar-barrios'),
             buscarClienteHistorico: EndPoints.uri('/generic/cartera-buscar-cliente-historico'),
-            verDetalleCarteraHistorico: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico')
+            verDetalleCarteraHistorico: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico'),
+            carteraCargarDetalleClienteResumen: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico'),
 
         }
     };

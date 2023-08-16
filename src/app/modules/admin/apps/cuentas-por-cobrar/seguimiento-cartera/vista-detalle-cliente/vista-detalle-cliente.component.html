@@ -1,0 +1,296 @@
+<div class="h-full flex flex-row pt-4 pl-4 pr-4 sm:pr-0 gap-4 rounded-md w-screen sm:w-max " style="min-width: 360px;">
+    <!-- 506 1320 -->
+
+
+    <div *ngIf="viewMode.detalle" [ngClass]="!viewMode.gestiones? 'mr-4' : 'mr-0' "
+        [ngStyle]="{'height': calculateWith()>1400? '90%' : '87.5%'}"
+        class="border bg-white border-gray-50  rounded-md shadow-md  w-120 xl:w-160 flex flex-col p-1 ">
+
+        <h3 class="text-2xl font-semibold  sticky pl-2 pt-2">{{infoCliente?.nombreCliente}}</h3>
+
+        <hr class="my-0 mt-2">
+
+        <div class="flex flex-col mt-2 overflow-y-auto">
+
+            <div class="border mb-4 rounded-md m-1 flex flex-col gap-2 p-2">
+
+                <span class="text-2xl font-semibold">Datos del crédito</span>
+
+                <hr class="my-0">
+
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Vencimiento mayor : </span>
+                    <span class="flex flex-row  items-center gap-2">
+                        <p [class]="infoCliente?.class + ' w-4 h-4 min-w-4 min-h-4 rounded-full m-0 ' "></p>
+                        {{infoCliente?.vencimientoMayor}}
+                    </span>
+
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Unidad de negocio : </span>
+                    <span>{{infoCliente?.nombreConvenio}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Pagaduría : </span>
+                    <span>{{infoCliente?.pagaduria}}</span>
+
+
+                </div>
+
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Negocio : </span>
+                    <span>{{infoCliente?.negocio}}</span>
+
+
+                </div>
+
+
+
+
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Cédula : </span>
+                    <span>{{infoCliente?.cedula | dataTable : 'document'}}</span>
+
+
+                </div>
+
+
+
+
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Ciudad : </span>
+                    <span>{{infoCliente?.ciudad}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Barrio : </span>
+                    <span>{{infoCliente?.barrio}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Dirección : </span>
+                    <span>{{infoCliente?.direccion}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Teléfono contacto : </span>
+                    <span>{{infoCliente?.telcontacto}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Celular : </span>
+                    <span>{{infoCliente?.telefono}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Fecha último compromiso : </span>
+                    <span>{{infoCliente?.fechaultCompromiso}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Valor último compromiso : </span>
+                    <span>{{infoCliente?.valoraPagar | dataTable : 'number'}}</span>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <!-- <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Juridica : </span>
+                    <span>{{infoCliente?.juridica}}</span>
+
+
+                </div> -->
+
+                <!-- <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">Reestructuración : </span>
+                    <span>{{infoCliente?.reestructuracion }}</span>
+
+
+                </div> -->
+
+                <!-- <div class="flex flex-row  justify-start gap-2">
+
+
+                    <span class="font-semibold">refinanciacion : </span>
+                    <span>{{infoCliente?.refinanciacion }}</span>
+
+
+                </div> -->
+
+
+
+                <div class="flex flex-row  justify-between gap-2 ">
+
+
+                    <span class="font-semibold">Recaudos por cuota: </span>
+                    <span>{{infoCliente?.recaudosxCuota | dataTable : 'number'}}</span>
+
+
+                </div>
+
+
+
+
+                <!-- <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Valor asignado : </span>
+                    <span>{{infoCliente?.valorAsignado | dataTable : 'number'}}</span>
+
+
+                </div> -->
+
+
+
+
+            </div>
+
+
+
+            <div class="border rounded-md m-1 flex flex-col gap-2 p-2">
+
+                <span class="text-2xl font-semibold">Detalle pago</span>
+
+                <hr class="my-0">
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Debido a cobrar : </span>
+                    <span>{{infoCliente?.debidoCobrar | dataTable : 'number' }}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">% de cumplimiento : </span>
+                    <span>{{infoCliente?.cumplimiento | dataTable:'percentage'}}</span>
+
+
+                    <!-- <input [value]="infoCliente?.cumplimiento" disabled readonly class="w-full p-1" type="range" /> -->
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Interés de mora : </span>
+                    <span>{{infoCliente?.interesMora | dataTable :'number'}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Gastos de cobranza : </span>
+                    <span>{{infoCliente?.gastoCobranza | dataTable :'number'}}</span>
+
+
+                </div>
+
+                <div class="flex flex-row  justify-between gap-2">
+
+
+                    <span class="font-semibold">Total a pagar : </span>
+                    <span>{{infoCliente?.totalesParciales | dataTable :'number'}}</span>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+        <div class="flex flex-row justify-end mt-2 gap-4 mb-6">
+            <button mat-raised-button color="primary" (click)="openGestiones()">Agregar gestiones</button>
+            <button mat-stroked-button (click)="closePage.emit()">Cerrar</button>
+        </div>
+
+
+    </div>
+
+    <div *ngIf="viewMode.gestiones" class="w-160 xl:w-180 "
+        [ngStyle]="{'height': calculateWith()>1400? '90%' : '87.5%'}">
+        <app-modal-details-cartera-cliente
+            (cerrarViewGestiones)=" this.viewMode = {gestiones: false, detalle: true}"></app-modal-details-cartera-cliente>
+    </div>
+
+
+
+
+</div>

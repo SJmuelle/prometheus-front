@@ -8,9 +8,9 @@ describe('SeguimientoCarteraClienteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SeguimientoCarteraClienteComponent ]
+      declarations: [SeguimientoCarteraClienteComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

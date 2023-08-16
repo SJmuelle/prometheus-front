@@ -1,0 +1,62 @@
+<div class="flex flex-col h-auto gap-2">
+
+    <h3>Seleccione opciones a visualizar</h3>
+
+    <form [formGroup]="formView" (ngSubmit)="Onsave()">
+
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+
+            <!-- <mat-form-field class="fuse-mat-dense flex-grow col-span-1 sm:col-span-2">
+                <mat-label>Visualizar tabulaciones</mat-label>
+
+
+                <div class="flex-wrap flex flex-row gap-3 py-2 sm:py-0 sm:gap-0 sm:flex-nowrap">
+                    <mat-checkbox (change)="disabledForm()" formControlName="tab" matPrefix>Visualizar
+                        tabulaciones</mat-checkbox>
+                </div>
+
+                <input matInput readonly="true" class="w-0 max-w-0" style="display: none;">
+
+            </mat-form-field> -->
+
+
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Vista 1</mat-label>
+                <mat-select (selectionChange)="changeSelect('viewOne')" formControlName="viewOne">
+                    <mat-option [value]="item" *ngFor="let item of options">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Vista 2</mat-label>
+                <mat-select (selectionChange)="changeSelect('viewTwo')" #selectTwo formControlName="viewTwo">
+                    <mat-option [value]="item" *ngFor="let item of selected.selectTwo">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class=" fuse-mat-dense">
+                <mat-label>Vista 3</mat-label>
+                <mat-select (selectionChange)="changeSelect('viewTree')" #selectTree formControlName="viewTree">
+                    <mat-option [value]="item" *ngFor="let item of selected.selectTree">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class=" fuse-mat-dense">
+                <mat-label>Vista 4</mat-label>
+                <mat-select (selectionChange)="changeSelect('viewFour')" #selectFour formControlName="viewFour">
+                    <mat-option [value]="item" *ngFor="let item of selected.SelectFor">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-stroked-button (click)="cerrarModal()" type="button">Cerrar</button>
+
+            <button [disabled]="validform()" mat-raised-button color="primary" type="submit">Visualizar</button>
+
+
+        </div>
+
+
+    </form>
+
+</div>

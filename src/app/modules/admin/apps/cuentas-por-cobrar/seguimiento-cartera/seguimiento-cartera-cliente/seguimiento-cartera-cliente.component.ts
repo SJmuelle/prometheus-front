@@ -7,10 +7,10 @@ import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import { Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { skip, takeUntil } from 'rxjs/operators';
 import { ModalActualizarClienteComponent } from '../modal-actualizar-cliente/modal-actualizar-cliente/modal-actualizar-cliente.component';
 import { ModalDetailsCarteraClienteComponent } from '../modal-details-cartera-cliente/modal-details-cartera-cliente/modal-details-cartera-cliente.component';
-import { AplicarPagosCarteraClienteComponent } from './aplicar-pagos-cartera-cliente/aplicar-pagos-cartera-cliente/aplicar-pagos-cartera-cliente.component';
+import { ModalSelectViewClienteComponent } from '../modal-selectView-cliente/modal-select-view-cliente.component';
 
 @Component({
   selector: 'app-seguimiento-cartera-cliente',
@@ -20,10 +20,16 @@ import { AplicarPagosCarteraClienteComponent } from './aplicar-pagos-cartera-cli
 export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
   public dataRows: any[] = []
+  public ArrayDataTables: any[] = []
   public formSearch: FormGroup;
+  public tittleFilter: string = 'Filtros'
   public openSearch: boolean = true
   public unidadesNegocio: any[] = []
   public periodosFotos: any[] = []
+  public allData: any[] = null
+  public opened: boolean = false
+  public viewMode: any = { display: false, tab: false }
+  public rowSelected: any = null
   public optionsTable: IoptionTable[] = [
     {
       name: 'Opciones',
@@ -31,42 +37,77 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       typeField: 'mat-menu',
       MenuFunctions: [
         {
-          nameFunction: 'Visualizar',
+          nameFunction: 'Visualizar cartera',
           iconAngularMaterial: 'remove_red_eye',
-          children: true,
-          arrayChildren: {
-            nameChildren: 'indexMatMenu1', values: [
-              {
-                nameFunction: 'Detalle cartera',
-                callback: (data) => {
-                  this.openDialog('detalleCartera', data)
-                },
-                iconAngularMaterial: 'vertical_split',
-                children: false
-              },
-              {
-                nameFunction: 'Pagos',
-                callback: (data) => {
-                  this.openDialog('visualizarPagos', data)
-                },
-                iconAngularMaterial: 'credit_card',
-                children: false
-              }, {
-                nameFunction: 'Gestiones',
-                callback: (data) => {
-                  this.openDialog('visualizarGestiones', data)
-                },
-                iconAngularMaterial: 'query_builder',
-                children: false
-              }, {
-                nameFunction: 'Compromisos de pago',
-                callback: (data) => {
-                  this.openDialog('visualizarCompromisosPago', data)
-                },
-                iconAngularMaterial: 'timeline',
-                children: false
-              }]
-          }
+          children: false,
+          callback: (data) => {
+
+            const searchValues = this.formSearch.getRawValue();
+            const estados = this.estadosCartera.value
+            const dataValues = {
+              ...searchValues,
+              ...data,
+              estados
+            }
+            // this.allData = { ...dataValues }
+            this._carteraClienteServices.saveSearch({ ...dataValues });
+            this._carteraClienteServices.selectedOption$.next([])
+
+            // this.dialog.open(ModalSelectViewClienteComponent, {})
+
+          },
+          // arrayChildren: {
+          //   nameChildren: 'indexMatMenu1', values: [
+          //     {
+          //       nameFunction: 'Detalle cartera',
+          //       callback: (data) => {
+          //         this.openDialog('detalleCartera', data)
+          //       },
+          //       iconAngularMaterial: 'vertical_split',
+          //       children: false
+          //     },
+          //     {
+          //       nameFunction: 'Pagos',
+          //       callback: (data) => {
+          //         this.openDialog('visualizarPagos', data)
+          //       },
+          //       iconAngularMaterial: 'credit_card',
+          //       children: false
+          //     }, {
+          //       nameFunction: 'Gestiones',
+          //       callback: (data) => {
+          //         this.openDialog('visualizarGestiones', data)
+          //       },
+          //       iconAngularMaterial: 'query_builder',
+          //       children: false
+          //     }, {
+          //       nameFunction: 'Compromisos de pago',
+          //       callback: (data) => {
+          //         this.openDialog('visualizarCompromisosPago', data)
+          //       },
+          //       iconAngularMaterial: 'timeline',
+          //       children: false
+          //     },
+          //     {
+          //       nameFunction: 'Pantalla dividida',
+          //       callback: (data) => {
+          //         const searchValues = this.formSearch.getRawValue();
+          //         const estados = this.estadosCartera.value
+          //         const dataValues = {
+          //           ...searchValues,
+          //           ...data,
+          //           estados
+          //         }
+          //         // this.allData = { ...dataValues }
+          //         this._carteraClienteServices.saveSearch({ ...dataValues });
+
+          //         this.dialog.open(ModalSelectViewClienteComponent, {})
+          //       },
+          //       iconAngularMaterial: 'chrome_reader_mode',
+          //       children: false
+          //     }
+          //   ]
+          // }
         },
         // {
         //   nameFunction: 'Estado cuenta Geotech',
@@ -78,8 +119,11 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
         // },
         {
           nameFunction: 'Agregar gestiones',
-          callback: (data) => {
-            this.openDialog('agregarGestiones', data)
+          callback: (data: any) => {
+
+            this.viewDetail(data, true);
+
+
           },
           iconAngularMaterial: 'next_week',
           children: false
@@ -90,6 +134,24 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
             this.openDialog('editarInformacion', data)
           },
           iconAngularMaterial: 'edit',
+          children: false
+        },
+        {
+          nameFunction: 'Pantalla dividida',
+          callback: (data) => {
+            const searchValues = this.formSearch.getRawValue();
+            const estados = this.estadosCartera.value
+            const dataValues = {
+              ...searchValues,
+              ...data,
+              estados
+            }
+            // this.allData = { ...dataValues }
+            this._carteraClienteServices.saveSearch({ ...dataValues });
+
+            this.dialog.open(ModalSelectViewClienteComponent, {})
+          },
+          iconAngularMaterial: 'chrome_reader_mode',
           children: false
         },
         // {
@@ -109,13 +171,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'cedula',
       text: 'Cédula',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'nombreCliente',
       text: 'Cliente',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'direccion',
@@ -127,7 +191,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'barrio',
       text: 'Barrio',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
     },
     {
       name: 'ciudad',
@@ -139,13 +203,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'telcontacto',
       text: 'Celular',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'telefono',
       text: 'Teléfono',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'negocio',
@@ -169,7 +235,8 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'Dia de pago',
       text: 'Día de pago',
       typeField: 'text',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
 
     {
@@ -184,13 +251,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       text: 'Recaudo',
       typeField: 'text',
       pipeName: 'number',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'cumplimiento',
       text: '% cumplimiento',
       typeField: 'text',
-      pipeName: 'percentage'
+      pipeName: 'percentage',
+      view: false
     },
     {
       name: 'valoraPagar',
@@ -203,13 +272,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
       name: 'fechaultCompromiso',
       text: 'Fecha último compromiso',
       typeField: 'text',
+      view: false
     },
     {
       name: 'compromiso de pago',
       text: '$ compromiso de pago',
       typeField: 'text',
       pipeName: 'number',
-      classTailwind: 'whitespace-pre'
+      classTailwind: 'whitespace-pre',
+      view: false
     },
     {
       name: 'reestructuracion',
@@ -233,6 +304,8 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   private unsuscribe$: Subject<any> = new Subject<any>();
   public subcription$: Subscription = new Subscription();
   public estadosCartera: FormControl = new FormControl(['porVencer', 'vencido'])
+
+
   constructor(
     private _carteraClienteServices: CarteraClientesService,
     private fb: FormBuilder,
@@ -244,12 +317,49 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
     this.subcription$.unsubscribe();
     this.unsuscribe$.next(null);
     this.unsuscribe$.complete();
+
   }
 
   ngOnInit(): void {
     this.loadsearch()
     this.formSearchBuilder();
     this.listenObservable();
+  }
+
+  public viewDetail(dataRow, gestiones: boolean): void {
+
+    gestiones = gestiones || false
+
+    this._sweetAlerService.startLoading({});
+    if (dataRow.vencimientoMayor.includes('CORRIENTE')) {
+      dataRow.class = 'bg-green-300'
+    } else if (dataRow.vencimientoMayor.inlcudes('30')) {
+      dataRow.class = 'bg-green-300'
+    } else {
+      dataRow.class = 'bg-red-300'
+    }
+    const cliente = {
+      periodo: this.formSearch.controls['periodo'].value,
+      unidadNegocio: dataRow.idConvenio,
+      negocio: dataRow.negocio
+    }
+
+    this._carteraClienteServices.verResumenCarteraCliente(cliente).pipe(takeUntil(this.unsuscribe$)).subscribe({
+      next: (resp) => {
+        const data = resp?.data[0] || {}
+        this._sweetAlerService.stopLoading();
+        this.rowSelected = { ...dataRow, ...data, gestiones }
+        this.opened = true
+        this.rowSelected.cumplimiento = Number(this.rowSelected.cumplimiento || 0)
+        this._carteraClienteServices.dataCliente$.next(this.rowSelected);
+      },
+      error: () => {
+        this._sweetAlerService.alertError();
+      }
+    })
+
+
+
   }
 
   public openDialog(viewModal: string, dataRow: any): void {
@@ -459,7 +569,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
     return new Promise((resolve) => {
 
       this._sweetAlerService.startLoading({});
-
+      this.viewMode = { tab: false, display: false }
       const { periodo, unidadNegocio, identificacion } = this.formSearch.getRawValue();
 
       const values = { alDia: '', porVencer: '', vencido: '', historico: false }
@@ -501,10 +611,13 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
             if (!resp.data.length) {
               this._sweetAlerService.alertInfo({});
               this.dataRows = []
+              this.tittleFilter = 'Filtros'
+
             } else {
               this.openSearch = false
               this._sweetAlerService.stopLoading();
               this.dataRows = resp?.data || []
+              this.tittleFilter = `${this.dataRows[0].nombreCliente} CC - ${this.documentFormat(this.dataRows[0].cedula)}`
             }
             resolve(this.dataRows);
           },
@@ -518,16 +631,20 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
             if (!resp.data.length) {
               this._sweetAlerService.alertInfo({});
               this.dataRows = []
+              this.tittleFilter = 'Filtros'
+
             } else {
               this.openSearch = false
               this._sweetAlerService.stopLoading();
               this.dataRows = resp?.data || []
+
+
+              this.tittleFilter = `${this.dataRows[0].nombreCliente} CC - ${this.documentFormat(this.dataRows[0].cedula)}`
             }
             resolve(this.dataRows);
           },
           error: (e) => {
             this._sweetAlerService.alertError();
-            // console.log(e)
           }
         })
 
@@ -538,6 +655,27 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
 
     })
 
+
+
+  }
+
+  public tittleString(value: string): string {
+
+    if (value) {
+      const firstCaracter = (value as string)?.charAt(0)?.toUpperCase();
+      const word = (value as string)?.substring(1)?.toLowerCase();
+      return `${firstCaracter}${word}`;
+    }
+
+
+  }
+
+  public documentFormat(value: unknown): string {
+
+    return `${new Intl.NumberFormat('es-ES', {
+      style: 'decimal',
+      minimumFractionDigits: 0, maximumFractionDigits: 0,
+    }).format(Math.trunc((value as number)))}`
 
 
   }
@@ -553,6 +691,35 @@ export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
         this.reloadData();
       }
     })
+
+    this.subcription$ = this._carteraClienteServices.selectedOption$.pipe(takeUntil(this.unsuscribe$), skip(1)).subscribe({
+      next: (resp) => {
+        this.viewMode = { display: false, tab: true }
+        const dataSearch = this._carteraClienteServices.getSearchData();
+        this.allData = { ...dataSearch }
+      }
+    })
+
+    this.subcription$ = this._carteraClienteServices.dataTablesSelected$.pipe(takeUntil(this.unsuscribe$), skip(1)).subscribe({
+      next: (resp) => {
+
+        const { length } = resp
+        resp.forEach((item, index) => {
+          if (length === 1) {
+            item.class = 'sm:col-span-2'
+          } else {
+            item.class = 'sm:col-span-1'
+          }
+          if ((index === 2) && (length === 3)) {
+            item.class = 'sm:col-span-2'
+          }
+        })
+
+        this.ArrayDataTables = [...resp]
+        this.viewMode = { display: true, tab: false }
+      }
+    })
+
   }
 
   private formSearchBuilder(): void {

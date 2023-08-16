@@ -23,6 +23,13 @@ export class AgendaComercialService {
   }
 
     /**
+   * @description: Listado de agendas comercial
+   */
+    public getAgendaPagaduria(dato): Observable<any> {
+      return this._http.post(`${this._appSettings.agendaPagadura.url.base}`,dato);
+    }
+ 
+    /**
    * @description: Listado de agendas visitas
    */
     public getAgendaVisitas(): Observable<any> {
