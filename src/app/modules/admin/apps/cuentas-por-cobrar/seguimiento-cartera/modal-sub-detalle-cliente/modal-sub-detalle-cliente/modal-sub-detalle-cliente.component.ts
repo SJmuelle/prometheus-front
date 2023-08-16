@@ -151,7 +151,6 @@ export class ModalSubDetalleClienteComponent implements OnInit, OnDestroy {
     this.suscription$ = this._carteraServices.dataCliente$.pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (data) => {
         this.dataClient = data
-        // console.log('data cliente', this.dataClient);
         this.allDataRow = this.data?.valuesData || []
 
       },

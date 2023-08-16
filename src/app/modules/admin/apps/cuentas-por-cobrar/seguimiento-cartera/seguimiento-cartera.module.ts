@@ -37,6 +37,8 @@ import { VistaDetalleClienteComponent } from './vista-detalle-cliente/vista-deta
     SeguimientoCarteraRoutingModule,
     SharedModule,
     NgxMaskModule.forRoot(),
+
+
   ]
 })
 export class SeguimientoCarteraModule { }

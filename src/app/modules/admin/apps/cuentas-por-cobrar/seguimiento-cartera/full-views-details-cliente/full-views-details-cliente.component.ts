@@ -20,7 +20,6 @@ import { ModalSubDetalleClienteComponent } from '../modal-sub-detalle-cliente/mo
 export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
   public Subscription$: Subscription = new Subscription;
-  public SubscriptionTwo$: Subscription = new Subscription;
   public unsuscribe$: Subject<void> = new Subject<void>();
   public data: any = null
   public valuesSelect: string[]
@@ -41,7 +40,6 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
   public barrios: any[] = []
   public ciudadeseditar: any[] = []
   public dapartamentosEdit: any[] = []
-  public suscriptionTree$: Subscription = new Subscription;
   public barriosGestiones: any[] = []
 
   constructor(
@@ -59,8 +57,6 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
     this.Subscription$.unsubscribe();
     this.unsuscribe$.next();
     this.unsuscribe$.complete();
-    this.SubscriptionTwo$.unsubscribe();
-    this.suscriptionTree$.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -75,7 +71,6 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
     this.cargarSelects();
 
     this.loadSelect();
-    console.log(this.allDataTable, 'subject');
 
   }
 
@@ -636,14 +631,14 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.SubscriptionTwo$ = this._seguimientoClienteService.selectedOption$.pipe(takeUntil(this.unsuscribe$)).subscribe({
+    this.Subscription$ = this._seguimientoClienteService.selectedOption$.pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         this.selectedOptions = [...resp]
 
       }
     })
 
-    // this.suscriptionTree$ = this._seguimientoClienteService.direccionCliente$.pipe(skip(1), takeUntil(this.unsuscribe$)).subscribe({
+    // this.Subscription$ = this._seguimientoClienteService.direccionCliente$.pipe(skip(1), takeUntil(this.unsuscribe$)).subscribe({
     //   next: (resp) => {
 
     //     this.formEditClient.controls['direccionCliente'].setValue(resp)

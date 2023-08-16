@@ -533,8 +533,8 @@ export class AppSettingsService {
             guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
             listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
             negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera'),
-            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera')
-
+            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera'),
+            obtenerNegociaciones: EndPoints.uri('/generic/qry/obtener-negociaciones-cartera')
         }
     };
 
@@ -566,7 +566,8 @@ export class AppSettingsService {
             listarNomenclaturas: EndPoints.uri('/generic/qry/nomenclarturas'),
             listarBarrios: EndPoints.uri('/generic/qry/listar-barrios'),
             buscarClienteHistorico: EndPoints.uri('/generic/cartera-buscar-cliente-historico'),
-            verDetalleCarteraHistorico: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico')
+            verDetalleCarteraHistorico: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico'),
+            carteraCargarDetalleClienteResumen: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico'),
 
         }
     };

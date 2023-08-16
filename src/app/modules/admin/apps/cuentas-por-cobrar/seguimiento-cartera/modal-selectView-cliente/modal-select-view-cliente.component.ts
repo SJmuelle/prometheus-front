@@ -25,17 +25,17 @@ export class ModalSelectViewClienteComponent implements OnInit {
 
   public detalleCartera: IoptionTable[] = [
     { name: 'negocio', text: 'Negocio', typeField: 'text', classTailwind: 'whitespace-pre' },
-    { name: 'cedula', text: 'Cedula', typeField: 'text', view: false, classTailwind: 'whitespace-pre' },
+    { name: 'cedula', text: 'Cédula', typeField: 'text', view: false, classTailwind: 'whitespace-pre' },
     { name: 'nombreCliente', text: 'Cliente', typeField: 'text', view: false, classTailwind: 'whitespace-pre' },
     { name: 'cuota', text: 'Cuota', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'fechaVencimiento', text: 'Fecha vencimiento', typeField: 'text', classTailwind: 'whitespace-pre' },
-    { name: 'diasVencidoHoy', text: 'Dias de vencimiento hoy', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'diasVencidoHoy', text: 'Dias de vencimiento', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'vencimientoMayor', text: 'Vencimiento mayor', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'diasVencidos', text: 'Dias vencidos', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'status', text: 'Estado', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'valorAsignado', text: 'Valor asignado', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'whitespace-pre text-end' },
     { name: 'debidoCobrar', text: 'Debido cobrar', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'whitespace-pre text-end' },
-    { name: 'interesMora', text: 'Interes de mora', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'whitespace-pre text-end' },
+    { name: 'interesMora', text: 'Interés de mora', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'whitespace-pre text-end' },
     { name: 'gastoCobranza', text: 'Gasto cobranza', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'whitespace-pre text-end' },
     { name: 'totalesParciales', text: 'Total parciales', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'whitespace-pre text-end' },
   ]
@@ -212,8 +212,6 @@ export class ModalSelectViewClienteComponent implements OnInit {
       forkJoin(this.arrayPromises).pipe(takeUntil(this.unsuscribe$)).subscribe({
         next: (res) => {
           setTimeout(() => {
-            console.log(res)
-
             this._seguimientoCarteraService.dataTablesSelected$.next([...res]);
             // this._seguimientoCarteraService.selectedOption$.next([...this.selectedOptions])
             this._sweetAlerService.stopLoading();
@@ -381,7 +379,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
       viewTwo: [, [Validators.required]],
       viewTree: [,],
       viewFour: [,],
-      tab: [true, []]
+      tab: [false, []]
 
     })
 

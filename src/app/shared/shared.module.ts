@@ -42,8 +42,9 @@ import { TotalesComponent } from './componentes/totales/totales.component';
 import { TablaComponent } from './componentes/agendas/tabla/tabla.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from "@angular-material-components/datetime-picker";
+import { MatNativeDateModule, } from '@angular/material/core';
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
@@ -85,6 +86,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
                 MatPaginatorModule,
                 NgxPaginationModule,
                 MatAutocompleteModule,
+                NgxMatDatetimePickerModule,
+                MatNativeDateModule,
+                NgxMatNativeDateModule
         ],
         exports: [
                 CommonModule,
@@ -121,7 +125,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
                 TotalesComponent,
                 TablaComponent,
                 MatTooltipModule,
-                MatAutocompleteModule
+                MatAutocompleteModule,
+                NgxMatDatetimePickerModule,
+                MatNativeDateModule,
+                NgxMatNativeDateModule
         ],
         declarations: [
                 DirectionsBasicComponent,

@@ -28,13 +28,13 @@
                     </p>
                 </div>
 
-                <div (click)="actionSelectRow(value)"
-                    *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
+                <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
                     class="border-1 p-4 flex flex-col cursor-pointer">
 
 
 
-                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row my-0.5">
+                    <div (click)="actionSelectRow(value)" *ngFor="let item of dataOptionTable"
+                        class="w-full flex-row my-0.5">
 
                         <span class="w-full "
                             *ngIf="(item.typeField!=='function' || item.typeField!=='mat-menu') && item.view"
@@ -227,7 +227,8 @@
 
         <div *ngIf="!viewmode()" class="hidden sm:flex flex-col">
 
-            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 " tabindex="0">
+            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 tabla-izquierda "
+                tabindex="0">
 
                 <!-- <ng-container matColumnDef="action" *ngIf="Options.function">
                     <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
@@ -257,8 +258,8 @@
                 <ng-container [matColumnDef]="dataOption.name"
                     *ngFor="let dataOption of this.dataOptionTable; let i = index">
 
-                    <th class=" sticky top-0 pl-2.5 header-table" style="background: #E2E8F0;" mat-header-cell
-                        *matHeaderCellDef mat-sort-header>
+                    <th class=" sticky top-0 pl-2.5 header-table wrapper-table" style="background: #E2E8F0;"
+                        mat-header-cell *matHeaderCellDef mat-sort-header>
                         {{ dataOption.text }}
                     </th>
 
