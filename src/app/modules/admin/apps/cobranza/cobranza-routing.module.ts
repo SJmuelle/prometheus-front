@@ -67,7 +67,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'historico-paagos',
+        path: 'historico-pagos',
         loadChildren: () => HistoricoPagoClienteModule,
       }
     ]
