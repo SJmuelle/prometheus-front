@@ -38,13 +38,14 @@ import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatListModule } from '@angular/material/list';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { TotalesComponent } from './componentes/totales/totales.component';
+import { TablaComponent } from './componentes/agendas/tabla/tabla.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
+
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-
-
-
 
 @NgModule({
         imports: [
@@ -75,23 +76,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
                 MatExpansionModule,
                 MatMenuModule,
                 MatProgressBarModule,
+                Ng2SearchPipeModule,
                 // FabricaCreditoModule,
                 MatCheckboxModule,
                 NgxMaskModule.forRoot(),
                 // FabricaCreditoModule,
                 MatListModule,
-                NgxMatDatetimePickerModule,
-                NgxMatTimepickerModule,
-                NgxMatNativeDateModule,
-                MatAutocompleteModule
-
-
-
-
-
-
-
-
+                MatPaginatorModule,
+                NgxPaginationModule,
+                MatAutocompleteModule,
         ],
         exports: [
                 CommonModule,
@@ -125,19 +118,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
                 MatCheckboxModule,
                 OTPComponent,
                 MatListModule,
+                TotalesComponent,
+                TablaComponent,
                 MatTooltipModule,
-                NgxMatDatetimePickerModule,
-                NgxMatTimepickerModule,
-                NgxMatNativeDateModule,
                 MatAutocompleteModule
-
-
-
-
-
-
-
-
         ],
         declarations: [
                 DirectionsBasicComponent,
@@ -146,7 +130,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
                 TableComponent,
                 HeaderComponent,
                 NoDataComponent,
-                OTPComponent
+                OTPComponent,
+                TotalesComponent,
+                TablaComponent
         ],
 })
 export class SharedModule { }

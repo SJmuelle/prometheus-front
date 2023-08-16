@@ -112,3 +112,22 @@
 .bg-yellowCustom{
     background-color: rgb(255, 158, 0);
 }
+
+.cardWidth{
+    width: 280px !important;
+    max-width: 280px !important;
+    min-width: 280px !important;
+}
+
+.paddingCount{
+    padding: 2px 1px;
+}
+
+.arrowColor{
+    background-color: #1D293E;
+    &:hover{
+     background-color: #0a1322;
+    }
+}
+
+

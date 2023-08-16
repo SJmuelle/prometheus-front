@@ -24,8 +24,12 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     public page: number = 1;
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = [];
     public mostrarTotales: boolean = true;
     public totales: any[];
+
+    public loadingDataTable: boolean = false;
+
     constructor(
         private agendaReferenciaService: AgendaReferenciacionService,
         private router: Router,
@@ -63,17 +67,17 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     }
 
     private getAgendaReferenciacion(): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.loadingDataTable = true;
         this.agendaReferenciaService.getAgendaReferenciacion().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
                 this.mostrar = false;
-                Swal.close();
             } else {
-                Swal.close();
             }
+            this.loadingDataTable = false;
         });
     }
     /**
@@ -125,18 +129,18 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * 
-     * @param date 
-     * @returns 
+     *
+     * @param date
+     * @returns
      */
     cambiarFecha(date) {
         moment.locale('es');
         return moment(date).format('MMMM D YYYY')
     }
     /**
-     * 
-     * @param date 
-     * @returns 
+     *
+     * @param date
+     * @returns
      */
     cambiarHora(date) {
         moment.locale('es');
@@ -144,11 +148,20 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * 
-     * @param estado 
+     *
+     * @param estado
      */
     public cambiarEstado(estado) {
         this.mostrarTotales = estado;
+    }
+
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
+    }
+
+    actualizarTabla($event){
+        this.getAgendaReferenciacion();
+        this.agendaReferenciaService.refrescarListado$.next({ estado: true });
     }
 
     ngOnDestroy(): void {

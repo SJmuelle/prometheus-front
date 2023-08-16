@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { AppSettingsService } from '../app-configs/app-settings.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +13,8 @@ export class FormularioCreditoService {
 
     constructor(
         private _utilityService: UtilityService,
-        private _appSettings: AppSettingsService,
-        private _http: HttpClient
+        private _http: HttpClient,
+        private _appSettings: AppSettingsService
     ) { }
 
 
@@ -105,6 +106,19 @@ export class FormularioCreditoService {
             }));
     }
 
+    calcularValorCoutaAProximada(data) {
+        let options = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+        const body = new HttpParams()
+            .set('data', JSON.stringify(data))
+
+        return this._http.post(this._appSettings.formulario.url.calcularValorAprox, body, { headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }) })
+
+    }
+
     postGuardarFormularioSolicitud(data) {
         return this._utilityService.postQuery(this._appSettings.formulario.url.guardarFormularioLibranza, data)
             .pipe(map((res: any) => {
@@ -121,6 +135,5 @@ export class FormularioCreditoService {
     public downloadDocument(id: string): Observable<any[]> {
         return this._http.get<any[]>(`${this._appSettings.decision.url.baseArchivo}/${id}`)
     }
-
 
 }
