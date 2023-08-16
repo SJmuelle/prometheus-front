@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AsignacionCuentasModule } from './asignacion-cuentas/asignacion-cuentas.module';
 import { GestionCarteraModule } from './gestion-cartera/gestion-cartera.module';
-import { NegociacionesModule } from '../negociaciones/negociaciones.module';
 import { HistoricoGestionesModule } from './historico-gestiones/historico-gestiones.module';
 import { HistoricoNegociacionesModule } from './historico-negociaciones/historico-negociaciones.module';
 import { HistoricoPagoClienteModule } from './historico-pago-cliente/historico-pago-cliente.module';
@@ -12,6 +11,7 @@ import { AperturaCajaModule } from './apertura-caja/apertura-caja.module';
 import { ActualizacionDatosModule } from './actualizacion-datos/actualizacion-datos.module';
 import { ConsignacionesModule } from './consignaciones/consignaciones.module';
 import { IngresoRecaudoModule } from './ingreso-recaudo/ingreso-recaudo.module';
+import { NegociacionesModule } from './negociaciones/negociaciones.module';
 
 const routes: Routes = [
   {
@@ -77,7 +77,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'historial-pagos',
+        path: 'historial-de-pagos',
         loadChildren: () => HistorialPagosModule,
       }
     ]
