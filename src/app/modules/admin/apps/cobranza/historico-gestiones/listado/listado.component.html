@@ -1,0 +1,66 @@
+<!-- Main -->
+<div class="flex-auto bg-white h-full h-screen overflow-auto pb-20">
+
+    <!-- Header -->
+    <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+        <!-- Title -->
+        <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 overflow-hidden">
+                <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Histórico de gestiones
+                </div>
+                <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                    <div class="font-medium tracking-tight text-secondary">
+                        Histórico de gestiones
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="mt-3">
+
+        <div class="grid grid-cols-3 mx-8 gap-2">
+
+            <form [formGroup]="form" class="w-100">
+                <mat-form-field class="w-100">
+                    <mat-label>Número de negocio</mat-label>
+                    <input matInput [placeholder]="'Número del negocio'" [formControlName]="'id'">
+                </mat-form-field>
+            </form>
+
+            <form [formGroup]="formPeriodo" class="w-100">
+                <mat-form-field class="w-100">
+                    <mat-label>Rango de fechas</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Fecha inicial" [formControlName]="'fechaInicial'">
+                        <input matEndDate placeholder="Fecha final" [formControlName]="'fechaFinal'">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </form>
+
+            <div class="flex justify-center align-items-center">
+                <button mat-raised-button class="bg-accent text-white"
+                    (click)="getInformacionNegocios()">Buscar</button>
+            </div>
+        </div>
+
+
+        <div class="relative h-cal">
+            <div class="m-8">
+               
+                <app-table [allDataRows]="dataRow" [dataOptionTable]="optionsTable"></app-table>
+
+
+            </div>
+        </div>
+
+    </div>
