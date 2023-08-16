@@ -1,0 +1,88 @@
+<!-- Main -->
+<div class="flex-auto  h-full h-screen overflow-auto pb-20">
+
+    <!-- Header -->
+    <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b bg-white">
+
+        <!-- Title -->
+        <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 overflow-hidden">
+                <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Apertura de la caja
+                </div>
+                <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                    <div class="font-medium tracking-tight text-secondary">
+                        Realiza las estrategias de normalización incluyendo todas las tablas de descuentos para pago
+                        total y normalización.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <div class="max-w-3xl">
+
+            <!-- <div class="prose prose-sm max-w-3xl">
+                <p>
+                    By default, Fuse changes the default form field appearance to <em>fill</em> and heavily modifies it
+                    to provide a more unique and consistent look. We
+                    <strong>DO NOT</strong> recommend using any other form field styles as they are not optimized for
+                    Fuse.
+                </p>
+                <h2>Appearance</h2>
+                <p>
+                    Here's a very simple form layout to showcase the form fields.
+                </p>
+            </div> -->
+
+            <form class="flex flex-col p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field class="w-full fuse-mat-dense">
+                        <mat-label style="display: block; min-height: 30px !important; line-height: 30px !important;" class="min-h-0; leading-1">Seleccione fecha y hora</mat-label>
+                        <input matInput [ngxMatDatetimePicker]="picker"
+                               placeholder="Fecha y hora"
+                               autocomplete="off"
+                               (keydown)="picker.open()"
+                               (click)="picker.open()"
+                        >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Código de la caja</mat-label>
+                        <input matInput>
+                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'calculate'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput>
+                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <mat-form-field class="flex-auto gt-xs:pl-3">
+                        <mat-label>Valor</mat-label>
+                        <input matInput>
+                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'local_atm'"></mat-icon>
+                        <span  matPrefix>$</span>
+                    </mat-form-field>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
