@@ -225,7 +225,8 @@
 
         </div>
 
-        <div *ngIf="!viewmode()" class="hidden sm:flex flex-col">
+        <div *ngIf="!viewmode()"
+            class="hidden sm:flex flex-col transition-all duration-200 delay-75 ease-linear max-h-100 h-100">
 
             <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 tabla-izquierda "
                 tabindex="0">
@@ -500,7 +501,7 @@
         <mat-paginator (page)="pageEvent($event)"
             class="border-t border-b border flex flex-row items-center h-22 sm:h-14 rounded-t-none rounded-xl"
             style="background-color: #ffffff;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
-            [pageSize]="5" [pageSizeOptions]="[3,5]">
+            [pageSize]="5" [pageSizeOptions]="[3,5,10,15,20]">
         </mat-paginator>
 
         <button *ngIf="Options.config" #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button

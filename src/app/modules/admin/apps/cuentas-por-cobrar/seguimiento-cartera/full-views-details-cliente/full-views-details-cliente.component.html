@@ -40,7 +40,8 @@
                             <mat-icon>swap_horiz</mat-icon>
                         </button>
                     </div>
-                    <app-table [allDataRows]="item.valueVista" [dataOptionTable]="item.optionsTable"></app-table>
+                    <app-table [allDataRows]="item.valueVista" [Options]="{footer: item.footer}"
+                        [dataOptionTable]="item.optionsTable"></app-table>
                 </div>
 
 

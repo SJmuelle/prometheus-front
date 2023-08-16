@@ -52,7 +52,7 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   ]
 
   public visualizarGestiones: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', },
     { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'proAccion', text: 'Próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -62,7 +62,7 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   ]
 
   public visualizarCompromisosPago: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', },
     { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'direccion', text: 'Dirección', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'barrio', text: 'Barrio', typeField: 'text', classTailwind: 'whitespace-pre' },

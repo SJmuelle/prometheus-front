@@ -30,7 +30,8 @@
                 Detalle cartera
             </ng-template>
             <div class="pr-0">
-                <app-table [allDataRows]="dataRowdetalleCartera" [dataOptionTable]="detalleCartera"></app-table>
+                <app-table [Options]="{footer: true}" [allDataRows]="dataRowdetalleCartera"
+                    [dataOptionTable]="detalleCartera"></app-table>
             </div>
         </mat-tab>
 
@@ -50,7 +51,8 @@
                 Detalle de pagos
             </ng-template>
             <div class="pr-0">
-                <app-table [allDataRows]="dataRowPlanPagos" [dataOptionTable]="visualizarPlanPago"></app-table>
+                <app-table [Options]="{footer: true}" [allDataRows]="dataRowPlanPagos"
+                    [dataOptionTable]="visualizarPlanPago"></app-table>
             </div>
         </mat-tab>
 
@@ -72,7 +74,7 @@
                 Compromisos de pagos
             </ng-template>
             <div class="pr-0">
-                <app-table [allDataRows]="dataRowvisualizarCompromisosPago"
+                <app-table [Options]="{footer: true}" [allDataRows]="dataRowvisualizarCompromisosPago"
                     [dataOptionTable]="visualizarCompromisosPago"></app-table>
             </div>
         </mat-tab>
