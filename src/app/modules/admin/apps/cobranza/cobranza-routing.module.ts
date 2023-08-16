@@ -87,7 +87,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'arqueo-caja',
+        path: 'arqueo-cajas',
         loadChildren: () => ArqueoCajaModule,
       }
     ]
