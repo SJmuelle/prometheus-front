@@ -25,32 +25,32 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private comentariosService: ComentariosService,
         private fabricaCreditoService: FabricaCreditoService,
-    ) { 
+    ) {
         this.getFabricaCreditoAgenda(this.data.numeroSolicitud)
     }
 
     ngOnInit(): void {
         this.crearFormulario();
         this.getTipoComentario();
-      
+
         this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
         if (this.data.idComentario) {
             this.form.controls.comentario.setValue(this.data.comentario);
         }
     }
-    
-  /**
- * @description: Obtiene la data para cargar al formulario
- */
-  private getFabricaCreditoAgenda(numeroSolicitud: string): void {
-      this.comentariosService.obtenerAgendaSolicitud(numeroSolicitud).pipe()
-      .subscribe(({ data }) => {
-        Swal.close();
-        this.datoFabrica = data;
-        console.log('datos fabrica', data);
-        
-      })
-  }
+
+    /**
+   * @description: Obtiene la data para cargar al formulario
+   */
+    private getFabricaCreditoAgenda(numeroSolicitud: string): void {
+        this.comentariosService.obtenerAgendaSolicitud(numeroSolicitud).pipe()
+            .subscribe(({ data }) => {
+                Swal.close();
+                this.datoFabrica = data;
+                // console.log('datos fabrica', data);
+
+            })
+    }
 
     /**
      * @description: Cierra el dialogo
@@ -62,13 +62,13 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
     public onGuardar(): void {
         if (this.form.valid) {
             const data: any = this.form.getRawValue();
-            let valida=this.datoFabrica.agenda!='GC'&&this.datoFabrica.agenda!='CM' && this.datoFabrica.agenda != 'VD';
+            let valida = this.datoFabrica.agenda != 'GC' && this.datoFabrica.agenda != 'CM' && this.datoFabrica.agenda != 'VD';
             let envioData = {
                 comentario: data.comentario,
                 numeroSolicitud: data.numeroSolicitud,
-                tipoComentario: valida?Number(data.tipoComentario):2,
+                tipoComentario: valida ? Number(data.tipoComentario) : 2,
             }
-            let mensaje=envioData.tipoComentario==2?'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario será visible para todos los usuarios.':'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario no será visible para todos los usuarios';
+            let mensaje = envioData.tipoComentario == 2 ? '¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario será visible para todos los usuarios.' : '¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario no será visible para todos los usuarios';
             Swal.fire({
                 title: 'Guardar información',
                 text: mensaje,

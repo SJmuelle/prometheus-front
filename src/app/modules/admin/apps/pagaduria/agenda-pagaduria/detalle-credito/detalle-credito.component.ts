@@ -221,7 +221,7 @@ export class DetalleCreditoComponent implements OnInit, OnDestroy {
   public downloadVolanteNomina(): void {
 
     this._sweetalert.startLoading({});
-    console.log('datos', this.apiData)
+    // console.log('datos', this.apiData)
 
     this._formCreditoService.downloadDocument(this.numeroSolicitud).pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (response: any) => {

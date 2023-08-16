@@ -313,7 +313,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             break;
                         default:
                             error = true;
-                            console.log('entrando a no img', file.ext === 'JPEG');
+                            // console.log('entrando a no img', file.ext === 'JPEG');
 
                             await this.drawImgToPDF(
                                 pag,

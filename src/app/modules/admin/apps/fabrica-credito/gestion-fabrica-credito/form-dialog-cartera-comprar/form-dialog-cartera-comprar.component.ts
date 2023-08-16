@@ -6,7 +6,7 @@ import { ListadoCarteraService } from 'app/core/services/listadoCartera.service'
 import { UtilityService } from 'app/resources/services/utility.service';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 
-import { Subject, Observable, of,  } from 'rxjs';
+import { Subject, Observable, of, } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -85,11 +85,11 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             this.form.controls.estadoCuenta.setValue(this.data.item.estadoCuenta);
             this.form.controls.idObligacion.setValue(Number(this.data.item.id.toString()));
             this.form.controls.codigoEstado.setValue(this.data.item.codigoEstado);
-            this.form.controls.nombreEntidadNueva.setValue(this.data.item.nombreEntidadNueva ? this.data.item.nombreEntidadNueva: this.data.item.entidad)
+            this.form.controls.nombreEntidadNueva.setValue(this.data.item.nombreEntidadNueva ? this.data.item.nombreEntidadNueva : this.data.item.entidad)
 
-             this.form.get('entidad').valueChanges.subscribe(entidad => {
-                 this.getEntidadesObservable(entidad);
-             })
+            this.form.get('entidad').valueChanges.subscribe(entidad => {
+                this.getEntidadesObservable(entidad);
+            })
 
             this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
                 this.getEntidadesObservableNueva(entidad);
@@ -107,7 +107,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
     private postBusquedaEntidadFinanciera(nombre: string) {
         this.genericaServices.postBusquedaEntidadFinanciera(nombre).subscribe((res) => {
             this.entidadFinanciera = res.data;
-            console.log('entidad financiera', res.data);
+            // console.log('entidad financiera', res.data);
 
         });
     }
@@ -220,25 +220,25 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 Swal.showLoading();
             },
         }).then((result) => { });
-        console.log('data a guardar' , data);
+        // console.log('data a guardar', data);
         this.confirmarNit(data.nombreEntidadNueva, data.nit).pipe(takeUntil(this.unsubscribe$)).subscribe(guardar => {
-            console.log('guardar', guardar);
-            if(guardar){
+            // console.log('guardar', guardar);
+            if (guardar) {
                 this._listadoCarteraService
-                .guardarGestionCompra(data)
-                .subscribe((res) => {
-                    Swal.close();
-                    if (res.data.resultado == 'OK') {
-                        let msg = res.data.msg == 'OK' ? 'Registro guardado con éxito' : res.data.msg;
-                        Swal.fire('Completado', res.data.msg, 'success');
-                        setTimeout(() => {
-                            this.onCerrar();
-                        }, 1000);
-                    } else {
-                        Swal.fire('Error', res.data.resultado, 'error');
-                    }
-                });
-            }else{
+                    .guardarGestionCompra(data)
+                    .subscribe((res) => {
+                        Swal.close();
+                        if (res.data.resultado == 'OK') {
+                            let msg = res.data.msg == 'OK' ? 'Registro guardado con éxito' : res.data.msg;
+                            Swal.fire('Completado', res.data.msg, 'success');
+                            setTimeout(() => {
+                                this.onCerrar();
+                            }, 1000);
+                        } else {
+                            Swal.fire('Error', res.data.resultado, 'error');
+                        }
+                    });
+            } else {
                 Swal.fire('Error', 'El nit no concuerda con la entidad financiera', 'error');
             }
 
@@ -289,18 +289,18 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
 
 
     getEntidadesObservable(entidad: string) {
-        if(entidad.length > 0){
+        if (entidad.length > 0) {
             this._fabricaService.carteraEntidadNombres({
                 entidad
             }).subscribe(({ data }) => {
                 this.entidadOptions = data
-                console.log('data', data);
+                // console.log('data', data);
             })
         }
     }
 
     getEntidadesObservableNueva(entidad: string) {
-        if(entidad.length > 0){
+        if (entidad.length > 0) {
             this._fabricaService.carteraEntidadNombres({
                 entidad
             }).subscribe(({ data }) => {
@@ -310,26 +310,26 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
         }
     }
 
-    getNitApi(){
-        console.log('length', this.entidadOptionsNueva.length);
+    getNitApi() {
+        // console.log('length', this.entidadOptionsNueva.length);
 
-        if(this.entidadOptionsNueva.length === 1){
+        if (this.entidadOptionsNueva.length === 1) {
             this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)
         }
     }
 
     confirmarNit(entidad: string, nit: string): Observable<boolean> {
         return this._fabricaService.carteraEntidadNombres({ entidad }).pipe(
-          takeUntil(this.unsubscribe$),
-          map(({ data }) => {
-            if (data.length === 1) {
-              return nit === data[0].nitEntidad && entidad === data[0].nombreEntidad;
-            }
-            return false;
-          }),
-          catchError(() => of(false))
+            takeUntil(this.unsubscribe$),
+            map(({ data }) => {
+                if (data.length === 1) {
+                    return nit === data[0].nitEntidad && entidad === data[0].nombreEntidad;
+                }
+                return false;
+            }),
+            catchError(() => of(false))
         );
-      }
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();

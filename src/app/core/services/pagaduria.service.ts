@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {AppSettingsService} from "../app-configs/app-settings.service";
-import {Observable} from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { AppSettingsService } from "../app-configs/app-settings.service";
+import { Observable } from "rxjs";
 import { replace, toNumber } from 'lodash';
 
 @Injectable({
@@ -21,14 +21,14 @@ export class PagaduriaService {
   /**
    * @description: Obtiene listado de solicitudes segun el tipo
    */
-  public getSolicitudesFilter(tipo:any, estado:any): Observable<any> {
+  public getSolicitudesFilter(tipo: any, estado: any): Observable<any> {
     return this._http.get(`${this._appSettings.pagaduria.url.baseSoli}/${tipo}/${estado}`)
   }
 
   /**
    * @description: Obtiene listado de obligaciones
    */
-  public getObligaciones(numero:any): Observable<any> {
+  public getObligaciones(numero: any): Observable<any> {
     return this._http.get(`${this._appSettings.pagaduria.url.baseObli}/${numero}`)
   }
 
@@ -43,14 +43,14 @@ export class PagaduriaService {
    * @description: Descargar los archivos de la columna Anexo.
    */
   public descargarArchivos(data: any): Observable<any> {
-    console.log(`${this._appSettings.pagaduria.url.baseArchivo}/${data}`)
+    // console.log(`${this._appSettings.pagaduria.url.baseArchivo}/${data}`)
     return this._http.get(`${this._appSettings.pagaduria.url.baseArchivo}/${data}`)
   }
 
   /**
    * @description: Asegurar que los campos de valor tengan formato de numero
    */
-  public formatearNumero(value: string){
+  public formatearNumero(value: string) {
     const valor: string = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return valor;
   }
@@ -58,13 +58,13 @@ export class PagaduriaService {
   /**
    * @description: Enviar los numeros para el formato.
    */
-  public enviarNumero(value: string){
+  public enviarNumero(value: string) {
     if (value == '0') {
-        return 0;
-    }else {
-        const valor = value.replace(/,/g, '');
-        // console.log(valor)
-        return valor;
+      return 0;
+    } else {
+      const valor = value.replace(/,/g, '');
+      // console.log(valor)
+      return valor;
     }
   }
 

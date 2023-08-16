@@ -6,13 +6,14 @@ import { NegociacionCarteraComponent } from './negociacion-cartera/negociacion-c
 import { DataTableComponent } from './negociacion-cartera/data-table/data-table.component';
 import { DataModalComponent } from "./negociacion-cartera/data-modal/data-modal.component";
 import { SharedModule } from 'app/shared/shared.module';
+import { ConsultaNegociacionesComponent } from './consulta-negociaciones/consulta-negociaciones.component';
 
 @NgModule({
   declarations: [
     NegociacionCarteraComponent,
     DataTableComponent,
     DataModalComponent,
-
+    ConsultaNegociacionesComponent
 
 
   ],

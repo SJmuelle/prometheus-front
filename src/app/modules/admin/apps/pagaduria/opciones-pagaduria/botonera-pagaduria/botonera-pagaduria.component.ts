@@ -29,7 +29,7 @@ export class BotoneraPagaduriaComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    console.log(this.apiData)
+    // console.log(this.apiData)
   }
 
 
@@ -43,7 +43,7 @@ export class BotoneraPagaduriaComponent implements OnInit, OnDestroy {
   }
 
 
-  abrirDecision(){
+  abrirDecision() {
     let dialogRef;
     dialogRef = this._dialog.open(ModalDecisionCreditoComponent, {
       minWidth: '60%',
@@ -58,23 +58,23 @@ export class BotoneraPagaduriaComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().toPromise().then((atras) => {
-      if(atras){
-        this.irAtras() 
+      if (atras) {
+        this.irAtras()
       }
     });
   }
 
 
-  nuevaPagaduria(){
+  nuevaPagaduria() {
     this.redireccionar('/pagaduria/parametria/gestion-pagaduria/0');
   }
-  gestionPagaduria(){
+  gestionPagaduria() {
     this.redireccionar('/pagaduria/parametria/gestion-pagaduria');
   }
-  nuevoPlazo(){
+  nuevoPlazo() {
     this.redireccionar('/pagaduria/plazo/parametria/gestion-plazo/0');
   }
-  gestionPlazo(){
+  gestionPlazo() {
     this.redireccionar('/pagaduria/plazo/parametria/gestion-plazo');
   }
 
@@ -82,24 +82,24 @@ export class BotoneraPagaduriaComponent implements OnInit, OnDestroy {
  * @description: Valida que el campo solo sea numeros
  */
   public irAtras() {
- 
+
     switch (this.apiData) {
       case 'resumen':
         this.redireccionar('/pagaduria/agenda-pagaduria');
-      break;
+        break;
 
       case 'pagaduria':
         this.redireccionar('/pagaduria/agenda-pagaduria');
-      break;
+        break;
 
       default:
-      break;
+        break;
     }
   }
 
 
   ngOnDestroy(): void {
-    
+
   }
 
 }

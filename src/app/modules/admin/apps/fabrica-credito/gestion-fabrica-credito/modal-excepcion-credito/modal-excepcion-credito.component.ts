@@ -30,7 +30,7 @@ export class ModalExcepcionCreditoComponent implements OnInit {
     // console.log('datos politica', this.data)
     this.form.controls.excepcionText.setValue(this.data.comentarioExcepcion)
     this.form.patchValue(this.data);
-    console.log('data', this.data);
+    // console.log('data', this.data);
 
   }
 
@@ -67,8 +67,8 @@ export class ModalExcepcionCreditoComponent implements OnInit {
               text: 'Excepción guardada exitosamente.',
               icon: 'success',
               allowOutsideClick: false
-            }).then((result)=>{
-                this._dialog.close();
+            }).then((result) => {
+              this._dialog.close();
             })
           })
         }

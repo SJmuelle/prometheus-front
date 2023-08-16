@@ -1,0 +1,500 @@
+<div class="flex flex-col w-full h-screen ">
+
+    <!-- <div class="w-full flex flex-col">
+        <app-header [infoTitulo]="infoTitulo"></app-header>
+    </div> -->
+
+
+
+    <div class="flex flex-col gap-4 h-auto">
+
+        <!-- <div
+            class="grid grid-cols-1 p-4  w-full gap-2 sm:gap-4 sm:flex sm:flex-row flex-wrap h-auto bg-white border border-gray-50 rounded-lg justify-between items-center"> -->
+        <!-- <div>
+                <h5>{{AllDataSearch?.nombreCliente}} - CC {{AllDataSearch?.cedula}}</h5>
+            </div> -->
+        <!-- <div class="grid grid-cols-1 sm:flex sm:flex-row gap-2"> -->
+        <!-- <button mat-stroked-button routerLink="/cuentas-por-cobrar/seguimiento-cartera">Regresar</button> -->
+        <!-- <button mat-raised-button color="primary" (click)="openModalView()">Cambiar vista</button>
+            </div>
+
+        </div> -->
+
+
+        <div class="bg-white rounded-lg w-full p-2 sm:p-4 flex flex-col mb-40 gap-4 h-auto border border-gray-50">
+
+            <div class="text-2xl font-semibold mt-2 -mb-2 pl-2">
+                Información detalle del cliente
+            </div>
+
+            <hr class="my-0 -mb-5">
+
+            <div *ngIf="!!allDataTable.length" class="grid grid-cols-1 sm:grid-cols-2 p-0 mb-4 sm:p-4 gap-4">
+
+                <div [ngClass]="'col-span-1 '+ item?.class "
+                    class="flex flex-col gap-2 border border-gray-100 rounded-md p-6 "
+                    *ngFor="let item of allDataTable; let last = last; let id = index">
+                    <div class="flex flex-row justify-between items-center">
+                        <h4>{{item.vista}}</h4>
+                        <button class="hidden sm:inline-flex " (click)="expandTable(id)" mat-icon-button>
+                            <mat-icon>swap_horiz</mat-icon>
+                        </button>
+                    </div>
+                    <app-table [allDataRows]="item.valueVista" [dataOptionTable]="item.optionsTable"></app-table>
+                </div>
+
+
+
+            </div>
+
+            <!-- class="grid grid-cols-1 sm:grid-cols-2 gap-2 " -->
+
+
+            <!-- <div [ngClass]="!allDataTable.length? ' mt-0 ' : ' -mt-12 ' "
+                class=" w-full h-auto grid sm:grid-cols-2 grid-cols-1 p-4 gap-4 ">
+
+
+                <div *ngIf="selectedOptions?.includes('Agregar gestiones')"
+                    class="border rounded-md shadow-md p-4  border-gray-50">
+                    <form [formGroup]="formAgregarGestiones" (ngSubmit)="onSaveGestiones()">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-2">
+
+                            <div
+                                class="w-full border col-span-1 sm:col-span-2 flex flex-row rounded-md p-3 h-auto border-gray-50">
+                                <div class="w-10 h-10">
+                                    <img [src]="'assets/images/agendas/Asignacion.png'"
+                                        class="w-full h-full object-cover">
+                                </div>
+                                <span class="pl-2 font-semibold ">{{'Agregar gestiones'}}</span>
+
+                            </div>
+
+
+                            <mat-form-field class="fuse-mat-dense mt-0 sm:mt-0 ">
+                                <mat-label>Cliente</mat-label>
+                                <input matInput type="text" formControlName="Cliente">
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:mt-0 flex-grow">
+                                <mat-label>Negocio</mat-label>
+                                <input matInput type="text" formControlName="Negocio">
+                            </mat-form-field>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-2 ">
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
+                                <mat-label>Tipo de gestor</mat-label>
+                                <mat-select [matTooltip]="" formControlName="Tipodegestor">
+                                    <mat-option *ngFor="let item of tipoGestor"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
+                                <mat-label>Tipo de gestión</mat-label>
+                                <mat-select [matTooltip]="" formControlName="Tipodegestion">
+                                    <mat-option *ngFor="let item of tipoGestion"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2  gap-2">
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
+                                <mat-label>Tipo de contacto</mat-label>
+
+                                <mat-select (selectionChange)="changeSelects($event,'Tipodecontacto')" [matTooltip]=""
+                                    formControlName="Tipodecontacto">
+                                    <mat-option *ngFor="let item of tipoContacto"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
+                                <mat-label>Resultado gestión</mat-label>
+                                <mat-select (selectionChange)="changeSelects($event,'Resultadogestión')" [matTooltip]=""
+                                    formControlName="Resultadogestión">
+                                    <mat-option *ngFor="let item of listarResultadoGestion"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-2">
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
+                                <mat-label>Motivo no pago</mat-label>
+
+                                <mat-select [matTooltip]="" formControlName="Motivonopago">
+                                    <mat-option *ngFor="let item of motivoNoPago"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
+                                <mat-label>Estado cliente</mat-label>
+
+                                <mat-select [matTooltip]="" formControlName="Estadocliente">
+                                    <mat-option *ngFor="let item of estadoCliente"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-1 gap-2">
+
+                            <mat-form-field class="fuse-mat-dense -mt-5 sm:-mt-2 ">
+                                <mat-label>Observaciones</mat-label>
+                                <textarea matInput formControlName="Observaciones" cols="1" rows="2"></textarea>
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-5 sm:-mt-2">
+                                <mat-label>Proxima acción</mat-label>
+
+                                <mat-select [matTooltip]="" formControlName="Proximaacción">
+                                    <mat-option *ngFor="let item of listarProximaAccion"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+                        <div *ngIf="formAgregarGestiones.controls['Resultadogestión'].value==='62'"
+                            class="grid grid-cols-1 sm:grid-cols-3  gap-2">
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
+                                <mat-label>Valor a pagar</mat-label>
+
+                                <input mask="separator.0" thousandSeparator="." matInput type="text"
+                                    formControlName="valorPagar">
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
+                                <mat-label>Fecha pago</mat-label>
+                                <input matInput [matDatepicker]="datepicker2" formControlName="fechaPagar">
+                                <mat-datepicker-toggle class="-mr-4" matIconSuffix
+                                    [for]="datepicker2"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker2>
+
+                                </mat-datepicker>
+
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense w-auto -mt-7 sm:-mt-2">
+                                <mat-label class="font-semibold text-md">Domicilio</mat-label>
+                                <div class="flex-wrap flex flex-row gap-3 py-2 sm:py-0 sm:gap-0 sm:flex-nowrap">
+                                    <mat-checkbox (change)="resetDocimiclio()" formControlName='domicilio'
+                                        matPrefix>Domicilio</mat-checkbox>
+                                </div>
+
+                                <input matInput readonly="true" class="w-0 max-w-0" style="display: none;">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="formAgregarGestiones.controls['domicilio'].value && formAgregarGestiones.controls['Resultadogestión'].value==='62'"
+                            class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow">
+                                <mat-label>Departamento</mat-label>
+
+                                <mat-select (selectionChange)="changeSelects($event,'departamento')" [matTooltip]=""
+                                    formControlName="departamento">
+                                    <mat-option *ngFor="let item of departamentos"
+                                        [value]="item.codigo">{{item.nombre}}</mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow">
+                                <mat-label>Ciudad</mat-label>
+
+                                <mat-select (selectionChange)="changeSelects($event,'ciudad')" [matTooltip]=""
+                                    formControlName="ciudad">
+                                    <mat-option *ngFor="let item of ciudades"
+                                        [value]="item.codigo">{{item.nombre}}</mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
+                                <mat-label>Barrio</mat-label>
+                                <input type="text" matInput formControlName="barrio" [matAutocomplete]="auto">
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptionsGestiones()"
+                                        [value]="option.barrio">
+                                        {{option.barrio}}
+                                    </mat-option>
+                                </mat-autocomplete>
+
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense mat-form-field-disabled -mt-7 sm:-mt-2 flex-grow ">
+                                <mat-label>Dirección</mat-label>
+
+                                <input readonly type="text" matInput formControlName="direccion">
+                                <button (click)="openDiagGestion()" type="button" matSuffix>
+                                    <mat-icon mat-icon-button style="color: #2196f3;">location_on</mat-icon>
+                                </button>
+                            </mat-form-field>
+
+                        </div>
+
+
+
+
+                        <mat-form-field class="fuse-mat-dense  w-full sm:flex-grow">
+                            <mat-label>Fecha y Hora proxima gestión</mat-label>
+                            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                                formControlName="Fecha">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <ngx-mat-datetime-picker #picker [showSpinners]="false" [showSeconds]="false" [stepHour]="1"
+                                [stepMinute]="30" [stepSecond]="60" [touchUi]="false" [enableMeridian]="true"
+                                [disableMinute]="false" [hideTime]="false">
+                            </ngx-mat-datetime-picker>
+                        </mat-form-field>
+
+                        <div class="flex flex-col sm:flex-row justify-end w-full gap-2">
+
+
+
+                            <button type="submit" [disabled]="formAgregarGestiones.invalid"
+                                class="mt-1 w-full sm:w-auto" mat-raised-button color="primary">Guardar</button>
+                        </div> -->
+
+
+
+
+
+
+            <!-- <div>
+                                    <pre>
+                                        {{formAgregarGestiones.value | json}}
+                                    </pre>
+                
+                                </div> -->
+
+            <!-- 
+                                <mat-form-field>
+                                    <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" formControl="Fecha">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1">
+                                    </mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                                        [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+                                        [color]="color">
+                                    </ngx-mat-datetime-picker>
+                                </mat-form-field> -->
+
+
+
+            <!-- <mat-dialog-actions>
+                                    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+                                        <button mat-raised-button color="primary" type="button">
+                                            Guardar
+                                        </button>
+                                        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button"
+                                            [mat-dialog-close]="false">
+                                            Cerrar
+                                        </button>
+                                    </div>
+                                </mat-dialog-actions> -->
+            <!-- </form>
+                </div>
+
+                <div *ngIf="selectedOptions?.includes('Editar información')"
+                    class="w-full h-auto flex flex-col gap-4 p-4 shadow-md border border-gray-50 rounded-md"> -->
+
+            <!-- <app-header [infoTitulo]="infoTitulo"></app-header> -->
+            <!-- <div class="w-full border-2  rounded-2xl p-3 shadow-md">
+            
+                        <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4>
+                    </div> -->
+
+            <!-- <div class="w-full border flex flex-row rounded-md border-gray-50 p-3 h-auto">
+                        <div class="w-10 h-10">
+
+                            <img [src]="'assets/images/agendas/Asignacion.png'" class="w-full h-full object-cover">
+                        </div>
+
+                        <span class="pl-2 font-semibold ">{{'Editar información'}}</span>
+ -->
+
+
+            <!-- <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4> -->
+            <!-- </div>
+
+
+                    <form [formGroup]="formEditClient" (ngSubmit)="onSaveEdit()">
+
+
+                        <div class="flex flex-col gap-2">
+
+                            <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+
+                                <mat-form-field class="flex-grow fuse-mat-dense">
+                                    <mat-label>Codigo</mat-label>
+                                    <input type="text" matInput formControlName="codigoCliente">
+                                </mat-form-field>
+
+                                <mat-form-field class="flex-grow fuse-mat-dense">
+                                    <mat-label>Nit ó cedula</mat-label>
+                                    <input type="text" matInput formControlName="nitCliente">
+                                </mat-form-field>
+
+                            </div>
+
+                            <mat-form-field class="w-full col-span-2 fuse-mat-dense">
+                                <mat-label>Nombre cliente</mat-label>
+                                <input type="text" matInput formControlName="nombreCliente">
+                            </mat-form-field>
+                            <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+                                <mat-form-field class="flex-grow fuse-mat-dense">
+                                    <mat-label>Departamento</mat-label>
+
+                                    <mat-select (selectionChange)="changeSelectsedit($event)" [matTooltip]=""
+                                        formControlName="departamento">
+                                        <mat-option *ngFor="let item of dapartamentosEdit"
+                                            [value]="item.codigo">{{item.nombre}}</mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+
+                                <mat-form-field class="fuse-mat-dense flex-grow">
+                                    <mat-label>Ciudad</mat-label>
+
+                                    <mat-select [matTooltip]="" (selectionChange)="resetBarrio()"
+                                        formControlName="ciudad">
+                                        <mat-option *ngFor="let item of ciudadeseditar"
+                                            [value]="item.codigo">{{item.nombre}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+                                <mat-form-field class="flex-grow fuse-mat-dense mat-form-field-disabled">
+                                    <mat-label>Dirección</mat-label>
+                                    <input type="text" [readonly]="true" class="" matInput
+                                        formControlName="direccionCliente">
+                                    <button (click)="openDiag()" type="button" matSuffix>
+                                        <mat-icon mat-icon-button style="color: #2196f3;">location_on</mat-icon>
+                                    </button>
+                                </mat-form-field>
+
+                                <mat-form-field class="fuse-mat-dense flex-grow">
+                                    <mat-label>Barrio</mat-label> -->
+            <!-- <input type="text" matInput formControlName="barrio"> -->
+
+            <!-- <input type="text" matInput formControlName="barrio" [matAutocomplete]="auto1">
+                                    <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredOptions()" [value]="option.barrio">
+                                            {{option.barrio}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+
+
+                                </mat-form-field>
+
+                            </div>
+
+
+
+
+                            <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+                                <mat-form-field class="fuse-mat-dense flex-grow">
+                                    <mat-label>Telefono</mat-label>
+                                    <input mask="(000) 000 00 00" type="text" matInput
+                                        formControlName="telefonoCliente">
+                                </mat-form-field>
+
+
+                                <mat-form-field class="fuse-mat-dense flex-grow">
+                                    <mat-label>Celular 1</mat-label>
+                                    <input mask="(000) 000 00 00" type="text" matInput formControlName="celularCliente">
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+
+                                <mat-form-field class="fuse-mat-dense flex-grow">
+                                    <mat-label>Celular 2</mat-label>
+                                    <input mask="(000) 000 09 99" type="text" matInput
+                                        formControlName="celular2Cliente">
+                                </mat-form-field>
+
+                                <mat-form-field class="fuse-mat-dense flex-grow">
+                                    <mat-label>Víctima de extorsíon</mat-label>
+
+
+                                    <div class="flex-wrap flex flex-row gap-3 py-2 sm:py-0 sm:gap-0 sm:flex-nowrap">
+                                        <mat-checkbox formControlName='extorsion' matPrefix>Cliente es víctima de
+                                            extorsíon</mat-checkbox>
+                                    </div>
+
+                                    <input matInput readonly="true" class="w-0 max-w-0" style="display: none;">
+
+                                </mat-form-field>
+
+                            </div>
+                            <div class="w-full flex flex-col sm:flex-row justify-end gap-2">
+
+
+
+                                <button type="submit" class="w-full sm:w-auto" color="primary"
+                                    [disabled]="formEditClient.invalid" mat-raised-button
+                                    class="w-full sm:w-auto">Guardar</button>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+
+
+                </div> -->
+
+            <!-- </div> -->
+
+
+
+
+            <!-- <pre>
+                    {{formAgregarGestiones.value | json}}
+                </pre> -->
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

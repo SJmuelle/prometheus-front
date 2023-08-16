@@ -173,7 +173,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.totales = res.data;
-                console.log('totales', this.totales);
+                // console.log('totales', this.totales);
 
                 Swal.close();
             } else {
@@ -235,7 +235,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         this.unsubscribe$.complete();
     }
 
-    nextTotalesSlider(){
+    nextTotalesSlider() {
         var slider: HTMLElement = document.getElementById("totalesScroll");
         const currentScroll = slider.scrollLeft
 
@@ -245,7 +245,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         })
     }
 
-    previousTotalesSlider(){
+    previousTotalesSlider() {
         var slider: HTMLElement = document.getElementById("totalesScroll");
         const currentScroll = slider.scrollLeft
 
@@ -255,16 +255,16 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         })
     }
 
-    public isMobil(){
+    public isMobil() {
         return window.innerWidth < 600;
     }
 
-    actualizarTabla($event){
+    actualizarTabla($event) {
         this.getAgendaComercial();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
     }
 
-    filtrarTablaTotalesEvent(datos){
+    filtrarTablaTotalesEvent(datos) {
         this.datos = datos;
     }
 }
