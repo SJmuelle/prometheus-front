@@ -1,6 +1,6 @@
-<div class="w-full  flex flex-col gap-2 p-4 bg-white rounded-md shadow-md">
+<div class="w-full  flex flex-col gap-2 p-0 sm:p-4 bg-white rounded-md shadow-md">
 
-    <div class="text-2xl font-semibold pl-2 mb-2">
+    <div class="text-2xl mt-2 font-semibold pl-2 mb-2">
         Información detalle del cliente
     </div>
 
@@ -34,7 +34,7 @@
             </div>
         </mat-tab>
 
-        <mat-tab>
+        <!-- <mat-tab>
             <ng-template mat-tab-label>
 
                 Detalle Pagos
@@ -42,12 +42,12 @@
             <div class="pr-0">
                 <app-table [allDataRows]="dataRowvisualizarPagos" [dataOptionTable]="visualizarPagos"></app-table>
             </div>
-        </mat-tab>
+        </mat-tab> -->
 
         <mat-tab>
             <ng-template mat-tab-label>
 
-                Plan de Pagos
+                Detalle de pagos
             </ng-template>
             <div class="pr-0">
                 <app-table [allDataRows]="dataRowPlanPagos" [dataOptionTable]="visualizarPlanPago"></app-table>

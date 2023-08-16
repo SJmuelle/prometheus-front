@@ -8,7 +8,14 @@
 
     <!-- </div> -->
 
-    <h3 class="text-2xl font-semibold mb-2 sticky pl-2 pt-2">{{'AGREGAR GESTIONES'}}</h3>
+    <div class="flex pl-2 flex-row justify-start items-center">
+        <div class="w-7 h-7 max-h-7 max-w-7">
+            <img [src]="'assets/images/agendas/Asignacion.png'" class="w-full h-full object-cover">
+        </div>
+
+        <h3 class="text-2xl font-semibold mb-2 sticky pl-2 pt-2">{{'Agregar gestiones'}}</h3>
+    </div>
+
 
     <hr class="my-0 mt-2">
 
@@ -261,7 +268,7 @@
         </form>
     </div>
 
-    <div class="flex flex-col sm:flex-row justify-end w-full mb-4 sm:mb-0 gap-2 mt-2 relative bottom-0  ">
+    <div class="flex flex-col sm:flex-row justify-end w-full mb-4 sm:mb-0 gap-2 mt-2 relative bottom-0 sm:pr-3 pr-0 ">
 
         <button type="button" class="mt-1 w-full sm:w-auto" (click)="cerrarGestion()" mat-stroked-button>Cerrar</button>
 

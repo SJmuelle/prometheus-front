@@ -18,9 +18,10 @@
 
 
 
-            <div class="p-4 w-full gap-4 flex flex-col">
+            <div [ngClass]="paddingClass" class=" w-full gap-4 flex flex-col ">
 
-                <mat-accordion class="w-full h-auto gap-4 flex flex-col">
+                <mat-accordion class="w-full h-auto gap-4 flex flex-col"
+                    [ngStyle]="{'margin-bottom' : (!dataRows.length) ? '160px' : '0px' }">
 
                     <mat-expansion-panel [(expanded)]="openSearch">
                         <mat-expansion-panel-header class="h-24 sm:h-14" (opened)="openSearch = true"

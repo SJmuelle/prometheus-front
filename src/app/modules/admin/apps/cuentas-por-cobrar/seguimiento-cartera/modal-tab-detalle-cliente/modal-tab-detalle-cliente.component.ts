@@ -7,7 +7,7 @@ import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import moment from 'moment';
 import { Subject, Subscription } from 'rxjs';
-import { skip, takeUntil } from 'rxjs/operators';
+import { filter, skip, takeUntil } from 'rxjs/operators';
 import { ModalSubDetalleClienteComponent } from '../modal-sub-detalle-cliente/modal-sub-detalle-cliente/modal-sub-detalle-cliente.component';
 
 @Component({
@@ -84,6 +84,9 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
     { name: 'fecha_consignacion', text: 'Fecha consignación', typeField: 'text', pipeName: 'date', classTailwind: 'whitespace-pre' },
     { name: 'descripcion_ingreso', text: 'Descripción', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'negocio', text: 'Negocio', typeField: 'text', classTailwind: 'whitespace-pre' },
+    // documento
+    { name: 'documento', text: 'Factura', typeField: 'text', classTailwind: 'whitespace-pre' },
+
     { name: 'valor_ingreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end whitespace-pre' },
 
   ]
@@ -285,17 +288,17 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
         this.initdataTab();
         break;
       case 1:
-        this.detallePagos();
-        break;
-      case 2:
+        // this.detallePagos();
         this.PlanPagos();
         break;
-      case 3:
+      case 2:
         this.detalleGestiones();
         break;
-      case 4:
+      case 3:
         this.compromisosPagos();
         break;
+      // case 4:
+      //   break;
     }
 
 
@@ -317,8 +320,9 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
       next: (resp) => {
         setTimeout(() => {
           this._sweetAlerService.stopLoading();
-          this.dataRowPlanPagos = resp?.data || []
+          this.dataRowPlanPagos = resp?.data.filter((value: any) => value.valor_ingreso > 0) || []
         }, 400)
+
       }, error: (e) => {
         this._sweetAlerService.alertError()
       }

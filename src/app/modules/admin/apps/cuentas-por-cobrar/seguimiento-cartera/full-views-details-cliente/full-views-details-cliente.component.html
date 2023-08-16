@@ -32,7 +32,7 @@
             <div *ngIf="!!allDataTable.length" class="grid grid-cols-1 sm:grid-cols-2 p-0 mb-4 sm:p-4 gap-4">
 
                 <div [ngClass]="'col-span-1 '+ item?.class "
-                    class="flex flex-col gap-2 border border-gray-100 rounded-md p-6 "
+                    class="flex flex-col gap-2 border border-gray-100 rounded-md p-1 sm:p-6 "
                     *ngFor="let item of allDataTable; let last = last; let id = index">
                     <div class="flex flex-row justify-between items-center">
                         <h4>{{item.vista}}</h4>
