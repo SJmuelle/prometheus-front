@@ -396,7 +396,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
         const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
         const activos = Number(this.utility.enviarNumero(this.form.value.activos));
-        // const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
+         const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado + ''));
         const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
         const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
@@ -420,7 +420,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             comisionesHorasExtras: comisionesHorasExtrasFormato,
             fechaFinalizacionContrato: fechaFinalizacionContratoFormato,
             fechaVinculacion: fechaVinculacionFormato,
-            // valorSolicitado: valorSolicitadoFormato,
+             valorSolicitado: valorSolicitadoFormato,
             salarioBasico: salarioBasicoformato,
             fechaNacimiento: fechaNacimientoFormato,
             fechaExpedicionDocumento: fechaExpedicionDocumentoFormato,
@@ -1250,7 +1250,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         ) {
             return
         }
-        debugger
         let data = {
             pagaduria: pagaduria,
             tipoContrato: tipoContrato,
