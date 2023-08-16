@@ -1,6 +1,6 @@
-<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+<div class="absolute inset-0 flex flex-col min-w-0 h-full h-screen overflow-auto">
 
-    <mat-drawer-container class="flex-auto h-full h-screen bg-card dark:bg-transparent"
+    <mat-drawer-container class="flex-auto bg-card dark:bg-transparent"
         (backdropClick)="onBackdropClicked()">
 
         <!-- Drawer -->
@@ -45,9 +45,10 @@
                 <!-- Contacts list -->
                 <div class="relative h-cal">
                     <mapa-cobertura></mapa-cobertura>
+                </div>
+                <div class="relative h-cal">
                     <listado-asignaciones></listado-asignaciones>
                 </div>
-
             </div>
 
         </mat-drawer-content>

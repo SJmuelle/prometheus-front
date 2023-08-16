@@ -1,1 +1,11 @@
-<p>listado-asignaciones works!</p>
+<div class="card py-2 px-3 shadow bg-white m-4 rounded-lg">
+    <div class="flex flex-row mb-3">
+        <div class="border rounded-full flex items-center w-full h-10 md:w-56 pl-2 ">
+            <input type="text" placeholder="Filtrar..." (keyup)="search()"  [(ngModel)]="filtrarTabla" class="w-full not-uppercase"
+                autocomplete="off" name="filtrarTabla">
+        </div>
+    </div>
+    <div>
+        <app-table [allDataRows]="dataRow" [dataOptionTable]="optionsTable"></app-table>
+    </div>
+</div>
