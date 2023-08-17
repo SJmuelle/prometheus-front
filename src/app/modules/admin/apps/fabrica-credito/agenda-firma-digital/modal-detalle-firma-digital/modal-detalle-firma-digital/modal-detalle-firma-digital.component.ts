@@ -12,7 +12,7 @@ export class ModalDetalleFirmaDigitalComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.data)
+    // console.log(this.data)
   }
 
 }

@@ -66,11 +66,11 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                     let fechaFinal = moment(e.fechaFinal._d).format("YYYY-MM-DD");
                     let fechaInicial = moment(e.fechaInicial._d).format("YYYY-MM-DD");
 
-                    this.form.controls.fechaInicial=new FormGroup({
+                    this.form.controls.fechaInicial = new FormGroup({
                         tipo: new FormControl('FECHA_INICIAL'),
                         buscar: new FormControl(fechaInicial)
                     })
-                    this.form.controls.fechaIFinal=new FormGroup({
+                    this.form.controls.fechaIFinal = new FormGroup({
                         tipo: new FormControl('FECHA_FINAL'),
                         buscar: new FormControl(fechaFinal)
                     })
@@ -82,7 +82,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
         this.form.valueChanges.subscribe((e: any) => {
             let data = Object.values(e)
             this.armarConsulta(data)
-            console.log(Object.values(this.form.getRawValue()), 'valores');
+            // console.log(Object.values(this.form.getRawValue()), 'valores');
 
         })
 
@@ -121,7 +121,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
     consultaFiltro() {
         let dato = this.datos;
-        if(dato==null){
+        if (dato == null) {
             return
         }
         Swal.fire({ title: 'Cargando', html: 'Buscando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -246,7 +246,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                 details: filtered
             }
             this.datos = dataEnvio
-        }else{
+        } else {
             this.datos = null
         }
     }
