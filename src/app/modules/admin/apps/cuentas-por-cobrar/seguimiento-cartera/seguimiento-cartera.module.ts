@@ -12,7 +12,7 @@ import { FullViewsDetailsClienteComponent } from './full-views-details-cliente/f
 import { ModalTabDetalleClienteComponent } from './modal-tab-detalle-cliente/modal-tab-detalle-cliente.component';
 import { VistaDetalleClienteComponent } from './vista-detalle-cliente/vista-detalle-cliente.component';
 import { ModalDetailsCarteraClienteComponent } from './modal-details-cartera-cliente/modal-details-cartera-cliente/modal-details-cartera-cliente.component';
-
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from "@angular-material-components/datetime-picker";
 
 
 
@@ -33,6 +33,8 @@ import { ModalDetailsCarteraClienteComponent } from './modal-details-cartera-cli
   imports: [
     CommonModule,
     SeguimientoCarteraRoutingModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
     SharedModule,
     NgxMaskModule.forRoot(),
 
