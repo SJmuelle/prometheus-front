@@ -604,7 +604,7 @@ export class AppSettingsService {
             listarBarrios: EndPoints.uri('/generic/qry/listar-barrios'),
             buscarClienteHistorico: EndPoints.uri('/generic/cartera-buscar-cliente-historico'),
             verDetalleCarteraHistorico: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico'),
-            carteraCargarDetalleClienteResumen: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico'),
+            carteraCargarDetalleClienteResumen: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-resumen'),
 
         }
     };

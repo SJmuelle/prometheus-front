@@ -55,7 +55,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
   ]
 
   public visualizarGestiones: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'min-w-90' },
     { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'proAccion', text: 'Próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -65,7 +65,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
   ]
 
   public visualizarCompromisosPago: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'min-w-90' },
     { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'direccion', text: 'Dirección', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'barrio', text: 'Barrio', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -260,7 +260,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
 
         if (historico) {
           const verDetalleCarteraHistorico = this._seguimientoCarteraService.verDetalleCarteraHistorico(detalleCartera).pipe(takeUntil(this.unsuscribe$), map((res) => {
-            const response = { vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera] }
+            const response = { vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera], footer: true }
             return response
           }))
 
@@ -270,7 +270,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
           const cargarClienteCartera = this._seguimientoCarteraService.cargarClienteCartera(detalleCartera).pipe(takeUntil(this.unsuscribe$)
             , map((res) => {
               const response = {
-                vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera],
+                vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera], footer: true
               }
               return response
             })
@@ -297,7 +297,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
         }
         const verDetallePagoCliente = this._seguimientoCarteraService.verDetallePagoCliente(detallePagos)
           .pipe(takeUntil(this.unsuscribe$), map((res) => {
-            const response = { vista: 'Detalle de pagos', valueVista: res.data.filter((values: any) => values.valor_ingreso > 0) || [], optionsTable: [...this.visualizarPlanPago], }
+            const response = { vista: 'Detalle de pagos', valueVista: res.data.filter((values: any) => values.valor_ingreso > 0) || [], optionsTable: [...this.visualizarPlanPago], footer: true }
             return response
           }))
         this.arrayPromises.push(verDetallePagoCliente);
@@ -308,7 +308,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
 
         const visualizarGestiones = this.Alldata.negocio
         const verGestionesCliente = this._seguimientoCarteraService.verGestionesCliente(visualizarGestiones).pipe(takeUntil(this.unsuscribe$), map((res) => {
-          const response = { vista: 'Detalle gestiones', valueVista: res.data || [], optionsTable: [...this.visualizarGestiones], }
+          const response = { vista: 'Detalle gestiones', valueVista: res.data || [], optionsTable: [...this.visualizarGestiones], footer: false }
           return response
         }))
 
@@ -319,7 +319,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
         const visualizarCompromisosPago = this.Alldata.negocio
 
         const verCompromisosPagos = this._seguimientoCarteraService.verCompromisosPagos(visualizarCompromisosPago).pipe(takeUntil(this.unsuscribe$), map((res) => {
-          const response = { vista: 'Compromisos de pagos', valueVista: res.data || [], optionsTable: [...this.visualizarCompromisosPago], }
+          const response = { vista: 'Compromisos de pagos', valueVista: res.data || [], optionsTable: [...this.visualizarCompromisosPago], footer: true }
           return response
         }))
 

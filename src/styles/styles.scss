@@ -256,3 +256,7 @@ td.mat-calendar-body-cell:not(.mat-calendar-body-disabled) .mat-calendar-body-ce
 table.tabla-izquierda thead tr th.wrapper-table .mat-sort-header-container {
     justify-content: start !important;
 }
+
+table.tabla-izquierda thead tr th.wrapper-table.text-end .mat-sort-header-container {
+    justify-content: end !important;
+}
