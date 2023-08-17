@@ -259,7 +259,8 @@
                 <ng-container [matColumnDef]="dataOption.name"
                     *ngFor="let dataOption of this.dataOptionTable; let i = index">
 
-                    <th class=" sticky top-0 pl-2.5 header-table wrapper-table" style="background: #E2E8F0;"
+                    <th [ngClass]="dataOption.classTailwind ?? '' "
+                        class=" sticky top-0 pl-2.5 header-table wrapper-table z-10" style="background: #E2E8F0;"
                         mat-header-cell *matHeaderCellDef mat-sort-header>
                         {{ dataOption.text }}
                     </th>
