@@ -29,11 +29,12 @@
                 </div>
 
                 <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
-                    class="border-1 p-4 flex flex-col">
+                    class="border-1 p-4 flex flex-col cursor-pointer">
 
 
 
-                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row my-0.5">
+                    <div (click)="actionSelectRow(value)" *ngFor="let item of dataOptionTable"
+                        class="w-full flex-row my-0.5">
 
                         <span class="w-full "
                             *ngIf="(item.typeField!=='function' || item.typeField!=='mat-menu') && item.view"
@@ -226,7 +227,8 @@
 
         <div *ngIf="!viewmode()" class="hidden sm:flex flex-col">
 
-            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 " tabindex="0">
+            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 tabla-izquierda "
+                tabindex="0">
 
                 <!-- <ng-container matColumnDef="action" *ngIf="Options.function">
                     <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
@@ -256,8 +258,8 @@
                 <ng-container [matColumnDef]="dataOption.name"
                     *ngFor="let dataOption of this.dataOptionTable; let i = index">
 
-                    <th class=" sticky top-0 " style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef
-                        mat-sort-header>
+                    <th class=" sticky top-0 pl-2.5 header-table wrapper-table" style="background: #E2E8F0;"
+                        mat-header-cell *matHeaderCellDef mat-sort-header>
                         {{ dataOption.text }}
                     </th>
 
@@ -495,12 +497,13 @@
     </div>
 
     <div class="relative">
-        <mat-paginator (page)="pageEvent($event)" class="border-t border-b rounded-t-none rounded-xl"
-            style="background-color: #E2E8F0;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
+        <mat-paginator (page)="pageEvent($event)"
+            class="border-t border-b border flex flex-row items-center h-22 sm:h-14 rounded-t-none rounded-xl"
+            style="background-color: #ffffff;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
             [pageSize]="5" [pageSizeOptions]="[3,5]">
         </mat-paginator>
 
-        <button #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button
+        <button *ngIf="Options.config" #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button
             class="absolute buttonSettings"><mat-icon>settings</mat-icon></button>
 
 

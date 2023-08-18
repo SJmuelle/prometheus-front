@@ -120,17 +120,23 @@
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Monto crédito</mat-label>
-                        <input matInput type="text" [formControlName]="'valorSolicitado'"
-                            (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); "
-                            (change)="validacion('MO')">
-                        <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
+                        <input matInput type="text" [formControlName]="'valorSolicitado'" mask="separator.0"
+                            thousandSeparator="." (change)="validacion('MO')">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                        <mat-error>
+                            Ingrese un
+                            monto mayor a ${{montoMinimo |number:'1.0-5'}} y menor a ${{montoMaximo |number:'1.0-5'}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Plazo</mat-label>
                         <input matInput type="text" [formControlName]="'plazo'" [required]="true"
                             (change)="validacion('PL')">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                        <mat-error>
+                            Ingrese un
+                            plazo mayor a {{plazoMinimo |number:'1.0-5'}} y menor a {{plazoMaximo |number:'1.0-5'}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="-mx-3 md:flex mb-2">
@@ -190,7 +196,7 @@
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label [ngClass]="form.value.aplicaEmbargo!='N'?'text-red-700':''"> Embargo
                         </mat-label>
-                        <mat-select   [value]="'seleccione'" disabled [formControlName]="'aplicaEmbargo'">
+                        <mat-select [value]="'seleccione'" disabled [formControlName]="'aplicaEmbargo'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option value="S">Si aplica
@@ -362,8 +368,8 @@
                             <div class="-mx-3 md:flex mt-3 mb-2">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha de nacimiento </mat-label>
-                                    <input matInput [matDatepicker]="fechaNacimiento"  (dateChange)="validacion('FEN')"
-                                        [formControlName]="'fechaNacimiento'" >
+                                    <input matInput [matDatepicker]="fechaNacimiento" (dateChange)="validacion('FEN')"
+                                        [formControlName]="'fechaNacimiento'">
                                     <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #fechaNacimiento></mat-datepicker>
@@ -594,7 +600,7 @@
                             <ng-container *ngIf="form.controls['tipoContrato'].value == 'F'">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha desvinculación </mat-label>
-                                    <input matInput [matDatepicker]="fechaFinalizacionContrato"
+                                    <input matInput [matDatepicker]="fechaFinalizacionContrato"  (Change)="ValidacionPlazo()"
                                         [formControlName]="'fechaFinalizacionContrato'" [readonly]="true">
                                     <mat-datepicker-toggle matSuffix [for]="fechaFinalizacionContrato">
                                     </mat-datepicker-toggle>
@@ -740,7 +746,7 @@
                                 </mat-form-field>
                             </div>
                         </ng-container>
-                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end"  *ngIf="!permisoEditar">
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end" *ngIf="!permisoEditar">
                             <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                                 Guardar
                             </button>

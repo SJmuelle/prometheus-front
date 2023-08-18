@@ -1,0 +1,127 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <mat-drawer-container class="flex-auto h-full h-screen bg-card dark:bg-transparent"
+        (backdropClick)="onBackdropClicked()">
+
+        <!-- Drawer -->
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="false" [position]="'end'"
+            [disableClose]="true" #matDrawer>
+            <router-outlet></router-outlet>
+        </mat-drawer>
+
+        <mat-drawer-content class="flex flex-col">
+
+            <!-- Main -->
+            <div class="flex-auto">
+
+                <!-- Header -->
+                <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+                    <!-- Title -->
+                    <div class="flex items-center ml-6">
+                        <div class="flex-0 w-16 overflow-hidden">
+                            <img src="assets/images/agendas/pagadurias.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 mx-3">
+                            <div class="text-3xl font-semibold tracking-tight leading-8">Gestión de pagaduria
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                                <div class="font-medium tracking-tight text-secondary">
+                                    Realiza la gestión de la configuración personalizada por pagaduria
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <!-- <button class="ml-4" mat-flat-button [color]="'primary'"  [routerLink]="['./222755']" (click)="mostrarDetalle()">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Listado</span>
+                        </button> -->
+
+                        <app-botonera-pagaduria [apiData]="'pagaduria'"></app-botonera-pagaduria>
+                    </div>
+
+                </div>
+
+                <!-- Contacts list -->
+                <div class="relative h-cal">
+                    <div class="grid grid-cols-1 w-full px-5 pt-3">
+                        <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
+                            <div class="flex items-center justify-between">
+
+                                <div class="text-secondary font-medium"> <input
+                                        class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                                        autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                                        placeholder="Filtrar..."></div>
+
+                                <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"
+                                    [formControl]="tamanoTabl" (change)="page=1">
+                                    <option value="10">10</option>
+                                    <option value="20"> 20</option>
+                                    <option value="30"> 30</option>
+                                </select>
+
+                            </div>
+                            <div class="w-full  overflow-auto mt-2">
+                                <table class="p-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th class="text-center">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white">
+                                        <ng-container
+                                            *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }; let i = index; ">
+                                            <ng-container
+                                                *ngIf="i === 0 || item.nombre.toUpperCase().charAt(0) !== datos[i - 1].nombre.toUpperCase().charAt(0)">
+                                                <tr
+                                                    class="z-99 top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                                                    <td colspan="4"> {{item.nombre.toUpperCase().charAt(0)}}</td>
+                                                </tr>
+                                            </ng-container>
+                                            <tr class="text-gray-700 border-t border-b " (click)="detalle(item.codigo)">
+                                                <td class="flex justify-center p-2">
+                                                    <div
+                                                        class="flex items-center justify-center w-10 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                                        {{item.nombre.charAt(0)+item.nombre.charAt(1)}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {{item.codigo}}
+                                                </td>
+                                                <td>
+                                                    {{item.nombre.toUpperCase()}}
+                                                </td>
+                                                <td class="flex justify-center p-2">
+
+                                                    <div [ngClass]="item.estado=='A'?'bg-pink-300':'bg-green-300'">
+                                                        <span
+                                                            class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                            {{ item.descripcionEstado}} </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex items-center mt-auto">
+                                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                                    nextLabel="Siguiente">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
+</div>

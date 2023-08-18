@@ -52,8 +52,17 @@ export class FabricaCreditoService {
         return this._http.post(this._appSettings.fabricaDatos.url.resumenes, datos);
 
     }
+     /**
+    * @description: resumenes de credito
+    */
+     public getResumenCreditoPagaduria(datos): Observable<any> {
+        // const { numeroSolicitud } = datos;
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.resumenesPagaduria}/${numeroSolicitud}`);
+        return this._http.post(this._appSettings.fabricaDatos.url.resumenesPagaduria, datos);
+
+    }
     /**
-* @description: resumenes de credito
+* @description: resumenes de credito pagaduria
 */
     public getHistoricoCliente(datos): Observable<any> {
         // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);
@@ -169,6 +178,20 @@ export class FabricaCreditoService {
     public postDatosDeudorSolidario(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
+    /**
+     * @description: Post libranza val monto
+     */
+    public validacionMonto(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.validacionMonto, data);
+    }
+
+    /**
+     * @description: Post libranza val plazo
+     */
+    public validacionPlazo(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.validacionPlazo, data);
+    }
+    /**
 
     /**
       * @description: Enviar confirmacion codigo OTP validado

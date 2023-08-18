@@ -1,0 +1,103 @@
+
+.bg-yellowCustom{
+    background-color: rgb(255, 158, 0);
+    padding: 2px 6px !important;
+}
+
+.unidadWidth{
+    min-width: 106px !important;
+    font-size: 9px !important;
+
+    padding: 2px 2px !important;
+}
+
+.maxWidthUnidadNegocio{
+    max-width: 140px !important;
+}
+
+.centerAbsolute{
+    top: 50%;
+    right: 0;
+
+    transform: translate(0, -50%);
+}
+
+.iconMarca{
+    font-size: 10px !important;
+}
+
+.bg-mobil{
+    @media screen and (width < 600px) {
+        background-color: #F1F5F9 !important;
+        box-shadow: none !important;
+    }
+}
+
+
+.bgMovilInput{
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    @media screen and (width < 600px) {
+        background-color: white !important;
+    }
+}
+
+
+.padingTable{
+    padding: 24px;
+    @media screen and (width < 600px) {
+        padding: 0px 24px;
+    }
+}
+
+.borderTopCard{
+    border-top: 1px solid rgb(172, 172, 172);
+}
+
+.borderEtiqueta{
+    border: 1px solid white;
+}
+
+.shadow3D{
+    box-shadow: 1px 1px 2px rgb(112, 112, 112);
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #84b7da;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: rgb(45 62 80) transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+
+  .bg-preAprobado{
+    background-color: rgb(38, 117, 38);
+   }

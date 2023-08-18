@@ -1,0 +1,66 @@
+<div class="w-full h-screen gap-3 flex flex-col  overflow-y-auto">
+
+
+    <div class="">
+
+        <div class="w-full h-auto flex flex-col">
+
+            <app-header [infoTitulo]="tittle"></app-header>
+        </div>
+
+    </div>
+
+    <div class=" m-4 ">
+
+        <div class="p-8  mb-40 rounded-md border bg-white  gap-4 flex flex-col h-auto ">
+
+
+            <div class="border rounded-md  w-full h-auto grid grid-cols-1 sm:flex sm:flex-row p-4 items-center gap-4 ">
+
+
+                <mat-form-field class="fuse-mat-dense w-full sm:w-60">
+                    <mat-label>Indique rango de fechas</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input [(ngModel)]="date.dateInit" matStartDate>
+                        <input (dateChange)="searchNegociaciones()" [(ngModel)]="date.dateEnd" matEndDate>
+                    </mat-date-range-input>
+
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker>
+
+                        <!-- <mat-date-range-picker-actions>
+
+                            <button mat-raised-button 
+                                (click)="searchNegociaciones()" color="primary" type="button"
+                                matDateRangePickerApply>Buscar</button>
+                        </mat-date-range-picker-actions> -->
+
+
+
+                    </mat-date-range-picker>
+
+
+
+                </mat-form-field>
+
+                <button (click)="exportAsXLSX()" [disabled]="!dataNegociaciones.length" mat-raised-button
+                    class="-mt-4 sm:mt-1" color="primary">
+                    Descargar
+                </button>
+
+
+
+
+            </div>
+
+
+            <div class=" ">
+
+                <app-table [dataOptionTable]="tableOptions" [allDataRows]="dataNegociaciones"></app-table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

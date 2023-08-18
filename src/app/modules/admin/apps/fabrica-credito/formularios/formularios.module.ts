@@ -33,53 +33,56 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
-import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.component';
+import { LibranzaComponent } from './libranza/libranza.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { SharedModule } from 'app/shared/shared.module';
+import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.component';
+
 
 
 @NgModule({
   declarations: [
     MicrocreditoComponent,
-    LibranzaPublicaComponent,  
+    LibranzaPublicaComponent,
+    LibranzaComponent
   ],
   imports: [
     CommonModule,
     FormulariosRoutingModule,
     MatExpansionModule,
-        MatFormFieldModule,
-        MatInputModule,
-        CdkScrollableModule,
-        MatIconModule,
-        MatDatepickerModule,
-        MatTabsModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatSelectModule,
-        NgxMatDatetimePickerModule,
-        NgxMatNativeDateModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatCheckboxModule,
-        NgxExtendedPdfViewerModule,
-        Ng2SearchPipeModule,
-        PdfViewerModule,
-        NgxPaginationModule,
-        MatListModule,
-        FuseDrawerModule,
-        FuseCardModule,
-        MatRadioModule,
-        FormsModule,
-        MatAutocompleteModule,
-        QuillModule,
-        MatMenuModule,
-        MatSliderModule,
-        NgxMaskModule.forRoot(),
-        MatProgressBarModule,
-        GestionFabricaCreditoModule,
-        MatStepperModule,
-        SharedModule
+    MatFormFieldModule,
+    MatInputModule,
+    CdkScrollableModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatTabsModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatSelectModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    NgxExtendedPdfViewerModule,
+    Ng2SearchPipeModule,
+    PdfViewerModule,
+    NgxPaginationModule,
+    MatListModule,
+    FuseDrawerModule,
+    FuseCardModule,
+    MatRadioModule,
+    FormsModule,
+    MatAutocompleteModule,
+    QuillModule,
+    MatMenuModule,
+    MatSliderModule,
+    NgxMaskModule.forRoot(),
+    MatProgressBarModule,
+    GestionFabricaCreditoModule,
+    MatStepperModule,
+    SharedModule
   ]
 })
 export class FormulariosModule { }

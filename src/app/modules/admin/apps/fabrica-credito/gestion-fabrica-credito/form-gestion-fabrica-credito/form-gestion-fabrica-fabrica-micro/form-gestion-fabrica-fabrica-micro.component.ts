@@ -240,7 +240,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log('data inicial', this.dataInicial)
+                // console.log('data inicial', this.dataInicial)
                 this.antiBucle = resp.data
                 this.subscribeInput();
             }
@@ -405,20 +405,20 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         //     datosFormularios.latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
         //     datosFormularios.longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
 
-            Swal.fire({
-                title: 'Guardar información',
-                text: '¿Está seguro de guardar información?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#a3a0a0',
-                confirmButtonText: 'Guardar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.postFormularioFabrica(datosFormularios);
-                }
-            });
+        Swal.fire({
+            title: 'Guardar información',
+            text: '¿Está seguro de guardar información?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.postFormularioFabrica(datosFormularios);
+            }
+        });
         // })
 
 
@@ -443,7 +443,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.setConyugueNombreCompleto()
 
                 this.formatearDataInicial();
-                this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
+                // console.log("controls", this.form.controls)
+                this.form.controls.fechaPrimerPago.setValue(data?.fechaPrimeraCuota === "0099-01-01" ? "NO REGISTRA" : data?.fechaPrimeraCuota);
+                this.form.controls.valorCuotaAprox.setValue(data?.valorCuota === 0 ? "NO REGISTRA" : data?.valorCuota);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
                 this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
                 this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
@@ -523,7 +525,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     ngAfterViewInit(): void {
         //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
         //Add 'implements AfterViewInit' to the class.
-        console.log('view inizializada');
+        // console.log('view inizializada');
 
         this.addValidation()
         this.marginTopInputDynamic();
@@ -676,8 +678,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesExpedicion(codigo);
-         // eliminar la ciudad
-         this.form.get('codigoCiudadExpedicion').setValue('')
+        // eliminar la ciudad
+        this.form.get('codigoCiudadExpedicion').setValue('')
     }
 
     /**
@@ -1004,6 +1006,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
             score: [''],
+
+            valorCuotaAprox: [''],
+            fechaPrimerPago: ['']
 
             // tipoCliente: [''],
             // categoriaSisben: ['', Validators.required]
@@ -1549,10 +1554,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.unSubscribe$.complete();
     }
 
-    public verScorePermiso():boolean{
-        if(this.fabricaDatos.observaScoreTrazabilidad === 'S'){
+    public verScorePermiso(): boolean {
+        if (this.fabricaDatos.observaScoreTrazabilidad === 'S') {
             return true;
-        }else{
+        } else {
             return this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO'
         }
     }

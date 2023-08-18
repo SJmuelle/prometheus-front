@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -45,16 +46,17 @@ import {MatMenuModule} from '@angular/material/menu';
     FuseAlertModule,
     MatDialogModule,
     MatDatepickerModule,
-    NgxMatDatetimePickerModule,    
-    MatTooltipModule,    
+    NgxMatDatetimePickerModule,
+    MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatSelectModule,     
-    MatExpansionModule,  
+    MatSelectModule,
+    MatExpansionModule,
     AgendaReferenciacionModule,
     MatProgressBarModule,
-    MatMenuModule
+    MatMenuModule,
+    SharedModule
   ]
 })
 export class AgendaVentaModule { }

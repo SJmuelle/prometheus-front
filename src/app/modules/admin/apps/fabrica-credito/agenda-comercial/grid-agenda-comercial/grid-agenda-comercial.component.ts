@@ -22,12 +22,15 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     public unsubscribe$: Subject<any> = new Subject();
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = []
     public page: number = 1;
     public tamanoTabl = new FormControl("10");
     public filtrarTabla = new FormControl('');
     public mostrarTotales: boolean = true;
     public totales: any[];
     public rolID: number;
+    private scrollSpeed: number = 200;
+    private loadingDatosTabla: boolean = false;
     constructor(
         private agendaComercialService: AgendaComercialService,
         private _matDialog: MatDialog,
@@ -51,12 +54,15 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
        * @description: Obtiene el listado de agenda de completacion
       */
     private getAgendaComercial(): void {
+        this.loadingDatosTabla = true;
         this.agendaComercialService.getAgendaComercial().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
 
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
+                this.loadingDatosTabla = false;
                 this.mostrar = false;
 
             } else {
@@ -88,6 +94,16 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     /**
      * @description: abre la agenda
      */
+    public onGetAgendaDigital(data: any, agenda: string): void {
+        if (data) {
+            const { tipoDocumento, identificacion, numeroSolicitud } = data;
+            this.router.navigate([`/credit-factory/formularios/${agenda}/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
+        } else {
+            //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+            this._permisosService.ruta = 'agenda-comercial';
+            this.router.navigate([`/credit-factory/formularios/microcredito`]);
+        }
+    }
     public onGetAgenda(data: any): void {
         //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
         const { numeroSolicitud, identificacion } = data;
@@ -95,19 +111,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     }
 
 
-    /**
-      * @description: abre la agenda
-      */
-    public onGetAgendaDigital(data: any): void {
-        if (data) {
-            const { tipoDocumento, identificacion, numeroSolicitud } = data;
-            this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
-        } else {
-            //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-            this._permisosService.ruta = 'agenda-comercial';
-            this.router.navigate([`/credit-factory/formularios/microcredito`]);
-        }
-    }
+
 
     /**
         * @description: abre el formulario corto de libranza publica
@@ -169,6 +173,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.totales = res.data;
+                // console.log('totales', this.totales);
+
                 Swal.close();
             } else {
                 Swal.close();
@@ -213,13 +219,13 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         this.mostrarTotales = estado;
     }
 
-    public getRolID(){
+    public getRolID() {
         this._fabricaCredito.getRolId().subscribe(data => {
             this.rolID = data.data.rolId
         })
     }
 
-    public changePageToOne(){
+    public changePageToOne() {
         this.page = 1;
     }
 
@@ -229,4 +235,36 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         this.unsubscribe$.complete();
     }
 
+    nextTotalesSlider() {
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+        const currentScroll = slider.scrollLeft
+
+        slider.scroll({
+            left: currentScroll + this.scrollSpeed,
+            behavior: 'smooth'
+        })
+    }
+
+    previousTotalesSlider() {
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+        const currentScroll = slider.scrollLeft
+
+        slider.scroll({
+            left: currentScroll - this.scrollSpeed,
+            behavior: 'smooth'
+        })
+    }
+
+    public isMobil() {
+        return window.innerWidth < 600;
+    }
+
+    actualizarTabla($event) {
+        this.getAgendaComercial();
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
+    }
+
+    filtrarTablaTotalesEvent(datos) {
+        this.datos = datos;
+    }
 }

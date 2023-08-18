@@ -21,9 +21,13 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
     public tamanoTabl = new FormControl("10");
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = [];
     public mostrarTotales: boolean = true;
     public totales: any[];
     public headerColums: string[] = ['numeroSolicitud', 'identificacion', 'nombreCompleto', 'monto', 'agencia','asesor'];
+
+    public loadingDataTable: boolean = false;
+
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private router: Router
@@ -48,17 +52,19 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
     private getAgendaCompletacion(): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.loadingDataTable = true;
         this.agendaCompletacionService.getAgendaCompletacion().pipe(
             takeUntil(this.unsubscribe$)
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
                 this.mostrar = false;
                 Swal.close();
             } else {
                 Swal.close();
             }
+            this.loadingDataTable = false;
         });
     }
 
@@ -84,13 +90,20 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
         moment.locale('es');
         return moment(date).format('MMMM D YYYY')
     }
-    
+
     cambiarHora(date){
         moment.locale('es');
         return moment(date).format('hh:mm A')
     }
 
-    
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
+    }
+
+    actualizarTabla($event){
+        // this.getAgendaComercial();
+        // this.agendaComercialService.refrescarListado$.next({ estado: true });
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();
