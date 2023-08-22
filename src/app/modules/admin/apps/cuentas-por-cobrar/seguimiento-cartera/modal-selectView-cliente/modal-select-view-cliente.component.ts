@@ -6,7 +6,7 @@ import { CarteraClientesService } from 'app/core/services/cartera-clientes.servi
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import { forkJoin, Subject, Subscription } from 'rxjs';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { delay, filter, map, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-select-view-cliente',
@@ -14,7 +14,7 @@ import { filter, map, takeUntil, tap } from 'rxjs/operators';
   styleUrls: ['./modal-select-view-cliente.component.scss']
 })
 export class ModalSelectViewClienteComponent implements OnInit {
-  public options: string[] = ['Detalle cartera', 'Detalle Pagos', 'Detalle gestiones', 'Compromisos de pagos']
+  public options: string[] = ['Detalle cartera', 'Detalle Pagos', 'Detalle gestiones', 'Compromisos de pagos', 'Agregar gestiones']
   public selected: any = { selectOne: [...this.options], selectTwo: [], selectTree: [], SelectFor: [] }
   public formView: FormGroup = new FormGroup({});
   public Alldata: any = null;
@@ -210,15 +210,15 @@ export class ModalSelectViewClienteComponent implements OnInit {
       //     this.router.navigate(['cuentas-por-cobrar/seguimiento-cartera/vista-detalle-cliente'])
       //   }, 400);
       // }
-      forkJoin(this.arrayPromises).pipe(takeUntil(this.unsuscribe$)).subscribe({
+      forkJoin(this.arrayPromises).pipe(takeUntil(this.unsuscribe$), delay(400)).subscribe({
         next: (res) => {
-          setTimeout(() => {
-            this._seguimientoCarteraService.dataTablesSelected$.next([...res]);
-            // this._seguimientoCarteraService.selectedOption$.next([...this.selectedOptions])
-            this._sweetAlerService.stopLoading();
-            this.dialog.close();
-            // this.router.navigate(['cuentas-por-cobrar/seguimiento-cartera/vista-detalle-cliente'])
-          }, 400);
+
+          this._seguimientoCarteraService.dataTablesSelected$.next([...res]);
+          this._seguimientoCarteraService.agregarGestiones$.next([...this.selectedOptions])
+          this._sweetAlerService.stopLoading();
+          this.dialog.close();
+          // this.router.navigate(['cuentas-por-cobrar/seguimiento-cartera/vista-detalle-cliente'])
+
         },
         error: (e) => {
           this._sweetAlerService.alertError();
@@ -335,7 +335,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
       }
     }
 
-    apiGet[vista]()
+    apiGet[vista]();
 
 
 
