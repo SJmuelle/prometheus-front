@@ -18,6 +18,7 @@ export class CarteraClientesService {
   public dataTablesSelected$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   public allDataSearch: any = null;
   public selectedOption$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  public agregarGestiones$: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
   constructor(private _http: HttpClient, private _appSettings: AppSettingsService) { }
 
