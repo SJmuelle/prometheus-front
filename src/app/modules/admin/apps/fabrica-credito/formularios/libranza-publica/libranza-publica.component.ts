@@ -20,7 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./libranza-publica.component.scss'],
     animations: fuseAnimations,
 })
-export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
+export class LibranzaPublicaComponent implements OnInit {
     @ViewChild('input1') input1!: ElementRef<HTMLInputElement>;
     @ViewChild('input2') input2!: ElementRef<HTMLInputElement>;
     @ViewChild('input3') input3!: ElementRef<HTMLInputElement>;
@@ -67,21 +67,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         private _genericaServices: GenericasService,
         private router: Router,) { }
 
-
-    ngAfterViewInit() {
-        this.focusNextInput(this.input1.nativeElement, this.input2.nativeElement);
-        this.focusNextInput(this.input2.nativeElement, this.input3.nativeElement);
-        this.focusNextInput(this.input3.nativeElement, this.input4.nativeElement);
-        this.focusNextInput(this.input4.nativeElement, this.input5.nativeElement);
-        this.focusNextInput(this.input5.nativeElement, this.input6.nativeElement);
-
-        this.focusPreviusInput(this.input2.nativeElement, this.input1.nativeElement);
-        this.focusPreviusInput(this.input3.nativeElement, this.input2.nativeElement);
-        this.focusPreviusInput(this.input4.nativeElement, this.input3.nativeElement);
-        this.focusPreviusInput(this.input5.nativeElement, this.input4.nativeElement);
-        this.focusPreviusInput(this.input6.nativeElement, this.input5.nativeElement);
-
-    }
 
 
     ngOnInit(): void {
@@ -235,11 +220,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             }
         })
 
-        this.validationOTPForm.get('numeroOTP').valueChanges.subscribe((e: string) => {
-            if(e.length === 6 && !this.otpValidado ){
-                this.validarCodigo()
-            }
-        })
     }
 
     ngAfterViewChecked(): void {
@@ -248,24 +228,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this.marginTopInputDynamic()
     }
 
-    public focusNextInput(currentInput: HTMLInputElement, nextInput: HTMLInputElement): void {
-        currentInput.addEventListener('input', ($e) => {
-            if (currentInput.value.length === 1) {
-                nextInput.focus();
-            }
-        });
-    }
-
-    public focusPreviusInput(currentInput: HTMLInputElement, previusInput: HTMLInputElement): void {
-        currentInput.addEventListener('keydown', ($e) => {
-            if ($e.key === 'Backspace') {
-                // bug donde primero se hace el focus y luego se borra, entonces se borraba el anterior y no el actual
-                setTimeout(() => {
-                    previusInput.focus();
-                }, 100);
-            }
-        });
-    }
 
     private validatedDate(control: AbstractControl) {
         const valueControl = control?.value ?? '';
@@ -418,18 +380,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         }, 1000)
     }
 
-    updateOTPInput() {
-        const num1 = this.input1.nativeElement.value;
-        const num2 = this.input2.nativeElement.value;
-        const num3 = this.input3.nativeElement.value;
-        const num4 = this.input4.nativeElement.value;
-        const num5 = this.input5.nativeElement.value;
-        const num6 = this.input6.nativeElement.value;
-
-
-        this.validationOTPForm.controls.numeroOTP.setValue(num1 + num2 + num3 + num4 + num5 + num6);
-
-    }
 
     atualizarDatosOTP() {
         const datos = { ...this.datosBasicos.getRawValue() }
@@ -458,38 +408,9 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         }
     }
 
-    validarCodigo(): void {
-        const numero = this.validationOTPForm.get('numeroOTP').value;
-        this.validandoOTPLoading = true;
-        if (numero.length === 6 && !this.otpValidado) {
-            const data = {
-                numeroSolicitud: this.numeroSolicitudTemporal,
-                tipoTercero: 'T',
-                numeroOTP: numero
-            }
 
-            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.destroyed)).subscribe(rep => {
-                this.otpValidado = rep.data.resultado === 'OK'
-                this.validandoOTPLoading = false;
-            }, err => {
-                Swal.fire('Error',
-                    'Error al validar del OTP','error').then(()=> {
-                        this.validandoOTPLoading = false;
-                        this.borrarOTPNumbers()
-                    })
-            })
-        }
-
-    }
-
-    borrarOTPNumbers(): void {
-        this.input1.nativeElement.value = ''
-        this.input2.nativeElement.value = ''
-        this.input3.nativeElement.value = ''
-        this.input4.nativeElement.value = ''
-        this.input5.nativeElement.value = ''
-        this.input6.nativeElement.value = ''
-
+    otpValidadoChange($e){
+        this.otpValidado = $e;
     }
 
     formatearDatos(datos: any){
