@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CobranzaService } from 'app/core/services/cobranza.service';
 
@@ -21,12 +21,12 @@ export class ListadoComponent implements OnInit {
       typeField: 'text',
     },
     {
-      name: 'codigoNegocio',
+      name: 'negocio',
       text: 'Código negocio',
       typeField: 'text',
     },
     {
-      name: 'tipoGestion',
+      name: 'clase_gestion',
       text: 'Tipo de gestón',
       typeField: 'text',
     },
@@ -36,7 +36,7 @@ export class ListadoComponent implements OnInit {
       typeField: 'text',
     },
     {
-      name: 'resultado',
+      name: 'gestion',
       text: 'Resultado',
       typeField: 'text',
     },
@@ -51,22 +51,25 @@ export class ListadoComponent implements OnInit {
   public displayedColumns: string[] = [
     ...this.optionsTable.map(({ name }) => name),
   ];
-  
+
   minDate: Date;
   maxDate: Date;
+  numeroSolicitud: any;
   constructor(private _cobranzaService: CobranzaService,
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private _activatedRoute: ActivatedRoute,
   ) {
     this.form = fb.group({
       fehcaInicial: '',
       fehcaFinal: '',
-      id: ''
-    });
-    this.formPeriodo= this.fb.group({
-      fechaInicial: [''],
-      fechaFinal: [''],
+      id: ['',Validators.required],
+    }); 
+
+    this.formPeriodo = this.fb.group({
+      fechaInicial: ['',Validators.required],
+      fechaFinal: ['',Validators.required],
     })
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
@@ -84,10 +87,17 @@ export class ListadoComponent implements OnInit {
   }
 
   getInformacionNegocios() {
+    if (!this.form.valid && !this.formPeriodo.valid) {
+      this.form.markAllAsTouched();
+      this.formPeriodo.markAllAsTouched();
+      return;
+    }
+
     this.dataRow = [];
-    // this._cobranzaService.refinanciacionCargarDetalleCartera(this.negocio,this.tipoEstrategia,moment(this.form.value.fecha).format('YYYY-MM-DD')).subscribe((res) => {
-    //   this.dataRow = res.data;
-    // });
+    const data: any = this.form.getRawValue();
+    this._cobranzaService.getHistoricoCartera(data.id).subscribe((res) => {
+      this.dataRow = res.data;
+    });
   }
 
   formatFecha(fecha: Date): string {

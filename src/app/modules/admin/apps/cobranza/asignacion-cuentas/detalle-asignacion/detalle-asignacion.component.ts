@@ -27,6 +27,7 @@ export class DetalleAsignacionComponent implements OnInit {
     this._activatedRoute.params.subscribe((param) => {
       this.numeroSolicitud = param.numeroSolicitud;
       this._cobranzaService.cuentasAsignadas$.subscribe((res) => {
+        debugger;
         this.listado = res;
         this.credito = this.listado.find(data => data.numero_solicitud == this.numeroSolicitud);
       });

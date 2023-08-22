@@ -113,4 +113,11 @@ export class CobranzaService {
   public refinanciacionCargarDtoCongela(): Observable<any> {
     return this._http.get(this._appSettings.cobranza.url.refinanciacionCargarDtoCongela);
   }
+  
+  /*
+  * @description: 
+  */
+  public getHistoricoCartera(negocio: string): Observable<any> {
+    return this._http.get(`${this._appSettings.cobranza.url.historicoGestionCartera}/${negocio}`);
+  }
 }

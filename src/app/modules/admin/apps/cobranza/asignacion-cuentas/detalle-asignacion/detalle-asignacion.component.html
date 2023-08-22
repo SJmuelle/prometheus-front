@@ -80,7 +80,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'heroicons_outline:currency-dollar'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Valor desembolso:</strong> ${{credito.valorDesembolso | number:'1.0-0' }}
+                            <strong>Valor desembolso:</strong> ${{credito.valor_desembolso | number:'1.0-0' }}
                         </div>
                     </div>
                 </ng-container>
@@ -90,7 +90,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'heroicons_solid:academic-cap'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Valor cuota:</strong> ${{credito.valorCuota | number:'1.0-0'}}
+                            <strong>Valor cuota:</strong> ${{credito.valor_cuota | number:'1.0-0'}}
                         </div>
                     </div>
                 </ng-container>
@@ -100,7 +100,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'mat_outline:today'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Plazo:</strong> {{credito.numeroDocumentos}}
+                            <strong>Plazo:</strong> {{credito.numero_documentos}}
                         </div>
                     </div>
                 </ng-container>
@@ -120,7 +120,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'mat_outline:person_pin_circle'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Dirección del codeudor:</strong> {{credito.direccionCodeudor}}
+                            <strong>Dirección del codeudor:</strong> {{credito.direccion_codeudor}}
                         </div>
                     </div>
                 </ng-container>
@@ -130,7 +130,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'mat_outline:business'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Nombre del negocio:</strong>  ---
+                            <strong>Nombre del negocio:</strong>  --- no viene
                         </div>
                     </div>
                 </ng-container>
@@ -150,7 +150,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'mat_outline:contact_phone'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Teléfono del codeudor:</strong> {{credito.telefonoCodeudor}}
+                            <strong>Teléfono del codeudor:</strong> {{credito.telefono_codeudor}}
                         </div>
                     </div>
                 </ng-container>
@@ -165,7 +165,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'mat_outline:format_list_numbered'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Número de refinanciaciones:</strong> ---
+                            <strong>Número de refinanciaciones:</strong> --- no llega
                         </div>
                     </div>
                 </ng-container>
@@ -175,7 +175,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'mat_outline:format_list_numbered_rtl'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Número de congela tu deuda:</strong> ---
+                            <strong>Número de congela tu deuda:</strong> --- no llega
                         </div>
                     </div>
                 </ng-container>

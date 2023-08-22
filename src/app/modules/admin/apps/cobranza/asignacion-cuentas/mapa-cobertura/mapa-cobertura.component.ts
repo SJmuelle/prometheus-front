@@ -50,7 +50,7 @@ export class MapaCoberturaComponent implements OnInit {
           window.location.href = `#/cobranza/asignacion-cuentas/${numeroSolicitud}`;
         });
 
-        let nombre = '<strong>' + item.cliente + '</strong>' + '<br />' + item.direccion + ',  ' + '<br />' + '$' + item.saldo_cartera.toLocaleString()
+        let nombre = '<strong>' + item.cliente + '</strong>' + '<br />' + item.direccion + ',  ' + '<br />' + '$' + item.saldo_artera.toLocaleString()
 
         let tooltip = L.tooltip(loc, {
           content: nombre,
