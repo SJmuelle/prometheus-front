@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { fuseAnimations } from '@fuse/animations';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-libranza-publica',
@@ -61,7 +62,10 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
-        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog,private _genericaServices: GenericasService) { }
+        private _libranzaService: LibranzaPublicaService,
+        private _dialog: MatDialog,
+        private _genericaServices: GenericasService,
+        private router: Router,) { }
 
 
     ngAfterViewInit() {
@@ -112,7 +116,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
         this.datosCredito = this.fb.group({
             plazo: ['',Validators.required],
-            monto: ['', Validators.required]
+            valorSolicitado: ['', Validators.required]
         })
 
         this.validationOTPForm = this.fb.group({
@@ -205,6 +209,16 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 }
             }
 
+            if(e === 'EPLDO' || e === 'PENSI'){
+                this.datosCredito.get('valorSolicitado').setValidators([Validators.required,
+                    Validators.min(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).montoMinimoCredito),
+                    Validators.max(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).montoMaximoCredito)])
+
+                this.datosCredito.get('plazo').setValidators([Validators.required,
+                        Validators.min(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).plazoMinimo),
+                        Validators.max(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).plazoMaximo)])
+
+            }
 
         })
 
@@ -324,13 +338,15 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     }
 
     guardar() {
-        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue() }
+        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue(), ...this.datosCredito.getRawValue() }
 
         this.formatearDatosAntesDeEnviar(dataToSend)
         Swal.fire({ title: 'Cargando', html: 'Guardando información, no cierre la pestaña', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._libranzaService.guardarFormularioCorto(dataToSend).subscribe(rep => {
 
-            Swal.fire('Guardado', 'Solicitud guardada con éxito', 'success')
+            Swal.fire('Guardado', 'Solicitud guardada con éxito', 'success').then(rep => {
+                this.irAtras();
+            })
         }, err => {
             Swal.fire('Error', 'Error al guardar ' + err?.error?.msg, 'error')
         })
@@ -340,6 +356,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     formatearDatosAntesDeEnviar(formData) {
         formData.primerNombre = formData.primerNombre?.trim()
         formData.primerApellido = formData.primerApellido?.trim()
+        formData.valorSolicitado =  Number(formData.valorSolicitado)
 
         formData.numeroSolicitud =  this.numeroSolicitudTemporal
 
@@ -480,8 +497,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         datos.otrosIngresos = Number(datos.otrosIngresos);
         datos.descuentoNomina = Number(datos.descuentoNomina);
 
-        datos.plazo = 0;
-        datos.valorSolicitado = 0;
 
         // verificacion
         datos.aceptoCentrales = 'S'
@@ -496,6 +511,10 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
             this.datosLaborares.get('salarioBasico').setValidators([Validators.required, Validators.min(data.salarioMinimo)])
         })
+    }
+
+    irAtras() {
+         this.router.navigate([`/credit-factory/agenda-comercial`]);
     }
 
     ngOnDestroy() {
