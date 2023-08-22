@@ -6,7 +6,7 @@ import { CarteraClientesService } from 'app/core/services/cartera-clientes.servi
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import { forkJoin, Subject, Subscription } from 'rxjs';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { delay, filter, map, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-select-view-cliente',
@@ -14,7 +14,7 @@ import { filter, map, takeUntil, tap } from 'rxjs/operators';
   styleUrls: ['./modal-select-view-cliente.component.scss']
 })
 export class ModalSelectViewClienteComponent implements OnInit {
-  public options: string[] = ['Detalle cartera', 'Detalle Pagos', 'Detalle gestiones', 'Compromisos de pagos']
+  public options: string[] = ['Detalle cartera', 'Detalle Pagos', 'Detalle gestiones', 'Compromisos de pagos', 'Agregar gestiones']
   public selected: any = { selectOne: [...this.options], selectTwo: [], selectTree: [], SelectFor: [] }
   public formView: FormGroup = new FormGroup({});
   public Alldata: any = null;
@@ -55,7 +55,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
   ]
 
   public visualizarGestiones: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'min-w-90' },
     { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'proAccion', text: 'Próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -65,7 +65,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
   ]
 
   public visualizarCompromisosPago: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'min-w-90' },
     { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'direccion', text: 'Dirección', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'barrio', text: 'Barrio', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -210,15 +210,15 @@ export class ModalSelectViewClienteComponent implements OnInit {
       //     this.router.navigate(['cuentas-por-cobrar/seguimiento-cartera/vista-detalle-cliente'])
       //   }, 400);
       // }
-      forkJoin(this.arrayPromises).pipe(takeUntil(this.unsuscribe$)).subscribe({
+      forkJoin(this.arrayPromises).pipe(takeUntil(this.unsuscribe$), delay(400)).subscribe({
         next: (res) => {
-          setTimeout(() => {
-            this._seguimientoCarteraService.dataTablesSelected$.next([...res]);
-            // this._seguimientoCarteraService.selectedOption$.next([...this.selectedOptions])
-            this._sweetAlerService.stopLoading();
-            this.dialog.close();
-            // this.router.navigate(['cuentas-por-cobrar/seguimiento-cartera/vista-detalle-cliente'])
-          }, 400);
+
+          this._seguimientoCarteraService.dataTablesSelected$.next([...res]);
+          this._seguimientoCarteraService.agregarGestiones$.next([...this.selectedOptions])
+          this._sweetAlerService.stopLoading();
+          this.dialog.close();
+          // this.router.navigate(['cuentas-por-cobrar/seguimiento-cartera/vista-detalle-cliente'])
+
         },
         error: (e) => {
           this._sweetAlerService.alertError();
@@ -260,7 +260,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
 
         if (historico) {
           const verDetalleCarteraHistorico = this._seguimientoCarteraService.verDetalleCarteraHistorico(detalleCartera).pipe(takeUntil(this.unsuscribe$), map((res) => {
-            const response = { vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera] }
+            const response = { vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera], footer: true }
             return response
           }))
 
@@ -270,7 +270,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
           const cargarClienteCartera = this._seguimientoCarteraService.cargarClienteCartera(detalleCartera).pipe(takeUntil(this.unsuscribe$)
             , map((res) => {
               const response = {
-                vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera],
+                vista: 'Detalle cartera', valueVista: res?.data || [], optionsTable: [...this.detalleCartera], footer: true
               }
               return response
             })
@@ -297,7 +297,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
         }
         const verDetallePagoCliente = this._seguimientoCarteraService.verDetallePagoCliente(detallePagos)
           .pipe(takeUntil(this.unsuscribe$), map((res) => {
-            const response = { vista: 'Detalle de pagos', valueVista: res.data.filter((values: any) => values.valor_ingreso > 0) || [], optionsTable: [...this.visualizarPlanPago], }
+            const response = { vista: 'Detalle de pagos', valueVista: res.data.filter((values: any) => values.valor_ingreso > 0) || [], optionsTable: [...this.visualizarPlanPago], footer: true }
             return response
           }))
         this.arrayPromises.push(verDetallePagoCliente);
@@ -308,7 +308,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
 
         const visualizarGestiones = this.Alldata.negocio
         const verGestionesCliente = this._seguimientoCarteraService.verGestionesCliente(visualizarGestiones).pipe(takeUntil(this.unsuscribe$), map((res) => {
-          const response = { vista: 'Detalle gestiones', valueVista: res.data || [], optionsTable: [...this.visualizarGestiones], }
+          const response = { vista: 'Detalle gestiones', valueVista: res.data || [], optionsTable: [...this.visualizarGestiones], footer: false }
           return response
         }))
 
@@ -319,7 +319,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
         const visualizarCompromisosPago = this.Alldata.negocio
 
         const verCompromisosPagos = this._seguimientoCarteraService.verCompromisosPagos(visualizarCompromisosPago).pipe(takeUntil(this.unsuscribe$), map((res) => {
-          const response = { vista: 'Compromisos de pagos', valueVista: res.data || [], optionsTable: [...this.visualizarCompromisosPago], }
+          const response = { vista: 'Compromisos de pagos', valueVista: res.data || [], optionsTable: [...this.visualizarCompromisosPago], footer: true }
           return response
         }))
 
@@ -335,7 +335,7 @@ export class ModalSelectViewClienteComponent implements OnInit {
       }
     }
 
-    apiGet[vista]()
+    apiGet[vista]();
 
 
 

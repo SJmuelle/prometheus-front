@@ -52,7 +52,7 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   ]
 
   public visualizarGestiones: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', },
     { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'proAccion', text: 'Próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -62,7 +62,7 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   ]
 
   public visualizarCompromisosPago: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', },
     { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'direccion', text: 'Dirección', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'barrio', text: 'Barrio', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -97,6 +97,13 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   public dataRowvisualizarGestiones: any[] = []
   public dataRowvisualizarCompromisosPago: any[] = []
   public dataRowPlanPagos: any[] = []
+
+  public cardValues: any[] = [
+    { text: 'Debido a cobrar', value: 0, icon: 'assets/icons/icon dollar.svg', color: '#009da9' },
+    { text: 'Interés de mora', value: 0, icon: 'assets/icons/icon interes.svg', color: '#2dd4bf' },
+    { text: 'Gastos de cobranza', value: 0, icon: 'assets/icons/icon alert.svg', color: '#FF8600' },
+    { text: 'Total a pagar', value: 0, icon: 'assets/icons/icon total.svg', color: '#818cf8' },
+  ]
 
   public unsuscribe$: Subject<void> = new Subject<void>();
   public formAgregarGestiones: FormGroup = new FormGroup({});
@@ -251,6 +258,15 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this._sweetAlerService.stopLoading();
             this.dataRowdetalleCartera = res?.data || []
+            this.cardValues.forEach((item) => {
+              item.value = 0
+            })
+            this.dataRowdetalleCartera.forEach((item) => {
+              this.cardValues[0].value += Number(item.debidoCobrar)
+              this.cardValues[1].value += Number(item.interesMora)
+              this.cardValues[2].value += Number(item.gastoCobranza)
+              this.cardValues[3].value += Number(item.totalesParciales)
+            })
           }, 400);
         },
         error: (e) => {
@@ -264,6 +280,17 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this._sweetAlerService.stopLoading();
             this.dataRowdetalleCartera = res?.data || []
+            this.cardValues.forEach((item) => {
+              item.value = 0
+            })
+
+            this.dataRowdetalleCartera.forEach((item) => {
+
+              this.cardValues[0].value += Number(item.debidoCobrar)
+              this.cardValues[1].value += Number(item.interesMora)
+              this.cardValues[2].value += Number(item.gastoCobranza)
+              this.cardValues[3].value += Number(item.totalesParciales)
+            })
           }, 400);
 
         },
@@ -272,6 +299,8 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
         }
       })
     }
+
+
 
 
 
