@@ -39,7 +39,6 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('edit', this.data)
     this.initForm()
 
     const tittle = {
@@ -111,7 +110,6 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
   public resetBarrio(): void {
     this.formEditClient.controls['barrio'].setValue(null);
     const { ciudad } = this.formEditClient.value
-    console.log('ciudad', ciudad);
     this._carteraClienteService.listarBarrios(ciudad).pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         this.barrios = resp?.data || []

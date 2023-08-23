@@ -13,7 +13,7 @@
                         <div class="text-3xl font-semibold tracking-tight leading-8">Agenda comercial
                         </div>
                     </div>
-                    <div   *ngIf="isMobil()">
+                    <div *ngIf="isMobil()">
                         <div class="absolute  top-5 right-5 rounded-full">
                             <button class="icon-size-12 bg-white" [matMenuTriggerFor]="menu" mat-icon-button>
                                 <mat-icon class="icon-size-8" svgIcon="heroicons_outline:plus-circle">
@@ -26,7 +26,8 @@
                                     <span>Microcrédito</span>
                                 </button>
                                 <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
-                                    <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
+                                    <img alt="linea de negocio" class="w-11 mr-3"
+                                        src="assets/images/logo/LibranzaPublica.png">
                                     <span>Libranza pública</span>
                                 </button>
                             </mat-menu>
@@ -54,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div  *ngIf="!isMobil()" class="flex z-99 absolute bottom-0 right-0 align-bottom justify-end ">
+            <div *ngIf="!isMobil()" class="flex z-99 absolute bottom-0 right-0 align-bottom justify-end ">
                 <div class="sm:mr-0 md:mr-10 mat-mdc-menu-trigger mat-ripple relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
                     [matMenuTriggerFor]="menu">
                     <div class="flex items-center">
@@ -64,19 +65,19 @@
                         <div class="flex items-center justify-center pl-2">
                             <mat-icon svgIcon="heroicons_outline:chevron-down"></mat-icon>
                         </div>
-                        <mat-menu #menu="matMenu" >
+                        <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="onGetAgendaDigital(null)">
                                 <img alt="linea de negocio" class="w-11 mr-3"
                                     src="assets/images/logo/logo-microcredito.png">
                                 <span>Microcrédito</span>
                             </button>
                             <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
-                                <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
+                                <img alt="linea de negocio" class="w-11 mr-3"
+                                    src="assets/images/logo/LibranzaPublica.png">
                                 <span>Libranza pública</span>
                             </button>
                         </mat-menu>
                     </div>
-
                 </div>
             </div>
 
@@ -85,8 +86,10 @@
 
             </div>
         </div>
-        <app-totales *ngIf="totales"  [totales]="totales" [dataTable]="datosAux"  (dataFilter)="filtrarTablaTotalesEvent($event)"> </app-totales>
+        <app-totales *ngIf="totales" [totales]="totales" [dataTable]="datosAux"
+            (dataFilter)="filtrarTablaTotalesEvent($event)"> </app-totales>
 
-        <app-tabla *ngIf="datos" [datos]="datos" (actualizarTabla)="actualizarTabla($event)" [isLoading]="loadingDatosTabla"></app-tabla>
+        <app-tabla *ngIf="datos" [datos]="datos" (actualizarTabla)="actualizarTabla($event)"
+            [isLoading]="loadingDatosTabla"></app-tabla>
 
-</div>
+    </div>

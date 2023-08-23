@@ -346,7 +346,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
 
     }
-    console.log('tipo', tipo);
+    // console.log('tipo', tipo);
     Swal.fire({ title: 'Cargando', html: 'Enviando correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this._agendaFirma.updateReenviarFirma(data).pipe(
       takeUntil(this.unsubscribe$)

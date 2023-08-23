@@ -88,9 +88,9 @@ export class ListadoTiposComentariosComponent implements OnInit {
     // Furthermore, you can customize the message to add additional
     // details about the values being sorted.
     if (sortState.direction) {
-      console.log(`Sorted ${sortState.direction}ending`);
+      // console.log(`Sorted ${sortState.direction}ending`);
     } else {
-      console.log('Sorting cleared');
+      // console.log('Sorting cleared');
     }
   }
 
@@ -121,7 +121,7 @@ export class ListadoTiposComentariosComponent implements OnInit {
 
   }
 
-  filtrar(){
+  filtrar() {
     this.dataSource.filter = this.filtrarTabla.trim().toUpperCase()
   }
 }

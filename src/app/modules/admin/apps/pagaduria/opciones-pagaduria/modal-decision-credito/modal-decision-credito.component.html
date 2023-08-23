@@ -1,0 +1,167 @@
+<h2 mat-dialog-title>{{tituloModal}}</h2>
+<mat-dialog-content class="py-2">
+    <div class="row mb-4">
+        <div class="col-md-12 col-md-12 col-lg-12">
+            <form [formGroup]="form">
+                <!--{{form.getRawValue() | json}}-->
+                <div class="bg-white flex flex-col">
+
+                    <div class="md:flex">
+                        <ng-container>
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Decisión</mat-label>
+                                <mat-select (selectionChange)="validarForm()" [formControlName]="'concepto'">
+                                    <mat-option [value]="''">
+                                        Seleccionar
+                                    </mat-option>
+                                    <mat-option [value]="'A'">
+                                        Visar
+                                    </mat-option>
+                                    <mat-option [value]="'R'">
+                                        No visar
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+
+                    <ng-container *ngIf="form.value.concepto!='A'">
+                        <div class="md:flex">
+                            <ng-container *ngIf="causal$ | async as items">
+                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                    <mat-label>Tipo de causal</mat-label>
+                                    <mat-select [formControlName]="'causal'">
+                                        <mat-option *ngFor="let item of items.data" [value]="item.idCausal">
+                                            {{item.descripcionCausal}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <ng-container *ngIf="form.value.causal=='82'">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mr-2">
+
+
+
+                                <mat-form-field class="w-full fuse-mat-dense col-span-2">
+                                    <mat-label>Cargo</mat-label>
+                                    <input matInput type="text" autocomplete="off" formControlName="cargo">
+                                    <mat-error *ngIf="form.controls.cargo.errors?.required">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="fuse-mat-dense">
+                                    <mat-label>Valor cuota</mat-label>
+                                    <input matInput [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                                        [formControlName]="'valorCuota'">
+                                    <span matPrefix>$&nbsp;</span>
+                                </mat-form-field>
+
+
+                                <ng-container *ngIf="tipoContrato$ | async as tipo">
+                                    <mat-form-field class="w-full fuse-mat-dense">
+                                        <mat-label>Tipo contrato</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'"
+                                            [required]="">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let data of tipo.data" [value]="data.codigo">
+                                                {{data.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.tipoContrato.errors?.required">
+                                            Este campo es requerido.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </ng-container>
+                                <mat-form-field class="w-full fuse-mat-dense">
+                                    <mat-label>Salario</mat-label>
+                                    <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
+                                        autocomplete="off" [formControlName]="'salario'">
+                                    <span matPrefix>$&nbsp;</span>
+                                    <mat-error *ngIf="form.controls.salario.errors?.required">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="w-full fuse-mat-dense">
+                                    <mat-label>Descuentos</mat-label>
+                                    <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
+                                        autocomplete="off" [formControlName]="'descuentos'">
+                                    <span matPrefix>$&nbsp;</span>
+                                    <mat-error *ngIf="form.controls.descuentos.errors?.required">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="w-full fuse-mat-dense">
+                                    <mat-label>Comisiones</mat-label>
+                                    <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
+                                        autocomplete="off" [formControlName]="'comisiones'">
+                                    <span matPrefix>$&nbsp;</span>
+                                    <mat-error *ngIf="form.controls.comisiones.errors?.required">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="fuse-mat-dense">
+                                    <mat-label>Fecha vinculación</mat-label>
+                                    <input matInput [matDatepicker]="picker1" [formControlName]="'fechaVinculacion'">
+
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+
+
+
+                                <ng-container *ngIf="form.value.tipoContrato=='F'">
+                                    <mat-form-field>
+                                        <mat-label>Fecha finalización</mat-label>
+                                        <input matInput [matDatepicker]="picker2" formControlName="fechaFinalizacion">
+
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </ng-container>
+                                <!-- <div>{{form.value.fechaFinalizacion}}</div> -->
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+
+                    <div class="md:flex flex flex-col w-full">
+                        <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                            <mat-label>Comentario: </mat-label>
+                            <textarea matInput [formControlName]="'comentario'" class="resize-none" rows="4"></textarea>
+                            <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
+                        </mat-form-field>
+
+
+
+                        <div *ngIf="form.value.concepto==='A'" class="w-full  -mt-3 sm:-mt-0 flex flex-col gap-2">
+                            <mat-checkbox formControlName="cartaLaboral">Revisé la carta laboral</mat-checkbox>
+                            <mat-checkbox formControlName="condicionesCredito">Estoy de acuerdo con las condiciones del
+                                crédito</mat-checkbox>
+                            <mat-error class="text-md font-semibold" *ngIf="errorForm()">
+                                Este campo es requerido.
+                            </mat-error>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()">
+            Guardar
+        </button>
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

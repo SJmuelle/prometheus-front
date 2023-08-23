@@ -23,20 +23,21 @@
                 <span class="font-semibold text-gray-500">Trazabilidad de la solicitud desde las devoluciones.</span>
 
                 <ng-container *ngIf="!permisoEditar">
-                <ng-container *ngIf="agenda!=='CM'">
-                    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
-                        <button mat-raised-button matTooltip="Nuevo devolución" [color]="'primary'"
-                            (click)="onDevolucion()">
-                            Nuevo devolución
-                        </button>
-                    </div>
+                    <ng-container *ngIf="agenda!=='CM'">
+                        <div
+                            class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
+                            <button mat-raised-button matTooltip="Nuevo devolución" [color]="'primary'"
+                                (click)="onDevolucion()">
+                                Nuevo devolución
+                            </button>
+                        </div>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
             </div>
 
             <ng-container class="py-2.5" *ngIf="(devolucion$ | async) as devolver; else loading">
                 <ng-container *ngIf="devolver.data.length; else noActivity">
-                    <div cdkScrollable class="mt-8 " >
+                    <div cdkScrollable class="mt-8 ">
                         <ol>
                             <!-- Activities -->
                             <ng-container
