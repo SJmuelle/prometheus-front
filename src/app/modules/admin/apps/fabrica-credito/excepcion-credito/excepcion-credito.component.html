@@ -31,7 +31,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </ng-container> -->
-                        <ng-container >
+                        <!-- <ng-container >
                             <mat-form-field class="w-full" appearance="fill" >
                                 <mat-label>Pagaduria</mat-label>
                                 <mat-select [value]="''" formControlName="pagaduria">
@@ -40,7 +40,7 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </ng-container>
+                        </ng-container> -->
                         <!-- <ng-container >
                             <mat-form-field class="w-full" appearance="fill" >
                                 <mat-label>Estado</mat-label>
@@ -145,8 +145,13 @@
                                     <td class="px-2 pb-0" rowspan="2">
                                         <div class="flex flex-column" rowspan="2">
                                             <div class="flex-0 w-12 overflow-hidden">
-                                                <img [src]="item.urlIconoUnidad"
-                                                    class="w-full h-full object-cover cursor-pointer">
+                                                    <div
+                                                [matTooltip]="item.undadNegocio"
+                                                [ngStyle]="{'background-color' : item.colorUnidadNegocio, 'color' : 'white' , 'border' : '1px solid', 'border-color' :  item.colorUnidadNegocio}"
+                                                class="iconMarca flex icon-size-6 cursor-pointer text-xs font-semibold font-sans items-center justify-center px-2 rounded-md text-center  tracking-widest">
+                                                {{item.inicialUnidadNegocio}}
+                                                </div>
+
                                             </div>
                                         </div>
                                     </td>
