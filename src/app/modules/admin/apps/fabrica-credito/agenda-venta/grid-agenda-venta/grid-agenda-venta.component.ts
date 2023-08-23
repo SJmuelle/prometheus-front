@@ -110,7 +110,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
         } else {
             //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
             this._permisosService.ruta = 'agenda-comercial';
-            this.router.navigate([`/credit-factory/formularios/${agenda}`]);
+            this.router.navigate([`/credit-factory/formularios/${agenda}/VD`]);
         }
     }
 
