@@ -225,6 +225,10 @@
                     <mat-error *ngIf="formDeudorSolidario.controls.email.errors?.required">
                         Este campo es requerido.
                     </mat-error>
+                    <mat-error *ngIf="formDeudorSolidario.controls.email.errors?.pattern">
+                        Email invalido
+                    </mat-error>
+
                 </mat-form-field>
             </ng-container>
         </div>
