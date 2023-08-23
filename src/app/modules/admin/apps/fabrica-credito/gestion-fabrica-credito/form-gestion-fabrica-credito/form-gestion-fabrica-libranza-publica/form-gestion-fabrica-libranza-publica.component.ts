@@ -257,6 +257,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
                 this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+                this.form.controls['autorizacionBanco'].setValue(data.autorizacionBanco === 'S')
+
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
@@ -464,6 +466,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         datos.nombreCompletoConyuge = `${datos.primerNombreConyuge}  ${datos.segundoNombreConyuge} ${datos.primerApellidoConyuge} ${datos.segundoApellidoConyuge}`
         // boolean
         datos.estrato = Number(datos.estrato);
+        datos.autorizacionBanco = datos.autorizacionBanco ? 'S' : 'N';
         datos.totalIngresosLaborales = Number(datos.totalIngresosLaborales);
 
         Swal.fire({
