@@ -6,7 +6,7 @@ import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.co
 
 const routes: Routes = [
   {
-    path: 'microcredito',
+    path: 'microcredito/:agenda',
     component: MicrocreditoComponent,
     resolve:{EdicionFormularioResolver}
   },
