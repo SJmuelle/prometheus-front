@@ -148,7 +148,7 @@ export class DetalleCarteraComponent implements OnInit {
 
 
   irFormRefinacionamiento(){
-    this.router.navigate([`/cobranza/negociaciones/${this.tipoEstrategia}/${this.tipoID}/${this.id}/${this.negocio}/${this.formatFecha(this.form.value.fecha._d)}`]);
+    this.router.navigate([`/cobranza/negociaciones/${this.tipoEstrategia}/${this.tipoID}/${this.id}/${this.negocio}/${moment(this.form.value.fecha).format('YYYY-MM-DD')}`]);
 
   }
 

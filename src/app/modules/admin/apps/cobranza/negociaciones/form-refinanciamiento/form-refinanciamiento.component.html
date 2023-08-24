@@ -1,0 +1,75 @@
+<!-- Main -->
+<div class="flex-auto bg-white h-full h-screen overflow-auto pb-20">
+
+    <!-- Header -->
+    <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+        <!-- Title -->
+        <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 overflow-hidden">
+                <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Formulario de
+                    {{tipoEstrategia=='AC'?'congela la deuda':'refinancimiento'}}
+                </div>
+                <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                    <div class="font-medium tracking-tight text-secondary">
+                        Negociación
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <button class="ml-4" mat-flat-button [color]="'primary'" [routerLink]="['../']">
+                <mat-icon [svgIcon]="'mat_outline:arrow_back'"></mat-icon>
+                <span class="ml-2 mr-1">Atras</span>
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="relative h-cal">
+        <div class=" flex justify-center my-3 mx-3">
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Capital</div>
+                <div class="mt-2 font-mono text-xl">$148.75B</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Interes</div>
+                <div class="mt-2 font-mono text-xl">$22.90B</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Mipymes</div>
+                <div class="mt-2 font-mono text-xl">18.17M</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Intermediación</div>
+                <div class="mt-2 font-mono text-xl">18.17M</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Seguro</div>
+                <div class="mt-2 font-mono text-xl">18.17M</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Aval</div>
+                <div class="mt-2 font-mono text-xl">18.17M</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Mora</div>
+                <div class="mt-2 font-mono text-xl">18.17M</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Gac</div>
+                <div class="mt-2 font-mono text-xl">18.17M</div>
+            </div>
+            <div class="p-4 leading-none border border-r-0">
+                <div class="text-sm font-medium text-secondary">Total</div>
+                <div class="mt-2 font-mono text-xl">$19,891.00</div>
+            </div>
+        </div>
+    </div>
+
+</div>
