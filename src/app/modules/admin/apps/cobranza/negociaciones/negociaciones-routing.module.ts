@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListadosNegociosComponent } from './listados-negocios/listados-negocios.component';
 import { DetalleCarteraComponent } from './detalle-cartera/detalle-cartera.component';
+import { FormRefinanciamientoComponent } from './form-refinanciamiento/form-refinanciamiento.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: ':tipoEstrategia/:tipoID/:id/:negocio',
     component: DetalleCarteraComponent,
+  },
+  {
+    path: ':tipoEstrategia/:tipoID/:id/:negocio/:fecha',
+    component: FormRefinanciamientoComponent,
   },
 ];
 

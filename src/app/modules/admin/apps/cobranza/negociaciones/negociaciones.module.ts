@@ -24,12 +24,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseCardModule } from '@fuse/components/card';
 import { SharedModule } from 'app/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { FormRefinanciamientoComponent } from './form-refinanciamiento/form-refinanciamiento.component';
 
 
 @NgModule({
   declarations: [
     ListadosNegociosComponent,
-    DetalleCarteraComponent
+    DetalleCarteraComponent,
+    FormRefinanciamientoComponent
   ],
   imports: [
     CommonModule,
