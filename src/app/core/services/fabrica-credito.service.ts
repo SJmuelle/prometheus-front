@@ -205,8 +205,6 @@ export class FabricaCreditoService {
          */
     public getRolId(): Observable<any> {
         return this._http.get(`${this._appSettings.fabricaDatos.url.getRolID}`);
-
-
     }
 
     public carteraValidarNitEntidad(datos): Observable<any>{
@@ -216,4 +214,10 @@ export class FabricaCreditoService {
     public carteraEntidadNombres(search): Observable<any>{
         return this._http.post(this._appSettings.agendaCartera.url.entidadesNombres, search)
     }
+
+
+    public getDatosDeudorSolidarioConyuge(numSolicitud: string): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.cargueDeudorSolidarioConyuge}/${numSolicitud}`);
+    }
+
 }

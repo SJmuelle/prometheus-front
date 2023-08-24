@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AgendaComercialService } from 'app/core/services/agenda-comercial.service';
 import moment from 'moment';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
@@ -50,12 +50,11 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
         this.loadingDataTable = true;
         this.agendaComercialService.getAgendaCartera().pipe(
             takeUntil(this.unsubscribe$)
-        ).subscribe((res) => {
+        ).pipe(finalize(()=> { this.loadingDataTable = false;})).subscribe((res) => {
             Swal.close();
             if (res.status === 200) {
                 this.datos = res.data;
                 this.datosAux = res.data;
-                this.loadingDataTable = false;
                 this.mostrar = false;
 
             } else {

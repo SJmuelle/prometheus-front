@@ -55,6 +55,96 @@
                         No puede ser menor a {{tipoDocumento?.value === 'CE' ? 7 : 10}} digitos
                     </mat-error>
                 </mat-form-field>
+
+                <mat-form-field class="w-full px-2 md:w-1/2">
+                    <mat-label>Fecha de nacimiento </mat-label>
+                    <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaNacimiento"
+                        [formControlName]="'fechaNacimiento'"  />
+                    <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #fechaNacimiento></mat-datepicker>
+                    <mat-error *ngIf="
+                    formDeudorSolidario.controls.fechaNacimiento.errors
+                                ?.required
+                        ">
+                        Este campo es requerido.
+                    </mat-error>
+                    <mat-error *ngIf="
+                    formDeudorSolidario.controls.fechaNacimiento.errors
+                                ?.dateError
+                        ">
+                        La fecha no puede ser mayor al día de hoy.
+                    </mat-error>
+                </mat-form-field>
+            <mat-form-field class="w-full px-2 md:w-1/2">
+                <mat-label>Fecha de expedición </mat-label>
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaExpedicionDocumento"
+                    [formControlName]="'fechaExpedicion'" />
+                <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
+                </mat-datepicker-toggle>
+                <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
+                <mat-error *ngIf="formDeudorSolidario.controls.fechaExpedicion.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="formDeudorSolidario.controls.fechaExpedicion.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
+                </mat-error>
+                <mat-error
+                *ngIf="formDeudorSolidario.controls.fechaExpedicion.errors?.expedicionDate">
+                                    La fecha no puede ser menor de 18 años de la
+                                    fecha de nacimiento.
+                                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="w-full px-2 md:w-1/2">
+                <mat-label>Departamento de expedición</mat-label>
+                <mat-select (selectionChange)="
+                        seleccionDepartamentoExpedicion($event)
+                    " [value]="'seleccione'" [formControlName]="
+                        'codigoDepartamentoExpedicion'
+                    ">
+                    <mat-option disabled [value]="'seleccione'">Seleccione
+                    </mat-option>
+                    <mat-option *ngFor="
+                            let departamento of dataInicial?.deparamentosGenerales
+                        " [value]="departamento.codigo">{{ departamento.nombre }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="
+                    formDeudorSolidario.controls
+                            .codigoDepartamentoExpedicion.errors
+                            ?.required
+                    ">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <ng-container *ngIf="ciudadesExpedicion">
+                <mat-form-field class="w-full px-2 md:w-1/2">
+                    <mat-label>Ciudad de expedición</mat-label>
+                    <mat-select [value]="'seleccione'" [formControlName]="
+                            'codigoCiudadExpedicion'
+                        ">
+                        <mat-option disabled [value]="'seleccione'">Seleccione
+                        </mat-option>
+                        <mat-option *ngFor="let ciudad of ciudadesExpedicion.data"
+                            [value]="ciudad.codigo">
+                            {{ ciudad.nombre }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                    </mat-icon>
+                    <mat-error *ngIf="
+                            formDeudorSolidario.controls.codigoCiudadExpedicion
+                                .errors?.required
+                        ">
+                        Este campo es requerido.
+                    </mat-error>
+                </mat-form-field>
+            </ng-container>
             </ng-container>
         </div>
 
@@ -135,6 +225,10 @@
                     <mat-error *ngIf="formDeudorSolidario.controls.email.errors?.required">
                         Este campo es requerido.
                     </mat-error>
+                    <mat-error *ngIf="formDeudorSolidario.controls.email.errors?.pattern">
+                        Email invalido
+                    </mat-error>
+
                 </mat-form-field>
             </ng-container>
         </div>
@@ -435,6 +529,8 @@
                     Longitud max 10.
                 </mat-error>
             </mat-form-field>
+
+
             <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>
                     Nacionalidad</mat-label>

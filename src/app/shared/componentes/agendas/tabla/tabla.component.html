@@ -156,13 +156,19 @@
                                     <div class="flex items-center" matTooltip="Agencia">
                                         <mat-icon class="icon-size-3"
                                                 svgIcon="heroicons_outline:location-marker"></mat-icon>
-                                        <span class="text-md text-black font-medium">{{ item.agencia}}</span>
+                                        <span class="text-sm text-black font-medium">{{ item.agencia}}</span>
                                     </div>
 
-                                    <div class="flex  items-center" matTooltip="Asesor">
-                                        <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                        <span class="text-md text-black font-medium">
-                                            {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No registra':item.asesorMicro : item.asesorCredito == '' ? 'No registra':item.asesorCredito }}
+                                    <div class="flex  items-center" [matTooltip]="'Asesor  ' + getAsesorByAgenda(item)">
+                                        <mat-icon class="icon-size-3" [ngClass]="getAsesorColorByAgenda(item)" svgIcon="heroicons_solid:user"></mat-icon>
+                                        <span class="text-sm text-black font-medium">
+                                            {{ item[getAsesorByAgenda(item)] == '' ? 'NO REGISTRA' : item[getAsesorByAgenda(item)]  }}
+                                        </span>
+                                    </div>
+                                    <div *ngIf="item.unidadNegocioFabrica === 1" class="flex  items-center" matTooltip="Asesor Micro">
+                                        <mat-icon class="icon-size-3 text-green-500" svgIcon="heroicons_solid:user"></mat-icon>
+                                        <span class="text-sm text-black font-medium">
+                                            {{ item.asesorMicro==''?'NO REGISTRA':item.asesorMicro }}
                                         </span>
                                     </div>
                                 </div>
@@ -212,7 +218,7 @@
                                             <span class="text-xs text-black font-medium" matTooltipPosition="right"
                                                 matTooltip="Asesor Comercial">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                                {{ item.asesorComercial==''?'NO REGISTRA':item.asesorComercial}}
                                             </span>
                                         </ng-container>
                                         <ng-container>
@@ -220,7 +226,7 @@
                                                 matTooltip="Asesor fábrica">
                                                 <mat-icon class="icon-size-3 text-blue-500"
                                                     svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
+                                                {{ item.asesorCredito==''?'NO REGISTRA':item.asesorCredito}}
                                             </span>
                                         </ng-container>
                                         <ng-container *ngIf="item.unidadNegocioFabrica === 1">
@@ -557,7 +563,7 @@
                                 <div class="flex justify-evenly w-full items-start gap-4 borderTopCard py-2">
                                     <div class="flex justify-evenly items-end gap-1">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                        <p class="m-0 text-xs font-semibold leading-3"> {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No registra':item.asesorMicro : item.asesorCredito == '' ? 'No registra':item.asesorCredito }}</p>
+                                        <p class="m-0 text-xs font-semibold leading-3"> {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'NO REGISTRA':item.asesorMicro : item.asesorCredito == '' ? 'NO REGISTRA':item.asesorCredito }}</p>
                                     </div>
                                     <div class="flex justify-center items-center gap-1">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:window"></mat-icon>
