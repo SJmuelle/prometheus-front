@@ -23,6 +23,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public fabricaDatos;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public agendaURL: string = this.route.snapshot.paramMap.get('agenda');
   public permisoEditar: boolean;
   public verComentarios: boolean = false;
   public minimizarComentarios: boolean = false;
@@ -46,7 +47,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private _dialog: MatDialog,
-    public _permisosService: PermisosService
+    public _permisosService: PermisosService,
   ) {
     this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
   }
@@ -100,18 +101,22 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
           case 'CO':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'CC':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'CM':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'RE':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'DE':
             this.habilitaDevolucion = true;
@@ -125,14 +130,17 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
           case 'GC':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'FO':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'VI':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           default:
             this.habilitaDevolucion = false;
@@ -164,7 +172,12 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       return
     }
     if(this._permisosService.estabaFormulario(this.router.url)){
-      this.redireccionar('agenda-venta-digital');
+        if(this.agendaURL === 'CM'){
+            this.redireccionar('agenda-comercial');
+        }else{
+            this.redireccionar('agenda-venta-digital');
+        }
+        return;
     }
 
     switch (this.fabricaDatos.agenda) {
@@ -267,7 +280,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
-      
+
       if (this.fabricaDatos.unidadNegocio != 32) {
         if (res == true) {
           this.abrirModal('recalcular')
@@ -366,7 +379,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         this.verReferencias = event;
       }
 
-      
+
   /**
 * @description:
 */

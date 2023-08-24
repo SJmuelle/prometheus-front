@@ -91,19 +91,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         });
     }
 
-    /**
-     * @description: abre la agenda
-     */
-    public onGetAgendaDigital(data: any, agenda: string): void {
-        if (data) {
-            const { tipoDocumento, identificacion, numeroSolicitud } = data;
-            this.router.navigate([`/credit-factory/formularios/${agenda}/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
-        } else {
-            //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-            this._permisosService.ruta = 'agenda-comercial';
-            this.router.navigate([`/credit-factory/formularios/microcredito`]);
-        }
-    }
+
     public onGetAgenda(data: any): void {
         //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
         const { numeroSolicitud, identificacion } = data;
@@ -111,6 +99,19 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     }
 
 
+    /**
+      * @description: abre la agenda
+      */
+    public onGetAgendaDigital(data: any): void {
+        if (data) {
+            const { tipoDocumento, identificacion, numeroSolicitud } = data;
+            this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
+        } else {
+            //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+            this._permisosService.ruta = 'agenda-comercial';
+            this.router.navigate([`/credit-factory/formularios/microcredito/CM`]);
+        }
+    }
 
 
     /**

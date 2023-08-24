@@ -157,7 +157,8 @@ export class AppSettingsService {
             validacionMonto: EndPoints.uri('/generic/cre-lib-monto'),
             validacionPlazo: EndPoints.uri('/generic/cre-lib-plazo'),
             autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp'),
-            getRolID: EndPoints.uri('/generic/qry/tk/obtener-rol-id-usuario')
+            getRolID: EndPoints.uri('/generic/qry/tk/obtener-rol-id-usuario'),
+            cargueDeudorSolidarioConyuge: EndPoints.uri('/generic/qry/tk/cargue-deudor-solidario'),
         }
     };
 
