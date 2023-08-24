@@ -10,8 +10,7 @@
                         escrito.</strong>
                     <div class="max-w-full  md:w-auto whitespace-normal">
                         La persona que recibe el código OTP lo recibirá al número
-                        <strong class="text-gray-800 text-md">{{datosBasicos.get('celular').value | mask: '(000) 000 00
-                            00'}}
+                        <strong class="text-gray-800 text-md">{{datosBasicos.get('celular').value | mask: '(000) 000 0000'}}
                         </strong> y al correo
 
                         <strong class="text-gray-800 text-md"> {{datosBasicos.get('email').value }}
@@ -42,7 +41,9 @@
                     <mat-form-field class="md:w-4/6 w-full md:pl-12 pl-0  fuse-mat-dense">
                         <span matPrefix class="flex justify-center items-center h-full"><mat-icon
                                 svgIcon="heroicons_solid:phone"></mat-icon></span>
-                        <input matInput type="text" autocomplete="off" formControlName="celular" [value]="datosBasicos.value.celular" mask="(000) 000 00 00">
+                        <input matInput type="text" autocomplete="off"
+                        formControlName="celular" [(ngModel)]="datosBasicos.value.celular"
+                        mask="(000) 000 00 00">
                         <mat-error *ngIf="datosBasicos.controls.celular.errors?.required">
                             Este campo es requerido.
                         </mat-error>
