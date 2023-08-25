@@ -14,7 +14,8 @@ export class FormRefinanciamientoComponent implements OnInit {
   public negocio: string = this.route.snapshot.paramMap.get('negocio');
   public fecha: string = this.route.snapshot.paramMap.get('fecha');
   dataRow: any;
-  
+  totales: any=[];
+
   constructor(
     private route: ActivatedRoute,
     private _cobranzaService: CobranzaService,
@@ -25,21 +26,48 @@ export class FormRefinanciamientoComponent implements OnInit {
   }
 
 
-  
-  getInformacionNegocios() {
-    this._cobranzaService.refinanciacionCargarDetalleCartera(this.negocio,this.tipoEstrategia,this.fecha).subscribe((res) => {
-      this.dataRow = res.data;
 
-      const valorSaldoCapital =  this.dataRow.reduce((acumulador, obj) => acumulador + obj.valorSaldoCapital, 0);
-      const valorInteresAval =  this.dataRow.reduce((acumulador, obj) => acumulador + obj.valorInteresAval, 0);
-      const Mipymes =  0;
-      const Intermediación =  0;
-      const Seguro =  this.dataRow.reduce((acumulador, obj) => acumulador + obj.valorSeguro, 0);
-      const Aval =  0;
-      const Mora =0;
-      const Gac =  this.dataRow.reduce((acumulador, obj) => acumulador + obj.gac, 0);
-      const Total =  this.dataRow.reduce((acumulador, obj) => acumulador + obj.sumaSaldos, 0);
-      
+  getInformacionNegocios() {
+    this._cobranzaService.refinanciacionCargarDetalleCartera(this.negocio, this.tipoEstrategia, this.fecha).subscribe((res) => {
+      this.dataRow = res.data;
+      this.totales.push(
+        {
+          etiqueta: "Capital",
+          valor: this.dataRow.reduce((acumulador, obj) => acumulador + obj.valorSaldoCapital, 0)
+        },
+        {
+          etiqueta: "Interes",
+          valor: this.dataRow.reduce((acumulador, obj) => acumulador + obj.valorInteresAval, 0)
+        },
+        {
+          etiqueta: "Mipymes",
+          valor: 0
+        },
+        {
+          etiqueta: "Intermediación",
+          valor: 0
+        },
+        {
+          etiqueta: "Seguro",
+          valor: this.dataRow.reduce((acumulador, obj) => acumulador + obj.valorSeguro, 0)
+        },
+        {
+          etiqueta: "Aval",
+          valor: 0
+        },
+        {
+          etiqueta: "Mora",
+          valor: 0
+        },
+        {
+          etiqueta: "Gac",
+          valor: this.dataRow.reduce((acumulador, obj) => acumulador + obj.gac, 0)
+        },
+        {
+          etiqueta: "Total",
+          valor: this.dataRow.reduce((acumulador, obj) => acumulador + obj.sumaSaldos, 0)
+        },
+      )
     });
   }
 }

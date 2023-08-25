@@ -6,7 +6,7 @@
 
         <!-- Title -->
         <div class="flex items-center ml-6">
-            <div class="flex-0 w-16 overflow-hidden">
+            <div class="flex-0 w-16 overflow-hidden hidden md:block">
                 <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
             </div>
             <div class="flex-1 mx-3">
@@ -31,44 +31,53 @@
     </div>
 
 
-    <div class="relative h-cal">
-        <div class=" flex justify-center my-3 mx-3">
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Capital</div>
-                <div class="mt-2 font-mono text-xl">$148.75B</div>
+    <div class="flex flex-col h-cal items-center ml-6 relative">
+        <div class="grid grid-cols-1 md:grid-cols-9 my-3 mx-3">
+            <span class=" md:col-span-9 bg-gray-200 p-1.5 rounded-1 text-dark">Totales</span>
+            <div class="p-4 leading-none border border-r-0" *ngFor="let item of totales">
+                <div class="text-sm font-medium text-secondary">{{item.etiqueta}}</div>
+                <div class="mt-2 font-mono text-xl">${{item.valor | number }}</div>
             </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Interes</div>
-                <div class="mt-2 font-mono text-xl">$22.90B</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Mipymes</div>
-                <div class="mt-2 font-mono text-xl">18.17M</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Intermediación</div>
-                <div class="mt-2 font-mono text-xl">18.17M</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Seguro</div>
-                <div class="mt-2 font-mono text-xl">18.17M</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Aval</div>
-                <div class="mt-2 font-mono text-xl">18.17M</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Mora</div>
-                <div class="mt-2 font-mono text-xl">18.17M</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Gac</div>
-                <div class="mt-2 font-mono text-xl">18.17M</div>
-            </div>
-            <div class="p-4 leading-none border border-r-0">
-                <div class="text-sm font-medium text-secondary">Total</div>
-                <div class="mt-2 font-mono text-xl">$19,891.00</div>
-            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 my-3 mx-3 w-100">
+            <span class=" md:col-span-3 my-2 bg-gray-200 p-1.5 rounded-1 text-dark">Descuentos de congela tu deuda</span>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. Capital</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. intereses</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. ley Mipymes</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. Capital</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. intermediacióm</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. Capital</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. seguro</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. aval</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+
+            <button  class="mr-9 mx-10" mat-flat-button [color]="'primary'" >
+                <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+                <span class="ml-2 mr-1">Aplicar descuentos</span>
+            </button>
         </div>
     </div>
 
