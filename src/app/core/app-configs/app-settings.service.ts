@@ -590,6 +590,9 @@ export class AppSettingsService {
             refinanciacionBuscarFechaPago: EndPoints.uri('/generic/qry/refinanciacion-buscar-fecha-pago/MC0063157/Z/2023-05-01'),
             refinanciacionCalcularCtaInicial: EndPoints.uri('/generic/refinanciacion-calcular-cta-inicial'),
             refinanciacionCargarDtoCongela: EndPoints.uri('/generic/qry/refinanciacion-cargar-dto-congela/AC'),
+
+            //congela
+            congelaComboDescuento: EndPoints.uri('/generic/qry/congela-combo-descuento/AC'),
          
             historicoGestionCartera: EndPoints.uri('/generic/qry/cargar-historico-gestiones-cartera'),
 

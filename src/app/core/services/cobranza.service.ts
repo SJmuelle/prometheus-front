@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 })
 export class CobranzaService {
 
-  
+
   private _cuentasAsignadas: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
 
 
@@ -81,22 +81,29 @@ export class CobranzaService {
   /*
   * @description: 2
   */
-  public refinanciacionBuscarCliente(tipoDato,tipoEstrategia,id): Observable<any> {
+  public refinanciacionBuscarCliente(tipoDato, tipoEstrategia, id): Observable<any> {
     return this._http.get(`${this._appSettings.cobranza.url.refinanciacionBuscarCliente}/${tipoDato}/${id}/${tipoEstrategia}`);
   }
 
   /*
   * @description: 
   */
-  public refinanciacionCargarDetalleCartera(negocio,tipoEstrategia,fecha): Observable<any> {
+  public refinanciacionCargarDetalleCartera(negocio, tipoEstrategia, fecha): Observable<any> {
     return this._http.get(`${this._appSettings.cobranza.url.refinanciacionCargarDetalleCartera}/${negocio}/${tipoEstrategia}/${fecha}`);
+  }
+
+  /*
+* @description: 
+*/
+  public refinanciacionBuscarFechaPago(): Observable<any> {
+    return this._http.get(this._appSettings.cobranza.url.refinanciacionBuscarFechaPago);
   }
 
   /*
   * @description: 
   */
-  public refinanciacionBuscarFechaPago(): Observable<any> {
-    return this._http.get(this._appSettings.cobranza.url.refinanciacionBuscarFechaPago);
+  public congelaComboDescuento(): Observable<any> {
+    return this._http.get(this._appSettings.cobranza.url.congelaComboDescuento);
   }
 
 
@@ -113,7 +120,7 @@ export class CobranzaService {
   public refinanciacionCargarDtoCongela(): Observable<any> {
     return this._http.get(this._appSettings.cobranza.url.refinanciacionCargarDtoCongela);
   }
-  
+
   /*
   * @description: 
   */

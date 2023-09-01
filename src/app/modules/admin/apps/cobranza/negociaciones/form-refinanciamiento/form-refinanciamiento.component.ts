@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CobranzaService } from 'app/core/services/cobranza.service';
 
@@ -14,12 +15,29 @@ export class FormRefinanciamientoComponent implements OnInit {
   public negocio: string = this.route.snapshot.paramMap.get('negocio');
   public fecha: string = this.route.snapshot.paramMap.get('fecha');
   dataRow: any;
-  totales: any=[];
+  totales: any = [];
+  descuento: any;
+  public form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private _cobranzaService: CobranzaService,
-  ) { }
+    private fb: FormBuilder,
+
+  ) {
+    this.form = fb.group({
+      dtoCapital: [''],
+      dtoInteres: [''],
+      dtocat: [''],
+      dtoCuotaAdmin: [''],
+      dtoSeguroDeudor: [''],
+      dtoAval: [''],
+      dtoIxm: [''],
+      dtoGac: [''],
+      cuotaMaxima: [''],
+      fechaPago: [''],
+    });
+  }
 
   ngOnInit(): void {
     this.getInformacionNegocios();
@@ -30,6 +48,7 @@ export class FormRefinanciamientoComponent implements OnInit {
   getInformacionNegocios() {
     this._cobranzaService.refinanciacionCargarDetalleCartera(this.negocio, this.tipoEstrategia, this.fecha).subscribe((res) => {
       this.dataRow = res.data;
+      this.getDescuentoCongela();
       this.totales.push(
         {
           etiqueta: "Capital",
@@ -68,6 +87,15 @@ export class FormRefinanciamientoComponent implements OnInit {
           valor: this.dataRow.reduce((acumulador, obj) => acumulador + obj.sumaSaldos, 0)
         },
       )
+    });
+  }
+
+  getDescuentoCongela() {
+    this._cobranzaService.congelaComboDescuento().subscribe((res) => {
+      let data = res.data;
+      delete data.success;
+      this.form.setValue(data);
+
     });
   }
 }

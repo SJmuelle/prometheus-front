@@ -39,46 +39,79 @@
                 <div class="mt-2 font-mono text-xl">${{item.valor | number }}</div>
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 my-3 mx-3 w-100">
-            <span class=" md:col-span-3 my-2 bg-gray-200 p-1.5 rounded-1 text-dark">Descuentos de congela tu deuda</span>
+
+        <form [formGroup]="form" class=" px-3 grid grid-cols-1 md:grid-cols-3 my-3 mx-3 w-100">
+            <span class=" md:col-span-3 my-2 bg-gray-200 p-1.5 rounded-1 text-dark">Descuentos de congela tu
+                deuda</span>
             <mat-form-field class=" mx-3">
                 <mat-label>% Dto. Capital</mat-label>
-                <input matInput type="text" >
+                <input matInput type="text" [formControlName]="'dtoCapital'">
             </mat-form-field>
             <mat-form-field class=" mx-3">
                 <mat-label>% Dto. intereses</mat-label>
-                <input matInput type="text" >
+                <input matInput type="text" [formControlName]="'dtoInteres'">
             </mat-form-field>
             <mat-form-field class=" mx-3">
                 <mat-label>% Dto. ley Mipymes</mat-label>
-                <input matInput type="text" >
+                <input matInput type="text" [formControlName]="'dtoAval'">
             </mat-form-field>
             <mat-form-field class=" mx-3">
-                <mat-label>% Dto. Capital</mat-label>
-                <input matInput type="text" >
-            </mat-form-field>
-            <mat-form-field class=" mx-3">
-                <mat-label>% Dto. intermediacióm</mat-label>
-                <input matInput type="text" >
-            </mat-form-field>
-            <mat-form-field class=" mx-3">
-                <mat-label>% Dto. Capital</mat-label>
-                <input matInput type="text" >
+                <mat-label>% Dto. intermediación</mat-label>
+                <input matInput type="text" [formControlName]="'dtoAval'">
             </mat-form-field>
             <mat-form-field class=" mx-3">
                 <mat-label>% Dto. seguro</mat-label>
-                <input matInput type="text" >
+                <input matInput type="text" [formControlName]="'dtoSeguroDeudor'">
             </mat-form-field>
             <mat-form-field class=" mx-3">
                 <mat-label>% Dto. aval</mat-label>
-                <input matInput type="text" >
+                <input matInput type="text" [formControlName]="'dtoAval'">
             </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. interes de mora</mat-label>
+                <input matInput type="text" [formControlName]="'dtoAval'">
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>% Dto. gastos cobranza</mat-label>
+                <input matInput type="text" [formControlName]="'dtoAval'">
+            </mat-form-field>
+            <div class=" mx-3 flex align-items-center">
+                <button class="w-100" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+                    <span class="ml-2 mr-1">Aplicar descuentos</span>
+                </button>
+            </div>
 
-            <button  class="mr-9 mx-10" mat-flat-button [color]="'primary'" >
-                <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
-                <span class="ml-2 mr-1">Aplicar descuentos</span>
-            </button>
-        </div>
+            <mat-form-field class=" mx-3">
+                <mat-label>Total a congelar</mat-label>
+                <input matInput type="text" [formControlName]="'dtoAval'">
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>Total descuento</mat-label>
+                <input matInput type="text" [formControlName]="'dtoAval'">
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>Plazo</mat-label>
+                <input matInput type="text" [formControlName]="'cuotaMaxima'">
+            </mat-form-field>
+            <mat-form-field class=" mx-3">
+                <mat-label>Fecha pago</mat-label>
+                <input matInput type="text" [formControlName]="'fechaPago'">
+            </mat-form-field>
+            <div class=" mx-3 flex align-items-center">
+                <button class="w-100" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+                    <span class="ml-2 mr-1">Simular plan congela</span>
+                </button>
+            </div>
+            <div class=" mx-3 flex align-items-center">
+                <button class="w-100" mat-flat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
+                    <span class="ml-2 mr-1">Solicitar aprobación</span>
+                </button>
+            </div>
+        </form>
+
     </div>
 
 </div>
