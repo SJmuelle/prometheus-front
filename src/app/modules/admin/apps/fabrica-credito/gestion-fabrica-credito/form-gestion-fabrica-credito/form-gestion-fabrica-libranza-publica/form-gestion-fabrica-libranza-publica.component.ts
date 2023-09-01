@@ -257,6 +257,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
                 this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+                this.form.controls['autorizacionBanco'].setValue(data.autorizacionBanco === 'S')
+
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
@@ -385,7 +387,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.departamentosCiudadesService.getCiudades(cod).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.ciudadesNacimiento = rep;
         })
-        if(clean){
+        if (clean) {
             this.form.get('codigoCiudadNacimiento').setValue('')
         }
     }
@@ -464,6 +466,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         datos.nombreCompletoConyuge = `${datos.primerNombreConyuge}  ${datos.segundoNombreConyuge} ${datos.primerApellidoConyuge} ${datos.segundoApellidoConyuge}`
         // boolean
         datos.estrato = Number(datos.estrato);
+        datos.autorizacionBanco = datos.autorizacionBanco ? 'S' : 'N';
         datos.totalIngresosLaborales = Number(datos.totalIngresosLaborales);
 
         Swal.fire({
@@ -482,10 +485,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         });
     }
 
-     /**
-     * @description: Guardado de datos fabrica
-     */
-     private postFormularioFabrica(datos: any): void {
+    /**
+    * @description: Guardado de datos fabrica
+    */
+    private postFormularioFabrica(datos: any): void {
 
         Swal.fire('Cargando', 'Guardando información'); Swal.showLoading();
         setTimeout(() => {
@@ -532,7 +535,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             const controlErrors: any = this.form.get(key).errors;
             if (controlErrors != null) {
                 Object.keys(controlErrors).forEach(keyError => {
-                    console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+                    // console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
                 });
             }
         });
@@ -864,16 +867,16 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
 
     }
 
-    getTotalIngresos(){
+    getTotalIngresos() {
         this.form.controls.totalIngresosLaborales.setValue(Number(this.form.controls.salarioBasico.value) + Number(this.form.controls.otrosIngresos.value))
     }
 
-    getPlazoMini(){
-       return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMinimo || 6
+    getPlazoMini() {
+        return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMinimo || 6
     }
 
-    getPlazoMax(){
-       return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMaximo || 144
+    getPlazoMax() {
+        return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMaximo || 144
     }
 
 

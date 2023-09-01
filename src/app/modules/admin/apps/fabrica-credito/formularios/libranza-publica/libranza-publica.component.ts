@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { fuseAnimations } from '@fuse/animations';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-libranza-publica',
@@ -19,7 +20,7 @@ import { MatStepper } from '@angular/material/stepper';
     styleUrls: ['./libranza-publica.component.scss'],
     animations: fuseAnimations,
 })
-export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
+export class LibranzaPublicaComponent implements OnInit {
     @ViewChild('input1') input1!: ElementRef<HTMLInputElement>;
     @ViewChild('input2') input2!: ElementRef<HTMLInputElement>;
     @ViewChild('input3') input3!: ElementRef<HTMLInputElement>;
@@ -34,6 +35,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     numeroOTP: string;
     datosBasicos: FormGroup;
     datosLaborares: FormGroup;
+    datosCredito: FormGroup;
     validationOTPForm: FormGroup;
     orientationStep: StepperOrientation;
     currentScreenSize: string;
@@ -60,31 +62,19 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
-        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog,private _genericaServices: GenericasService) { }
+        private _libranzaService: LibranzaPublicaService,
+        private _dialog: MatDialog,
+        private _genericaServices: GenericasService,
+        private router: Router,) { }
 
-
-    ngAfterViewInit() {
-        this.focusNextInput(this.input1.nativeElement, this.input2.nativeElement);
-        this.focusNextInput(this.input2.nativeElement, this.input3.nativeElement);
-        this.focusNextInput(this.input3.nativeElement, this.input4.nativeElement);
-        this.focusNextInput(this.input4.nativeElement, this.input5.nativeElement);
-        this.focusNextInput(this.input5.nativeElement, this.input6.nativeElement);
-
-        this.focusPreviusInput(this.input2.nativeElement, this.input1.nativeElement);
-        this.focusPreviusInput(this.input3.nativeElement, this.input2.nativeElement);
-        this.focusPreviusInput(this.input4.nativeElement, this.input3.nativeElement);
-        this.focusPreviusInput(this.input5.nativeElement, this.input4.nativeElement);
-        this.focusPreviusInput(this.input6.nativeElement, this.input5.nativeElement);
-
-    }
 
 
     ngOnInit(): void {
         this.datosBasicos = this.fb.group({
-            tipoDocumento: ['', [Validators.required]],
+            tipoDocumento: ['CC', [Validators.required]],
             documento: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
             celular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             genero: ['', Validators.required],
@@ -108,6 +98,11 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             descuentoNomina: ['', [Validators.required]],
 
         });
+
+        this.datosCredito = this.fb.group({
+            plazo: ['',Validators.required],
+            valorSolicitado: ['', Validators.required]
+        })
 
         this.validationOTPForm = this.fb.group({
             numeroOTP: ['', [Validators.required, Validators.minLength(6)]],
@@ -164,7 +159,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('otraPagaduria')?.setValidators(null)
                 this.datosLaborares.get('otraPagaduria')?.disable({ emitEvent: true, onlySelf: true })
 
-              //  this.datosLaborares.controls['otraPagaduria'].setValue('')
+                this.datosLaborares.controls['otraPagaduria'].setValue('')
             }
         })
 
@@ -172,7 +167,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             if (e === "EPLDO") {
                 this.datosLaborares.get('tipoContrato')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('tipoContrato')?.enable({ emitEvent: true, onlySelf: true })
-                this.datosLaborares.get('fechaVinculacion')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('fechaVinculacion')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.datosLaborares.get('fechaVinculacion')?.enable({ emitEvent: true, onlySelf: true })
                 this.datosLaborares.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
@@ -180,7 +175,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('tipoPension')?.setValidators(null)
                 this.datosLaborares.get('tipoPension')?.disable({ emitEvent: true, onlySelf: true })
 
-             //   this.datosLaborares.controls['tipoPension'].setValue('')
+                this.datosLaborares.controls['tipoPension'].setValue('')
             }
             else {
                 if (e === 'PENSI') {
@@ -193,12 +188,22 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                     this.datosLaborares.get('cargo')?.setValidators(null)
                     this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
 
-                    // this.datosLaborares.controls['cargo'].setValue('')
-                    // this.datosLaborares.controls['fechaVinculacion'].setValue('')
-                    // this.datosLaborares.controls['tipoContrato'].setValue('')
+                    this.datosLaborares.get('tipoContrato').setValue('')
+                    this.datosLaborares.get('cargo').setValue('')
+                    this.datosLaborares.get('fechaVinculacion').setValue('')
                 }
             }
 
+            if(e === 'EPLDO' || e === 'PENSI'){
+                this.datosCredito.get('valorSolicitado').setValidators([Validators.required,
+                    Validators.min(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).montoMinimoCredito),
+                    Validators.max(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).montoMaximoCredito)])
+
+                this.datosCredito.get('plazo').setValidators([Validators.required,
+                        Validators.min(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).plazoMinimo),
+                        Validators.max(this.dataInicial.ocupaciones.find(ocup => ocup.codigo === e).plazoMaximo)])
+
+            }
 
         })
 
@@ -211,15 +216,10 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('otrosIngresos')?.setValidators(null)
                 this.datosLaborares.get('otrosIngresos')?.disable({ emitEvent: true, onlySelf: true })
 
-               // this.datosLaborares.controls['otrosIngresos'].setValue('')
+                this.datosLaborares.get('otrosIngresos').setValue('')
             }
         })
 
-        this.validationOTPForm.get('numeroOTP').valueChanges.subscribe((e: string) => {
-            if(e.length === 6 && !this.otpValidado ){
-                this.validarCodigo()
-            }
-        })
     }
 
     ngAfterViewChecked(): void {
@@ -228,24 +228,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this.marginTopInputDynamic()
     }
 
-    public focusNextInput(currentInput: HTMLInputElement, nextInput: HTMLInputElement): void {
-        currentInput.addEventListener('input', ($e) => {
-            if (currentInput.value.length === 1) {
-                nextInput.focus();
-            }
-        });
-    }
-
-    public focusPreviusInput(currentInput: HTMLInputElement, previusInput: HTMLInputElement): void {
-        currentInput.addEventListener('keydown', ($e) => {
-            if ($e.key === 'Backspace') {
-                // bug donde primero se hace el focus y luego se borra, entonces se borraba el anterior y no el actual
-                setTimeout(() => {
-                    previusInput.focus();
-                }, 100);
-            }
-        });
-    }
 
     private validatedDate(control: AbstractControl) {
         const valueControl = control?.value ?? '';
@@ -318,13 +300,15 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     }
 
     guardar() {
-        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue() }
+        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue(), ...this.datosCredito.getRawValue() }
 
         this.formatearDatosAntesDeEnviar(dataToSend)
         Swal.fire({ title: 'Cargando', html: 'Guardando información, no cierre la pestaña', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._libranzaService.guardarFormularioCorto(dataToSend).subscribe(rep => {
 
-            Swal.fire('Guardado', 'Solicitud guardada con éxito', 'success')
+            Swal.fire('Guardado', 'Solicitud guardada con éxito', 'success').then(rep => {
+                this.irAtras();
+            })
         }, err => {
             Swal.fire('Error', 'Error al guardar ' + err?.error?.msg, 'error')
         })
@@ -334,6 +318,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     formatearDatosAntesDeEnviar(formData) {
         formData.primerNombre = formData.primerNombre?.trim()
         formData.primerApellido = formData.primerApellido?.trim()
+        formData.valorSolicitado =  Number(formData.valorSolicitado)
 
         formData.numeroSolicitud =  this.numeroSolicitudTemporal
 
@@ -395,18 +380,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         }, 1000)
     }
 
-    updateOTPInput() {
-        const num1 = this.input1.nativeElement.value;
-        const num2 = this.input2.nativeElement.value;
-        const num3 = this.input3.nativeElement.value;
-        const num4 = this.input4.nativeElement.value;
-        const num5 = this.input5.nativeElement.value;
-        const num6 = this.input6.nativeElement.value;
-
-
-        this.validationOTPForm.controls.numeroOTP.setValue(num1 + num2 + num3 + num4 + num5 + num6);
-
-    }
 
     atualizarDatosOTP() {
         const datos = { ...this.datosBasicos.getRawValue() }
@@ -435,38 +408,9 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         }
     }
 
-    validarCodigo(): void {
-        const numero = this.validationOTPForm.get('numeroOTP').value;
-        this.validandoOTPLoading = true;
-        if (numero.length === 6 && !this.otpValidado) {
-            const data = {
-                numeroSolicitud: this.numeroSolicitudTemporal,
-                tipoTercero: 'T',
-                numeroOTP: numero
-            }
 
-            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.destroyed)).subscribe(rep => {
-                this.otpValidado = rep.data.resultado === 'OK'
-                this.validandoOTPLoading = false;
-            }, err => {
-                Swal.fire('Error',
-                    'Error al validar del OTP','error').then(()=> {
-                        this.validandoOTPLoading = false;
-                        this.borrarOTPNumbers()
-                    })
-            })
-        }
-
-    }
-
-    borrarOTPNumbers(): void {
-        this.input1.nativeElement.value = ''
-        this.input2.nativeElement.value = ''
-        this.input3.nativeElement.value = ''
-        this.input4.nativeElement.value = ''
-        this.input5.nativeElement.value = ''
-        this.input6.nativeElement.value = ''
-
+    otpValidadoChange($e){
+        this.otpValidado = $e;
     }
 
     formatearDatos(datos: any){
@@ -474,8 +418,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         datos.otrosIngresos = Number(datos.otrosIngresos);
         datos.descuentoNomina = Number(datos.descuentoNomina);
 
-        datos.plazo = 0;
-        datos.valorSolicitado = 0;
 
         // verificacion
         datos.aceptoCentrales = 'S'
@@ -490,6 +432,10 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
             this.datosLaborares.get('salarioBasico').setValidators([Validators.required, Validators.min(data.salarioMinimo)])
         })
+    }
+
+    irAtras() {
+         this.router.navigate([`/credit-factory/agenda-comercial`]);
     }
 
     ngOnDestroy() {

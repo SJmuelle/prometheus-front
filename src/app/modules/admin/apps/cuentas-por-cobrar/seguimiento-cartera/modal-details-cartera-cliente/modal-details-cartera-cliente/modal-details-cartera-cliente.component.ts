@@ -1,5 +1,5 @@
 import { SelectionChange } from '@angular/cdk/collections';
-import { Component, Inject, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, AfterViewInit, ViewChild, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,7 +7,7 @@ import { CarteraClientesService } from 'app/core/services/cartera-clientes.servi
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import { Subject, Subscription } from 'rxjs';
-import { skip, takeUntil } from 'rxjs/operators';
+import { delay, skip, takeUntil } from 'rxjs/operators';
 import moment from 'moment'
 import { ModalSubDetalleClienteComponent } from '../../modal-sub-detalle-cliente/modal-sub-detalle-cliente/modal-sub-detalle-cliente.component';
 @Component({
@@ -103,15 +103,16 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
   public tittleModal: string = 'Visualizar seguimiento cartera clientes'
   public dataClient: any = null
   public suscription$: Subscription;
-
+  public barrios: any[] = []
+  @Input() public data: any = null
+  @Output() public cerrarViewGestiones: EventEmitter<void> = new EventEmitter<void>();
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  // @Inject(MAT_DIALOG_DATA) public data: any
+  constructor(
     private fb: FormBuilder,
     private _sweetAlertService: Sweetalert2Service,
     private _carteraClienteService: CarteraClientesService,
-    private _dialogRef: MatDialogRef<ModalDetailsCarteraClienteComponent>,
     private dialogSubDetalle: MatDialog,
   ) { }
   ngOnDestroy(): void {
@@ -131,6 +132,11 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
 
     this.listenObservable()
 
+
+
+  }
+
+  public loadInit(): void {
     const tittle = {
       detalleCartera: 'Detalle de la cartera',
       visualizarPagos: 'Visualizar pagos',
@@ -150,9 +156,9 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
       editarInformacion: ''
     }
 
-    this.tittleModal = tittle[this.data.viewModal]
-    this.dataOptions = dataOptionTable[this.data.viewModal]
-    this.dataRows = this.data.valuesData
+    this.tittleModal = 'Agregar gestiones'
+    this.dataOptions = []
+    this.dataRows = []
 
     switch (this.tittleModal) {
       case 'Detalle de la cartera':
@@ -163,24 +169,31 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
         break
     }
 
-    if (this.tittleModal === 'Agregar gestiones') {
-      this.AgregarGestiones();
-      const today = new Date();
 
-      this.formAgregarGestiones.controls['Fecha'].setValue(today)
-      this.formAgregarGestiones.controls['Cliente'].setValue(this.data.valuesData['nombreCliente'])
-      this.formAgregarGestiones.controls['Negocio'].setValue(this.data.valuesData['negocio'])
-      this.formAgregarGestiones.controls['Cliente'].disable()
-      this.formAgregarGestiones.controls['Negocio'].disable()
-      this.formAgregarGestiones.controls['Cliente'].updateValueAndValidity();
-      this.formAgregarGestiones.controls['Negocio'].updateValueAndValidity();
-      this.cargarSelects();
-    }
+    this.AgregarGestiones();
+    const today = new Date();
+    this.formAgregarGestiones.controls['Fecha'].setValue(today)
+    this.formAgregarGestiones.controls['Cliente'].setValue(this.dataClient?.nombreCliente)
+    this.formAgregarGestiones.controls['Negocio'].setValue(this.dataClient?.negocio)
+    this.formAgregarGestiones.controls['Cliente'].disable()
+    this.formAgregarGestiones.controls['Negocio'].disable()
+    this.formAgregarGestiones.controls['Cliente'].updateValueAndValidity();
+    this.formAgregarGestiones.controls['Negocio'].updateValueAndValidity();
+    this.cargarSelects();
 
   }
 
-  public closeModal(): void {
-    this._dialogRef.close()
+  // public closeModal(): void {
+  //   this._dialogRef.close()
+  // }
+
+  public calculatealto(): number {
+    const ancho = window.innerWidth
+    return ancho
+  }
+
+  public cerrarGestion(): void {
+    this.cerrarViewGestiones.emit();
   }
 
   public onSave(): void {
@@ -199,7 +212,7 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
       if (resultadoGestion === '62') {
         data = {
           empresa: 'FINT',
-          negocio: this.data.valuesData['negocio'],
+          negocio: this.dataClient['negocio'],
           observacion: form.Observaciones,
           valorPagar: Number(form.valorPagar),
           fechaPagar: moment(form.fechaPagar).format('YYYY-MM-DD'),
@@ -220,7 +233,7 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
       } else {
         data = {
           empresa: 'FINT',
-          negocio: this.data.valuesData['negocio'],
+          negocio: this.dataClient['negocio'],
           observacion: form.Observaciones,
           valorPagar: 0,
           fechaPagar: '',
@@ -239,10 +252,10 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
         }
       }
 
-      this._carteraClienteService.guardarGestionCliente(data).pipe(takeUntil(this.unsuscribe$)).subscribe({
+      this._carteraClienteService.guardarGestionCliente(data).pipe(takeUntil(this.unsuscribe$), delay(400)).subscribe({
         next: (resp) => {
           this._sweetAlertService.alertSuccess();
-          this._dialogRef.close()
+          this.cerrarGestion();
         },
         error: () => {
           this._sweetAlertService.alertError();
@@ -354,9 +367,9 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
           this._carteraClienteService.listarDepartamentos().pipe(takeUntil(this.unsuscribe$)).subscribe({
             next: (resp) => {
               this.departamentos = resp?.data || []
-              this.formAgregarGestiones.controls['departamento'].setValue(this.data.valuesData['coddpto']);
-              this.formAgregarGestiones.controls['barrio'].setValue(this.data.valuesData['barrio']);
-              this.formAgregarGestiones.controls['direccion'].setValue(this.data.valuesData['direccion']);
+              this.formAgregarGestiones.controls['departamento'].setValue(this.dataClient?.coddpto);
+              this.formAgregarGestiones.controls['barrio'].setValue(this.dataClient?.barrio);
+              this.formAgregarGestiones.controls['direccion'].setValue(this.dataClient.direccion);
             },
             error: (e) => { this._sweetAlertService.alertError() }
           })
@@ -392,6 +405,7 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
       case 'departamento':
         const departamento = eventSelect.value
         this.formAgregarGestiones.controls['ciudad'].setValue(null)
+        this.formAgregarGestiones.controls['barrio'].setValue(null)
         this._carteraClienteService.listarCiudades(departamento).pipe(takeUntil(this.unsuscribe$)).subscribe({
           next: (resp) => {
             this.ciudades = resp?.data || []
@@ -400,9 +414,42 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
           error: (e) => { this._sweetAlertService.alertError() }
         })
         break;
+      case 'ciudad':
+        this.formAgregarGestiones.controls['barrio'].setValue(null)
+        const ciudad = eventSelect.value
+        this._carteraClienteService.listarBarrios(ciudad).pipe(takeUntil(this.unsuscribe$)).subscribe({
+          next: (resp) => {
+            this.barrios = resp?.data || []
+          },
+          error: (e) => {
+            this._sweetAlertService.alertError();
+          }
+
+        })
+        break;
 
     }
   }
+
+  public filteredOptions(): any[] {
+    const filter = this.formAgregarGestiones.controls['barrio'].value?.toLowerCase() || '';
+    return this.barrios.filter(item => item.barrio?.toLowerCase().includes(filter))
+  }
+
+  public openDiag(): void {
+
+
+    const data = {
+      viewModal: 'Seleccionar Dirección',
+      valuesData: [],
+      width: '30%'
+    }
+
+    this.loadingModal(data)
+
+  }
+
+
 
   public verDetallePago(): void {
     const { negocio, periodo } = this.dataClient
@@ -433,8 +480,17 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
     this.suscription$ = this._carteraClienteService.dataCliente$.pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (data) => {
         this.dataClient = data;
-
+        if (!!this.dataClient) {
+          this.loadInit();
+        }
       },
+    })
+
+
+    this.suscription$ = this._carteraClienteService.direccionCliente$.pipe(skip(1), takeUntil(this.unsuscribe$)).subscribe({
+      next: (resp) => {
+        this.formAgregarGestiones.controls['direccion'].setValue(resp)
+      }
     })
 
 
@@ -457,16 +513,25 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
   public resetDocimiclio(): void {
     this.formAgregarGestiones.controls['departamento'].setValue(null)
     this.formAgregarGestiones.controls['ciudad'].setValue(null)
+    this.formAgregarGestiones.controls['barrio'].setValue(null)
+
     this.ciudades = []
     if (this.formAgregarGestiones.controls['domicilio'].value) {
-      this.formAgregarGestiones.controls['departamento'].setValue(this.data.valuesData['coddpto']);
-      const departamento = this.data.valuesData['coddpto']
+      this.formAgregarGestiones.controls['departamento'].setValue(this.dataClient?.coddpto);
+      const departamento = this.dataClient?.coddpto
       this._carteraClienteService.listarCiudades(departamento).pipe(takeUntil(this.unsuscribe$)).subscribe({
         next: (resp) => {
           this.ciudades = resp?.data || []
-          this.formAgregarGestiones.controls['ciudad'].setValue(this.data.valuesData['codciu']);
+          this.formAgregarGestiones.controls['ciudad'].setValue(this.dataClient?.codciu);
         },
         error: (e) => { this._sweetAlertService.alertError() }
+      })
+
+      this._carteraClienteService.listarBarrios(this.dataClient?.codciu).pipe(takeUntil(this.unsuscribe$)).subscribe({
+        next: (resp) => {
+          this.barrios = resp?.data || []
+          this.formAgregarGestiones.controls['barrio'].setValue(this.dataClient?.barrio)
+        }
       })
 
       this.formAgregarGestiones.controls['departamento'].setValidators([Validators.required])

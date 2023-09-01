@@ -7,7 +7,7 @@ import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import moment from 'moment';
 import { Subject, Subscription } from 'rxjs';
-import { skip, takeUntil } from 'rxjs/operators';
+import { filter, skip, takeUntil } from 'rxjs/operators';
 import { ModalSubDetalleClienteComponent } from '../modal-sub-detalle-cliente/modal-sub-detalle-cliente/modal-sub-detalle-cliente.component';
 
 @Component({
@@ -52,7 +52,7 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   ]
 
   public visualizarGestiones: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', },
     { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'proAccion', text: 'Próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -62,7 +62,7 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   ]
 
   public visualizarCompromisosPago: IoptionTable[] = [
-    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'observacion', text: 'Observación', typeField: 'text', },
     { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'direccion', text: 'Dirección', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'barrio', text: 'Barrio', typeField: 'text', classTailwind: 'whitespace-pre' },
@@ -84,6 +84,9 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
     { name: 'fecha_consignacion', text: 'Fecha consignación', typeField: 'text', pipeName: 'date', classTailwind: 'whitespace-pre' },
     { name: 'descripcion_ingreso', text: 'Descripción', typeField: 'text', classTailwind: 'whitespace-pre' },
     { name: 'negocio', text: 'Negocio', typeField: 'text', classTailwind: 'whitespace-pre' },
+    // documento
+    { name: 'documento', text: 'Factura', typeField: 'text', classTailwind: 'whitespace-pre' },
+
     { name: 'valor_ingreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end whitespace-pre' },
 
   ]
@@ -94,6 +97,13 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
   public dataRowvisualizarGestiones: any[] = []
   public dataRowvisualizarCompromisosPago: any[] = []
   public dataRowPlanPagos: any[] = []
+
+  public cardValues: any[] = [
+    { text: 'Debido a cobrar', value: 0, icon: 'assets/icons/icon dollar.svg', color: '#009da9' },
+    { text: 'Interés de mora', value: 0, icon: 'assets/icons/icon interes.svg', color: '#2dd4bf' },
+    { text: 'Gastos de cobranza', value: 0, icon: 'assets/icons/icon alert.svg', color: '#FF8600' },
+    { text: 'Total a pagar', value: 0, icon: 'assets/icons/icon total.svg', color: '#818cf8' },
+  ]
 
   public unsuscribe$: Subject<void> = new Subject<void>();
   public formAgregarGestiones: FormGroup = new FormGroup({});
@@ -248,6 +258,15 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this._sweetAlerService.stopLoading();
             this.dataRowdetalleCartera = res?.data || []
+            this.cardValues.forEach((item) => {
+              item.value = 0
+            })
+            this.dataRowdetalleCartera.forEach((item) => {
+              this.cardValues[0].value += Number(item.debidoCobrar)
+              this.cardValues[1].value += Number(item.interesMora)
+              this.cardValues[2].value += Number(item.gastoCobranza)
+              this.cardValues[3].value += Number(item.totalesParciales)
+            })
           }, 400);
         },
         error: (e) => {
@@ -261,6 +280,17 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this._sweetAlerService.stopLoading();
             this.dataRowdetalleCartera = res?.data || []
+            this.cardValues.forEach((item) => {
+              item.value = 0
+            })
+
+            this.dataRowdetalleCartera.forEach((item) => {
+
+              this.cardValues[0].value += Number(item.debidoCobrar)
+              this.cardValues[1].value += Number(item.interesMora)
+              this.cardValues[2].value += Number(item.gastoCobranza)
+              this.cardValues[3].value += Number(item.totalesParciales)
+            })
           }, 400);
 
         },
@@ -269,6 +299,8 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
         }
       })
     }
+
+
 
 
 
@@ -285,17 +317,17 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
         this.initdataTab();
         break;
       case 1:
-        this.detallePagos();
-        break;
-      case 2:
+        // this.detallePagos();
         this.PlanPagos();
         break;
-      case 3:
+      case 2:
         this.detalleGestiones();
         break;
-      case 4:
+      case 3:
         this.compromisosPagos();
         break;
+      // case 4:
+      //   break;
     }
 
 
@@ -317,8 +349,9 @@ export class ModalTabDetalleClienteComponent implements OnInit, OnDestroy {
       next: (resp) => {
         setTimeout(() => {
           this._sweetAlerService.stopLoading();
-          this.dataRowPlanPagos = resp?.data || []
+          this.dataRowPlanPagos = resp?.data.filter((value: any) => value.valor_ingreso > 0) || []
         }, 400)
+
       }, error: (e) => {
         this._sweetAlerService.alertError()
       }

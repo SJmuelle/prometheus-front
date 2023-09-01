@@ -10,6 +10,8 @@ import { FormDialogReprogramarComponent } from 'app/modules/admin/apps/fabrica-c
 import moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+
 @Component({
     selector: 'app-tabla',
     templateUrl: './tabla.component.html',
@@ -182,4 +184,23 @@ export class TablaComponent implements OnInit {
                 this.router.navigate([`/credit-factory/formularios/microcredito`]);
             }
         }
+
+    public getAsesorByAgenda(item){
+
+        if(item.codigoEstado === 'ES' || item.codigoEstado === 'AP'){
+            return 'asesorCredito'
+        }
+
+        return 'asesorComercial'
+    }
+
+    public getAsesorColorByAgenda(item){
+
+        if(item.codigoEstado === 'ES' || item.codigoEstado === 'AP'){
+            return 'text-blue-500'
+        }
+
+        return 'text-gray-500'
+    }
+
 }

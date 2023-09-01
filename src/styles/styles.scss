@@ -245,10 +245,18 @@ mat-form-field.dltMB .mat-form-field-wrapper {
 
 }
 
-td.mat-calendar-body-cell:not(.mat-calendar-body-disabled) .mat-calendar-body-cell-content.mat-focus-indicator {
+td.mat-calendar-body-cell:not(.mat-calendar-body-disabled) .mat-calendar-body-cell-content.mat-focus-indicator:not(.mat-calendar-body-selected) {
     background: rgb(141 141 169 / 15%);
 }
 
 .mat-calendar-body-cell-content.mat-focus-indicator.mat-calendar-body-selected {
     color: black;
+}
+
+table.tabla-izquierda thead tr th.wrapper-table .mat-sort-header-container {
+    justify-content: start !important;
+}
+
+table.tabla-izquierda thead tr th.wrapper-table.text-end .mat-sort-header-container {
+    justify-content: end !important;
 }

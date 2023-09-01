@@ -52,7 +52,7 @@
                             </div>
 
 
-                            <button (click)="search()" [disabled]="valueSearch.length===0 " mat-flat-button
+                            <button (click)="search()" [disabled]="valueSearch.length===0 " mat-raised-button
                                 class="p-2  w-full sm:w-32  color_fintra flex items-center"
                                 [ngClass]="valueSearch.length===0?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
                                 <mat-icon class="mr-1 "
@@ -60,6 +60,12 @@
                                 <!-- style="color: white !important;" -->
                                 <span
                                     [ngClass]=" valueSearch.length===0? ' text-disabled' : 'text-white' ">Consultar</span>
+                            </button>
+
+                            <button routerLink="/negociaciones/negociacioncartera/consulta-negociaciones"
+                                mat-raised-button
+                                class="py-2 px-4 color_fintra flex items-center text-white w-full sm:w-auto">
+                                <mat-icon class="mr-1 mt-0.5">dehaze</mat-icon>Ver negociaciones
                             </button>
 
                         </div>

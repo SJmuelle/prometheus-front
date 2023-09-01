@@ -7,8 +7,8 @@ import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import moment from 'moment';
-import { Subject, Subscription } from 'rxjs';
-import { skip, takeUntil } from 'rxjs/operators';
+import { forkJoin, Subject, Subscription } from 'rxjs';
+import { delay, map, takeUntil } from 'rxjs/operators';
 import { ModalSelectViewClienteComponent } from '../modal-selectView-cliente/modal-select-view-cliente.component';
 import { ModalSubDetalleClienteComponent } from '../modal-sub-detalle-cliente/modal-sub-detalle-cliente/modal-sub-detalle-cliente.component';
 
@@ -20,11 +20,11 @@ import { ModalSubDetalleClienteComponent } from '../modal-sub-detalle-cliente/mo
 export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
   public Subscription$: Subscription = new Subscription;
-  public SubscriptionTwo$: Subscription = new Subscription;
   public unsuscribe$: Subject<void> = new Subject<void>();
   public data: any = null
   public valuesSelect: string[]
   @Input() public allDataTable: any[] = []
+
   public AllDataSearch: any = null
   public formAgregarGestiones: FormGroup = new FormGroup({});
   public listarResultadoGestion: any[] = []
@@ -41,15 +41,36 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
   public barrios: any[] = []
   public ciudadeseditar: any[] = []
   public dapartamentosEdit: any[] = []
-  public suscriptionTree$: Subscription = new Subscription;
   public barriosGestiones: any[] = []
+  public arrayPromises: any[] = [];
+
+  public visualizarGestiones: IoptionTable[] = [
+    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'min-w-90' },
+    { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'proAccion', text: 'Próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'fechaProxGestion', text: 'Fecha próxima acción', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'fechaCreacion', text: 'Fecha creación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'usuarioCreacion', text: 'Usuario creador', typeField: 'text', classTailwind: 'whitespace-pre' },
+  ]
+  public visualizarCompromisosPago: IoptionTable[] = [
+    { name: 'observacion', text: 'Observación', typeField: 'text', classTailwind: 'min-w-90' },
+    { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'direccion', text: 'Dirección', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'barrio', text: 'Barrio', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'ciudad', text: 'Ciudad', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'fechaCreacion', text: 'Fecha creación', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'usuarioCreacion', text: 'Usuario creador', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'valoraPagar', text: 'Valor a pagar', typeField: 'text', pipeName: 'number', classTailwind: 'whitespace-pre text-end', footerSum: true },
+
+  ]
 
   constructor(
     private _seguimientoClienteService: CarteraClientesService,
     private dialog: MatDialog,
     private route: Router,
     private fb: FormBuilder,
-    private _sweetAlertService: Sweetalert2Service
+    private _sweetAlertService: Sweetalert2Service,
   ) { }
 
 
@@ -59,8 +80,6 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
     this.Subscription$.unsubscribe();
     this.unsuscribe$.next();
     this.unsuscribe$.complete();
-    this.SubscriptionTwo$.unsubscribe();
-    this.suscriptionTree$.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -75,7 +94,6 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
     this.cargarSelects();
 
     this.loadSelect();
-    console.log(this.allDataTable, 'subject');
 
   }
 
@@ -186,11 +204,89 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
         }
       }
 
-      this._seguimientoClienteService.guardarGestionCliente(data).pipe(takeUntil(this.unsuscribe$)).subscribe({
+
+
+
+
+
+
+
+
+      this._seguimientoClienteService.guardarGestionCliente(data).pipe(takeUntil(this.unsuscribe$), delay(400)).subscribe({
         next: (resp) => {
-          setTimeout(() => {
+
+          this.arrayPromises = [];
+
+
+          const formReset = ['Tipodegestor', 'Tipodegestion', 'Tipodecontacto', 'Resultadogestión', 'Motivonopago', 'Observaciones', 'Estadocliente', 'Proximaacción', 'valorPagar', 'fechaPagar',]
+
+
+          formReset.forEach((item) => {
+            this.formAgregarGestiones.controls[item].setValue(null);
+            this.formAgregarGestiones.controls[item].clearValidators();
+            this.formAgregarGestiones.controls[item].markAsUntouched();
+            this.formAgregarGestiones.controls[item].updateValueAndValidity();
+
+          })
+
+          const today = new Date();
+          this.formAgregarGestiones.controls['Fecha'].setValue(today);
+          this.formAgregarGestiones.controls['domicilio'].setValue(false);
+
+
+          if (this.selectedOptions.includes('Detalle gestiones')) {
+            const objetValue = this.allDataTable.filter(value => value.vista === 'Detalle gestiones');
+            this.allDataTable = this.allDataTable.filter(value => value.vista !== 'Detalle gestiones');
+
+            const visualizarGestiones = this.AllDataSearch['negocio'];
+            const verGestionesCliente = this._seguimientoClienteService.verGestionesCliente(visualizarGestiones).pipe(takeUntil(this.unsuscribe$), map((res) => {
+              const response = { vista: 'Detalle gestiones', valueVista: res.data || [], optionsTable: [...this.visualizarGestiones], footer: false, class: objetValue[0].class }
+              return response
+            }))
+
+            this.arrayPromises.push(verGestionesCliente);
+
+
+          }
+
+          if (this.selectedOptions.includes('Compromisos de pagos')) {
+            const objetValue = this.allDataTable.filter(value => value.vista === 'Compromisos de pagos');
+            this.allDataTable = this.allDataTable.filter(value => value.vista !== 'Compromisos de pagos');
+
+            const visualizarCompromisosPago = this.AllDataSearch['negocio'];
+            const verCompromisosPagos = this._seguimientoClienteService.verCompromisosPagos(visualizarCompromisosPago).pipe(takeUntil(this.unsuscribe$), map((res) => {
+              const response = { vista: 'Compromisos de pagos', valueVista: res.data || [], optionsTable: [...this.visualizarCompromisosPago], footer: true, class: objetValue[0].class }
+              return response
+            }))
+
+            this.arrayPromises.push(verCompromisosPagos);
+
+          }
+
+          if (!this.arrayPromises.length) {
             this._sweetAlertService.alertSuccess();
-          }, 400);
+          } else {
+            forkJoin(this.arrayPromises).pipe(takeUntil(this.unsuscribe$), delay(400)).subscribe({
+              next: (resp) => {
+                resp.forEach((item) => {
+                  this.allDataTable.push(item);
+                })
+                this._sweetAlertService.alertSuccess();
+
+              },
+              error: (e) => {
+                this._sweetAlertService.alertError();
+              }
+            })
+          }
+
+
+
+
+
+
+
+
         },
         error: () => {
           this._sweetAlertService.alertError();
@@ -299,6 +395,15 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
   public changeSelects(eventSelect, select: string): void {
 
     switch (select) {
+      case 'Tipodegestor':
+
+        const validaciones = ['Tipodegestor', 'Tipodegestion', 'Tipodecontacto', 'Resultadogestión', 'Observaciones', 'Estadocliente', 'Proximaacción', 'Fecha']
+        validaciones.forEach((item) => {
+          this.formAgregarGestiones.controls[item].addValidators([Validators.required]);
+          this.formAgregarGestiones.controls[item].markAsPristine();
+          this.formAgregarGestiones.controls[item].updateValueAndValidity();
+        })
+        break;
       case 'Tipodecontacto':
         const selectTipodecontacto = eventSelect.value
         const controls = ['Resultadogestión', 'Estadocliente', 'Motivonopago', 'Proximaacción']
@@ -466,19 +571,7 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
       this.formEditClient.controls[element]?.disable();
     });
 
-    // codigoCliente: [],
-    // nombreCliente: [],
-    // nitCliente: [],
-    // direccionCliente: [, [Validators.required]],
-    // telefonoCliente: [, [Validators.required]],
-    // celularCliente: [, [Validators.required]],
-    // celular2Cliente: [,],
-    // barrio: [, [Validators.required]],
-    // ciudad: [, [Validators.required]],
-    // departamento: [, [Validators.required]],
-    // observaciones: [],
-    // correoCliente: [],
-    // extorsion: [false, []]
+
 
     this._seguimientoClienteService.listarDepartamentos().pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
@@ -636,14 +729,14 @@ export class FullViewsDetailsClienteComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.SubscriptionTwo$ = this._seguimientoClienteService.selectedOption$.pipe(takeUntil(this.unsuscribe$)).subscribe({
+    this.Subscription$ = this._seguimientoClienteService.agregarGestiones$.pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         this.selectedOptions = [...resp]
-
+        // console.log('this.selectedOptions', this.selectedOptions);
       }
     })
 
-    // this.suscriptionTree$ = this._seguimientoClienteService.direccionCliente$.pipe(skip(1), takeUntil(this.unsuscribe$)).subscribe({
+    // this.Subscription$ = this._seguimientoClienteService.direccionCliente$.pipe(skip(1), takeUntil(this.unsuscribe$)).subscribe({
     //   next: (resp) => {
 
     //     this.formEditClient.controls['direccionCliente'].setValue(resp)

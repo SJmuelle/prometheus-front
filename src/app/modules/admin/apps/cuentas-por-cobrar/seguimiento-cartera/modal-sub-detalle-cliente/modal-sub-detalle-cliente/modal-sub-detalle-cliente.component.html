@@ -12,7 +12,7 @@
 
         </div> -->
 
-        <div class="w-full border-2 flex flex-row rounded-2xl p-3 h-auto">
+        <div class="w-full border flex flex-row rounded-md p-3 h-auto">
             <div class=" w-10 h-10 min-w-10 min-h-10">
 
                 <img [src]="'assets/images/agendas/Asignacion.png'" class="w-full h-full object-cover">
@@ -74,7 +74,7 @@
                 <div class="flex flex-col sm:flex-row gap-2">
 
                     <mat-form-field class=" w-full fuse-mat-dense sm:w-2/4 sm:-mt-4 -mt-7">
-                        <mat-label>Via principal</mat-label>
+                        <mat-label>Vía principal</mat-label>
                         <mat-select (selectionChange)="changeSelects($event)" [matTooltip]=""
                             formControlName="viaPrincipal">
                             <mat-option *ngFor="let item of viaPrincipal"
@@ -84,7 +84,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="fuse-mat-dense sm:-mt-4 -mt-7" style="flex-grow: 1;">
-                        <mat-label>Numero</mat-label>
+                        <mat-label>Número</mat-label>
                         <input type="text" matInput formControlName="valorViaPrincipal">
 
                     </mat-form-field>
@@ -97,7 +97,7 @@
                 <div class="flex flex-col sm:flex-row gap-2 w-full">
 
                     <mat-form-field class="w-full fuse-mat-dense sm:w-2/4 sm:-mt-4 -mt-7">
-                        <mat-label>Numero</mat-label>
+                        <mat-label>Número</mat-label>
                         <mat-select [matTooltip]="" formControlName="numero">
                             <mat-option *ngFor="let item of numeroVia"
                                 [value]="item.nombre">{{item.nombre}}</mat-option>

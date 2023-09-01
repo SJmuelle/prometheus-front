@@ -51,6 +51,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public numeroOTP: number = 0;
     public mostrarOTP: boolean = false;
     public dataGeneralIncial: any;
+    public ciudadesExpedicion: any;
 
     constructor(
         private fb: FormBuilder,
@@ -85,7 +86,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
         this.addValidation();
         this.marginTopInputDynamic();
-        
+
         this.permisoEditar =
             this._permisosService.permisoPorModuleTrazabilidad();
         if (this.permisoEditar) {
@@ -144,14 +145,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                 [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)],
             ],
             estadoCivil: [''],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
             genero: [''],
             nacionalidad: [''],
-            fechaNacimiento: [''],
+            fechaNacimiento: ['',[Validators.required, this.validatedDate.bind(this)]],
             nivelEstudio: [''],
             numeroHijos: [''],
             personasACargo: [''],
-            fechaExpedicion: [''],
             codigoDepartamentoExpedicion: [''],
             codigoCiudadExpedicion: [''],
             estrato: [''],
@@ -261,6 +261,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             fechaDesvinculacion: [''],
             parentesco: ['', Validators.required],
             declaraRenta: ['N', Validators.required],
+            fechaExpedicion: [
+                '',
+                [Validators.required, this.validatedDate.bind(this), this.validateExpedicion.bind(this)],
+            ],
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
@@ -270,8 +274,46 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         });
     }
 
+
+    private validateExpedicion(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        let date: any = moment(valueControl)
+
+        const errors = { expedicionDate: true };
+
+        const nacimientoDate: any = moment(this.formDeudorSolidario?.controls.fechaNacimiento.value || '').format('YYYY-MM-DD');
+        // Set the validation error on the matching control
+
+        date.subtract(18, 'years');
+        if (date.isBefore(nacimientoDate)) {
+
+            return errors
+        } else {
+            return null
+        }
+    }
+
     get tipoDocumento(): AbstractControl {
         return this.formDeudorSolidario.controls.tipoDocumento
+    }
+
+     /**
+  * @description: Departamento de expedicion
+  */
+     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudadesExpedicion(codigo);
+        // eliminar la ciudad
+        this.formDeudorSolidario.get('codigoCiudadExpedicion').setValue('')
+    }
+
+      /**
+    * @description: Obtiene listado de ciudades negocio
+    */
+      private getCiudadesExpedicion(codigo: string): void {
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudadesExpedicion = rep
+        })
     }
 
     /**
@@ -299,6 +341,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                 if (data?.codigoCiudad) {
                     this.getBarrios(data.codigoCiudad);
                 }
+
+                if (data.codigoDepartamentoExpedicion) {
+                    this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
+                }
             });
     }
 
@@ -316,6 +362,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
             })
     }
+
 
     startTimer() {
         this.contador = 0;
@@ -454,9 +501,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public validationPost(): void {
         if (this.formDeudorSolidario.invalid) {
             this.formDeudorSolidario.markAllAsTouched();
-            setTimeout(() => {
 
-                this.scrollToFirstInvalidControl();
+            setTimeout(() => {
+                if (this.formDeudorSolidario.invalid) {
+                    this.scrollToFirstInvalidControl();
+                }else{
+                    this.onPostDatos();
+                }
             }, 200);
         } else {
             this.onPostDatos();
@@ -492,6 +543,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                         .value,
             clausulaAnticurrupcionClaracionAuto: 'S',
             autoricacionDatosPersonalClaracionAuto: 'S',
+            fechaNacimiento:  moment(this.formDeudorSolidario.controls.fechaNacimiento.value).format('YYYY-MM-DD'),
+            fechaExpedicion:  moment(this.formDeudorSolidario.controls.fechaExpedicion.value).format('YYYY-MM-DD')
         };
 
         Swal.fire({
@@ -591,7 +644,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             }
         }
 
-        firstInvalidControl.scrollIntoView({
+        firstInvalidControl?.scrollIntoView({
             behavior: 'smooth',
             block: 'center'
         })
@@ -886,12 +939,30 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                         ?.disable({ emitEvent: true, onlySelf: true });
                 }
             });
+
+            // precargue de info cuando es conyuge
+            this.formDeudorSolidario
+            .get('parentesco')
+            .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
+                if (e === 'CO') {
+                    this.getConyugeDeudorData()
+                }
+            });
     }
 
     public cambiarNacionalidad(e: MatSelectChange) {
         if (e.value === 'CC') {
             this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO');
         }
+    }
+
+    public getConyugeDeudorData(){
+        this.fabricaCreditoService.getDatosDeudorSolidarioConyuge(this.numeroSolicitud).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            if(rep.data){
+                this.formDeudorSolidario.patchValue(rep.data);
+            }
+        })
     }
 
     private validatedDate(control: AbstractControl) {

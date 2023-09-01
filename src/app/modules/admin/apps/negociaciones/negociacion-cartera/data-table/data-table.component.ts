@@ -354,7 +354,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             text: 'Estado',
             typeField: 'statusStyle',
             styleCondition: (data): string => {
-              // console.log('yeloww MC17223', data?.tiene_negociacion)
               const stateName = data?.tiene_negociacion
               if (stateName === 'Negociado') { return 'bg-green-400' } else {
                 return 'bg-red-400';

@@ -40,12 +40,12 @@ export class GridPoliticasComponent implements OnInit {
         this.politicas = {}
         this._politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
             data.data.forEach(element => {
-                if(!this.politicas[element.tipoTercero]){
+                if (!this.politicas[element.tipoTercero]) {
                     this.politicas[element.tipoTercero] = []
                 }
                 this.politicas[element.tipoTercero].push(element)
             });
-            console.log('politicas', this.politicas);
+            // console.log('politicas', this.politicas);
 
         });
     }
@@ -130,7 +130,7 @@ export class GridPoliticasComponent implements OnInit {
 
                 Swal.fire({ title: 'Cargando', html: 'Evaluando motor de decisión (Políticas)', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
                 this._politicasService.correrMotorlExcepcionPolitica(data).subscribe(rep => {
-                    console.log('respuesta', rep);
+                    // console.log('respuesta', rep);
                     if (rep['data'].resultado === 'OK') {
                         Swal.fire('Guardado con éxito', 'Ha sido recalculado con éxito.', 'success').then(() => {
                             window.location.reload()
@@ -146,21 +146,21 @@ export class GridPoliticasComponent implements OnInit {
     }
 
 
-    getTituloPolitica(tipoTercero: string){
-        switch(tipoTercero){
+    getTituloPolitica(tipoTercero: string) {
+        switch (tipoTercero) {
             case 'C':
-            return 'Políticas administrativas del codeudor'
+                return 'Políticas administrativas del codeudor'
             case 'S':
-            return 'Políticas administrativas del deudor solidario'
+                return 'Políticas administrativas del deudor solidario'
             case 'R':
-            return 'Políticas administrativas del representante'
+                return 'Políticas administrativas del representante'
             default:
                 return 'Políticas administrativas del titular'
         }
     }
 
-      // Order by descending property key
-      keyDescOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+    // Order by descending property key
+    keyDescOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
     }
 

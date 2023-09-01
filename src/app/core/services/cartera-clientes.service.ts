@@ -18,6 +18,8 @@ export class CarteraClientesService {
   public dataTablesSelected$: BehaviorSubject<any[]> = new BehaviorSubject([]);
   public allDataSearch: any = null;
   public selectedOption$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  public agregarGestiones$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+
   constructor(private _http: HttpClient, private _appSettings: AppSettingsService) { }
 
   /**
@@ -259,18 +261,15 @@ export class CarteraClientesService {
     return this._http.post(`${this._appSettings.seguimientoCarteraClientes.url.verDetalleCarteraHistorico}`, { ...data })
   }
 
-  //generic/cartera-cargar-detalle-cliente-historico
-  //generic/qry/nomenclarturas
-  //generic/cartera-actualizar-info-cliente
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public verResumenCarteraCliente(data: any): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.post(`${this._appSettings.seguimientoCarteraClientes.url.carteraCargarDetalleClienteResumen}`, { ...data })
+  }
 
-  //generic/cartera-guardar-gestion-compromiso
 
-  //generic/qry/listar-departamentos
-
-  ///generic/qry/cartera-listar-proxima-accion-contacto/1
-
-  // api/generic/cartera-cargar-detalle-cliente
-
-  // api-fintra/api/generic/cartera-buscar-cliente
 
 }
